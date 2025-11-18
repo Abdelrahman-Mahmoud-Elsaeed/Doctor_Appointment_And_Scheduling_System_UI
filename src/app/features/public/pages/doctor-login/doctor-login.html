@@ -1,0 +1,156 @@
+<div class="min-h-screen bg-linear-to-br from-[#007bff]/10 via-white to-[#0056b3]/10 flex items-center justify-center p-4">
+  <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+
+    <!-- Left Column - Doctor Portal Branding -->
+    <div class="hidden lg:block">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-12 h-12 bg-[#007bff] rounded-lg flex items-center justify-center">
+          <lucide-icon [img]="Stethoscope" class="w-6 h-6 text-white"></lucide-icon>
+        </div>
+        <div class="flex items-center">
+          <span class="text-2xl text-gray-900">HealthCare</span>
+          <span class="ml-2 bg-[#007bff] text-white px-2 py-0.5 rounded text-xs">Doctor Portal</span>
+        </div>
+      </div>
+
+      <h1 class="text-gray-900 mb-4">Welcome to Your Medical Practice</h1>
+      <p class="text-xl text-gray-600 mb-8">
+        Access your secure portal to manage appointments, patient records, and schedules.
+      </p>
+
+      <div class="space-y-4">
+        <!-- HIPAA -->
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 bg-[#007bff]/10 rounded-lg flex items-center justify-center shrink-0">
+            <lucide-icon [img]="Shield" class="w-6 h-6 text-[#007bff]"></lucide-icon>
+          </div>
+          <div>
+            <h3 class="text-gray-900 mb-1">HIPAA Compliant Security</h3>
+            <p class="text-sm text-gray-600">Enterprise-grade encryption protects all patient data</p>
+          </div>
+        </div>
+
+        <!-- Smart Scheduling -->
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 bg-[#007bff]/10 rounded-lg flex items-center justify-center shrink-0">
+            <lucide-icon [img]="Calendar" class="w-6 h-6 text-[#007bff]"></lucide-icon>
+          </div>
+          <div>
+            <h3 class="text-gray-900 mb-1">Smart Scheduling</h3>
+            <p class="text-sm text-gray-600">Manage your availability and appointments efficiently</p>
+          </div>
+        </div>
+
+        <!-- Patient Management -->
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 bg-[#007bff]/10 rounded-lg flex items-center justify-center shrink-0">
+            <lucide-icon [img]="Users" class="w-6 h-6 text-[#007bff]"></lucide-icon>
+          </div>
+          <div>
+            <h3 class="text-gray-900 mb-1">Patient Management</h3>
+            <p class="text-sm text-gray-600">Access complete patient history and treatment records</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2 text-green-800 text-sm">
+        <lucide-icon [img]="Shield" class="w-4 h-4"></lucide-icon>
+        <span>Verified Secure Medical Portal</span>
+      </div>
+    </div>
+
+    <!-- Right Column - Login Form -->
+    <app-card customClasses="p-8 w-full shadow-xl">
+      <!-- Mobile Logo -->
+      <div class="text-center mb-8 lg:hidden">
+        <div class="flex items-center gap-2 justify-center mb-4">
+          <div class="w-10 h-10 bg-[#007bff] rounded-lg flex items-center justify-center">
+            <lucide-icon [img]="Stethoscope" class="w-5 h-5 text-white"></lucide-icon>
+          </div>
+          <div class="flex flex-col items-start">
+            <span class="text-xl text-gray-900">HealthCare</span>
+            <span class="bg-[#007bff] text-white text-xs px-1 rounded">Doctor Portal</span>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="text-gray-900 mb-2">Doctor Sign In</h2>
+      <p class="text-gray-600 mb-8">Access your professional dashboard</p>
+
+      <div class="space-y-6">
+        <!-- Email Input -->
+        <div>
+          <app-label for="doctor-email">Professional Email</app-label>
+          <div class="relative mt-2">
+            <lucide-icon [img]="Mail" class="ab w-5 h-5 text-gray-400"></lucide-icon>
+            <app-input [id]="'doctor-email'" type="email" placeholder="doctor@hospital.com" customClasses="pl-11"></app-input>
+          </div>
+        </div>
+
+        <!-- Password Input -->
+        <div>
+          <div class="flex items-center justify-between">
+            <app-label for="doctor-password">Password</app-label>
+            <a href="#" class="text-sm text-[#007bff] hover:underline">Forgot password?</a>
+          </div>
+          <div class="relative mt-2">
+            <lucide-icon [img]="Lock" class="ab w-5 h-5 text-gray-400"></lucide-icon>
+            <app-input [id]="'doctor-password'" type="password" placeholder="Enter your password" customClasses="pl-11"></app-input>
+          </div>
+        </div>
+
+        <!-- Remember Me & 2FA -->
+        <div class="space-y-3">
+          <div class="flex items-center space-x-2">
+            <app-checkbox [id]="'doctor-remember'"></app-checkbox>
+            <label for="doctor-remember" class="text-sm text-gray-700 cursor-pointer ml-2">
+              Keep me signed in on this device
+            </label>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600 bg-blue-50 p-2 rounded">
+            <lucide-icon [img]="Shield" class="w-3 h-3"></lucide-icon>
+            <span>Two-factor authentication may be required</span>
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <app-button customClasses="w-full bg-[#007bff] hover:bg-[#0056b3]" routerLink="/doctor/dashboard">
+          Sign In to Portal
+          <lucide-icon [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
+        </app-button>
+
+        <!-- Support Section -->
+        <div class="pt-4 border-t">
+          <p class="text-sm text-gray-600 mb-3">Need help accessing your account?</p>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <app-button variant="outline" customClasses="flex-1 text-sm">Contact IT Support</app-button>
+            <app-button variant="outline" customClasses="flex-1 text-sm">Request Access</app-button>
+          </div>
+        </div>
+
+        <!-- Registration Link -->
+        <div class="text-center pt-4 border-t">
+          <p class="text-sm text-gray-600 mb-3">Not a registered doctor yet?</p>
+          <app-button
+            variant="outline"
+            customClasses="w-full border-[#007bff] text-[#007bff] hover:bg-[#007bff]/5"
+            routerLink="/register"
+          >
+            Apply for Doctor Account
+          </app-button>
+        </div>
+
+        <!-- Patient Login Link -->
+        <div class="text-center">
+          <button
+            routerLink="/login"
+            class="text-sm text-gray-600 hover:text-[#00bfa6] hover:underline"
+          >
+            ← Back to Patient Login
+          </button>
+        </div>
+      </div>
+    </app-card>
+
+  </div>
+</div>

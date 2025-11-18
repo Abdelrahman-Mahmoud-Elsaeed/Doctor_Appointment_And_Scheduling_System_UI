@@ -1,0 +1,5 @@
+@reference "tailwindcss";
+
+:host::ng-deep lucide-icon > svg.search {
+  @apply absolute left-3 top-1/2 -translate-y-1/2;
+}

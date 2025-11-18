@@ -1,0 +1,55 @@
+<app-card class="overflow-hidden">
+  <div class="p-6">
+    <div class="flex gap-4">
+      <!-- Doctor Image -->
+      <div class="shrink-0">
+        <img [src]="appointment.doctor.image" [alt]="appointment.doctor.name"
+          class="w-20 h-20 rounded-lg object-cover" />
+      </div>
+
+      <!-- Appointment Info -->
+      <div class="flex-1 min-w-0">
+        <div class="flex items-start justify-between gap-2 mb-2">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-1">{{ appointment.doctor.name }}</h3>
+            <p class="text-sm text-gray-600">{{ appointment.doctor.specialization }}</p>
+          </div>
+          <app-badge [customClasses]="getStatusClasses(appointment.status)">
+            {{ appointment.status | titlecase }}
+          </app-badge>
+        </div>
+
+        <div class="space-y-2 mt-4">
+          <div class="flex items-center gap-2 text-sm text-gray-600">
+            <lucide-icon [img]="Calendar" class="w-4 h-4 text-gray-400"></lucide-icon>
+
+            <span>{{ formatDate(appointment.date) }}</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm text-gray-600">
+            <lucide-icon [img]="Clock" class="w-4 h-4 text-gray-400"></lucide-icon>
+            <span>{{ appointment.time }}</span>
+          </div>
+          @if (appointment.notes) {
+          <div class="flex items-start gap-2 text-sm text-gray-600">
+            <lucide-icon [img]="FileText" class="w-4 h-4 text-gray-400"></lucide-icon>
+            <span>{{ appointment.notes }}</span>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions - Only show for pending and confirmed appointments -->
+    @if (appointment.status === 'pending' || appointment.status === 'confirmed') {
+    <div class="flex gap-2 mt-4 pt-4 border-t border-gray-100">
+      <app-button  variant="outline"  class="flex-1 " customClasses="w-full"  (click)="rescheduleAppointment.emit()" >
+        Reschedule
+      </app-button>
+      <app-button  variant="outline" class="flex-1" customClasses="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
+        (click)="cancelAppointment.emit()">
+        Cancel
+      </app-button>
+    </div>
+    }
+  </div>
+</app-card>

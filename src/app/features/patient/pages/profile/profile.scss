@@ -1,0 +1,23 @@
+@reference "tailwindcss";
+
+:host::ng-deep {
+
+  lucide-icon > svg.ab {
+    @apply absolute left-3 top-1/2 -translate-y-1/2;
+  }
+  input[type="date"] {
+  /* Hide Chrome/Edge/Opera icon */
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  /* Hide Firefox icon */
+  &::-moz-focus-inner {
+    border: 0;
+  }
+  &::-moz-calendar-picker-indicator {
+    display: none;
+  }
+}
+
+} 

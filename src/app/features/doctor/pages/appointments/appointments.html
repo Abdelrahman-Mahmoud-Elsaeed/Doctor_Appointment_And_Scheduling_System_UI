@@ -1,0 +1,294 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-gray-900 mb-2">Appointments</h1>
+      <p class="text-gray-600">Manage and view all your patient appointments</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+      <app-card customClasses="p-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-600">Today</p>
+            <p class="text-2xl text-gray-900">5</p>
+          </div>
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+            <lucide-icon [img]="Calendar" class="w-5 h-5 text-blue-600"></lucide-icon>
+          </div>
+        </div>
+      </app-card>
+
+      <app-card customClasses="p-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-600">Pending</p>
+            <p class="text-2xl text-gray-900">3</p>
+          </div>
+          <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+            <lucide-icon [img]="Clock" class="w-5 h-5 text-yellow-600"></lucide-icon>
+          </div>
+        </div>
+      </app-card>
+
+      <app-card customClasses="p-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-600">This Week</p>
+            <p class="text-2xl text-gray-900">18</p>
+          </div>
+          <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+            <lucide-icon [img]="Calendar" class="w-5 h-5 text-green-600"></lucide-icon>
+          </div>
+        </div>
+      </app-card>
+
+      <app-card customClasses="p-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-600">This Month</p>
+            <p class="text-2xl text-gray-900">72</p>
+          </div>
+          <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+            <lucide-icon [img]="Calendar" class="w-5 h-5 text-purple-600"></lucide-icon>
+          </div>
+        </div>
+      </app-card>
+    </div>
+
+    <!-- Controls -->
+    <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex gap-2">
+          <app-button
+            [variant]="view === 'list' ? 'default' : 'outline'"
+            (click)="setView('list')"
+            [customClasses]="view === 'list' ? 'bg-[#007bff]' : ''"
+          >
+            <lucide-icon [img]="List" class="w-4 h-4 mr-2"></lucide-icon>
+            List View
+          </app-button>
+
+          <app-button
+            [variant]="view === 'calendar' ? 'default' : 'outline'"
+            (click)="setView('calendar')"
+            [customClasses]="view === 'calendar' ? 'bg-[#007bff]' : ''"
+          >
+            <lucide-icon [img]="Calendar" class="w-4 h-4 mr-2"></lucide-icon>
+            Calendar View
+          </app-button>
+        </div>
+
+        <div class="flex gap-2 w-full sm:w-auto">
+          <app-select placeholder="All Status" value="all">
+            <app-select-trigger customClasses="w-full sm:w-40">
+              <lucide-icon [img]="Filter" class="w-4 h-4 mr-2"></lucide-icon>
+              <app-select-value></app-select-value>
+            </app-select-trigger>
+            <app-select-content>
+              <app-select-item value="all">All Status</app-select-item>
+              <app-select-item value="confirmed">Confirmed</app-select-item>
+              <app-select-item value="pending">Pending</app-select-item>
+              <app-select-item value="completed">Completed</app-select-item>
+            </app-select-content>
+          </app-select>
+
+          <app-select placeholder="Newest First" value="date-desc">
+            <app-select-trigger customClasses="w-full sm:w-40">
+              <app-select-value></app-select-value>
+            </app-select-trigger>
+            <app-select-content>
+              <app-select-item value="date-desc">Newest First</app-select-item>
+              <app-select-item value="date-asc">Oldest First</app-select-item>
+              <app-select-item value="time">By Time</app-select-item>
+            </app-select-content>
+          </app-select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    @if(view === 'list'){
+
+      <app-card customClasses="p-6">
+        <app-tabs>
+          <app-tabs-list customClasses="mb-6">
+            <app-tabs-trigger value="upcoming">Upcoming</app-tabs-trigger>
+            <app-tabs-trigger value="pending">Pending Approval</app-tabs-trigger>
+            <app-tabs-trigger value="completed">Completed</app-tabs-trigger>
+          </app-tabs-list>
+
+          <app-tabs-content value="upcoming" customClasses="space-y-4">
+            @for (appointment of confirmedAppointments; track $index) {
+              <div class="p-4 border rounded-lg hover:border-[#007bff] transition-colors">
+                <div class="flex items-start gap-4">
+                  <img
+                    [src]="appointment.doctor.image"
+                    alt="Patient"
+                    class="w-16 h-16 rounded-lg object-cover"
+                  />
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                      <div>
+                        <h3 class="text-gray-900 mb-1">Patient Name</h3>
+                        <p class="text-sm text-gray-600">{{ appointment.notes || 'General consultation' }}</p>
+                      </div>
+                      <app-badge
+                        [customClasses]="
+                          appointment.status === 'confirmed'
+                            ? 'bg-green-100 text-green-700'
+                            : appointment.status === 'pending'
+                            ? 'bg-yellow-100 text-yellow-700'
+                            : 'bg-blue-100 text-blue-700'
+                        "
+                        variant="outline"
+                      >
+                        {{ appointment.status }}
+                      </app-badge>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <div class="flex items-center gap-1">
+                        <lucide-icon [img]="Calendar" class="w-4 h-4"></lucide-icon>
+                        <span>{{ formatDateLong(appointment.date) }}</span>
+                      </div>
+                      <div class="flex items-center gap-1">
+                        <lucide-icon [img]="Clock" class="w-4 h-4"></lucide-icon>
+                        <span>{{ appointment.time }}</span>
+                      </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                      <app-button size="sm" variant="outline">View Details</app-button>
+                      @if (appointment.status === 'confirmed') {
+                        <app-button size="sm" customClasses="bg-[#007bff] hover:bg-[#0056b3]">Mark as Completed</app-button>
+                        <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Cancel</app-button>
+                      }
+                      @if (appointment.status === 'pending') {
+                        <app-button size="sm" customClasses="bg-green-600 hover:bg-green-700">Confirm</app-button>
+                        <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Decline</app-button>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </app-tabs-content>
+
+          <app-tabs-content value="pending" customClasses="space-y-4">
+            @for (appointment of pendingAppointments; track $index) {
+              <!-- reuse item layout -->
+              <div class="p-4 border rounded-lg hover:border-[#007bff] transition-colors">
+                <!-- same structure as above -->
+                <div class="flex items-start gap-4">
+                  <img [src]="appointment.doctor.image" alt="Patient" class="w-16 h-16 rounded-lg object-cover" />
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                      <div>
+                        <h3 class="text-gray-900 mb-1">Patient Name</h3>
+                        <p class="text-sm text-gray-600">{{ appointment.notes || 'General consultation' }}</p>
+                      </div>
+                      <app-badge
+                        [customClasses]="
+                          appointment.status === 'confirmed'
+                            ? 'bg-green-100 text-green-700'
+                            : appointment.status === 'pending'
+                            ? 'bg-yellow-100 text-yellow-700'
+                            : 'bg-blue-100 text-blue-700'
+                        "
+                        variant="outline"
+                      >
+                        {{ appointment.status }}
+                      </app-badge>
+                    </div>
+                    <div class="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <div class="flex items-center gap-1">
+                        <lucide-icon [img]="Calendar" class="w-4 h-4"></lucide-icon>
+                        <span>{{ formatDateLong(appointment.date) }}</span>
+                      </div>
+                      <div class="flex items-center gap-1">
+                        <lucide-icon [img]="Clock" class="w-4 h-4"></lucide-icon>
+                        <span>{{ appointment.time }}</span>
+                      </div>
+                    </div>
+                    <div class="flex gap-2">
+                      <app-button size="sm" variant="outline">View Details</app-button>
+                      <app-button size="sm" customClasses="bg-green-600 hover:bg-green-700">Confirm</app-button>
+                      <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Decline</app-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+
+          </app-tabs-content>
+
+          <app-tabs-content value="completed" customClasses="space-y-4">
+            @for (appointment of completedAppointments; track $index) {
+              <div class="p-4 border rounded-lg hover:border-[#007bff] transition-colors">
+                <div class="flex items-start gap-4">
+                  <img [src]="appointment.doctor.image" alt="Patient" class="w-16 h-16 rounded-lg object-cover" />
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                      <div>
+                        <h3 class="text-gray-900 mb-1">Patient Name</h3>
+                        <p class="text-sm text-gray-600">{{ appointment.notes || 'General consultation' }}</p>
+                      </div>
+                      <app-badge variant="outline" customClasses="bg-blue-100 text-blue-700">{{ appointment.status }}</app-badge>
+                    </div>
+                    <div class="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <div class="flex items-center gap-1">
+                        <lucide-icon [img]="Calendar" class="w-4 h-4"></lucide-icon>
+                        <span>{{ formatDateLong(appointment.date) }}</span>
+                      </div>
+                      <div class="flex items-center gap-1">
+                        <lucide-icon [img]="Clock" class="w-4 h-4"></lucide-icon>
+                        <span>{{ appointment.time }}</span>
+                      </div>
+                    </div>
+                    <div class="flex gap-2">
+                      <app-button size="sm" variant="outline">View Details</app-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </app-tabs-content>
+        </app-tabs>
+      </app-card>
+    } @else {
+
+      <!-- Calendar View -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
+        <app-card customClasses="lg:col-span-2 p-6 ">
+          <app-calendar
+            mode="single"
+            [selected]="date"
+            (select)="setDate($event)"
+            customClasses="rounded-md border-0 max-w-63" 
+          ></app-calendar>
+        </app-card>
+
+        <app-card customClasses="p-6">
+          <h3 class="text-gray-900 mb-4">
+            {{ date ? (date | date:'MMMM d') : 'Select a date' }}
+          </h3>
+          <div class="space-y-3">
+            <ng-container *ngFor="let appointment of mockAppointments.slice(0,3)">
+              <div class="p-3 border rounded-lg hover:border-[#007bff] transition-colors cursor-pointer">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm text-gray-900">{{ appointment.time }}</span>
+                  <app-badge variant="outline" customClasses="text-xs">{{ appointment.status }}</app-badge>
+                </div>
+                <p class="text-sm text-gray-600">Patient Name</p>
+                <p class="text-xs text-gray-500 mt-1">{{ appointment.notes }}</p>
+              </div>
+            </ng-container>
+          </div>
+        </app-card>
+      </div>
+    } 
+
+  </div>
+</div>

@@ -1,1 +1,155 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+
+@use "tailwindcss";
+
+
+@supports (color: color-mix(in lab, red, red)) {
+  .focus-visible\:ring-ring\/50:focus-visible {
+    --tw-ring-color:
+      color-mix(in oklab, var(--ring) 50%, transparent);
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: var(--ring);
+  }
+  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
+@theme {
+  --font-size: 16px;
+  --color-background: #fff;
+  --color-foreground: oklch(.145 0 0);
+  --color-card: #fff;
+  --color-card-foreground: oklch(.145 0 0);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(.145 0 0);
+  --color-primary: #030213;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(.95 .0058 264.53);
+  --color-secondary-foreground: #030213;
+  --color-muted: #ececf0;
+  --color-muted-foreground: #717182;
+  --color-accent: #e9ebef;
+  --color-accent-foreground: #030213;
+  --color-destructive: #d4183d;
+  --color-destructive-foreground: #fff;
+
+  --color-input: transparent;
+  --color-input-background: #f3f3f5;
+  --color-switch-background: #cbced4;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: oklch(.708 0 0);
+  --color-chart-1: oklch(.646 .222 41.116);
+  --color-chart-2: oklch(.6 .118 184.704);
+  --color-chart-3: oklch(.398 .07 227.392);
+  --color-chart-4: oklch(.828 .189 84.429);
+  --color-chart-5: oklch(.769 .188 70.08);
+  --radius: .625rem;
+  --color-sidebar: oklch(.985 0 0);
+  --color-sidebar-foreground: oklch(.145 0 0);
+  --color-sidebar-primary: #030213;
+  --color-sidebar-primary-foreground: oklch(.985 0 0);
+  --color-sidebar-accent: oklch(.97 0 0);
+  --color-sidebar-accent-foreground: oklch(.205 0 0);
+  --color-sidebar-border: oklch(.922 0 0);
+  --color-sidebar-ring: oklch(.708 0 0);
+  --border: oklch(0% 0 0 / 0.102);
+  
+}
+.dark {
+  --color-background: oklch(.145 0 0);
+  --color-foreground: oklch(.985 0 0);
+  --color-card: oklch(.145 0 0);
+  --color-card-foreground: oklch(.985 0 0);
+  --color-popover: oklch(.145 0 0);
+  --color-popover-foreground: oklch(.985 0 0);
+  --color-primary: oklch(.985 0 0);
+  --color-primary-foreground: oklch(.205 0 0);
+  --color-secondary: oklch(.269 0 0);
+  --color-secondary-foreground: oklch(.985 0 0);
+  --color-muted: oklch(.269 0 0);
+  --color-muted-foreground: oklch(.708 0 0);
+  --color-accent: oklch(.269 0 0);
+  --color-accent-foreground: oklch(.985 0 0);
+  --color-destructive: oklch(.396 .141 25.723);
+  --color-destructive-foreground: oklch(.637 .237 25.331);
+  --color-border: oklch(.269 0 0);
+  --color-input: oklch(.269 0 0);
+  --color-ring: oklch(.439 0 0);
+
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  --chart-1: oklch(.488 .243 264.376);
+  --chart-2: oklch(.696 .17 162.48);
+  --chart-3: oklch(.769 .188 70.08);
+  --chart-4: oklch(.627 .265 303.9);
+  --chart-5: oklch(.645 .246 16.439);
+
+  --sidebar: oklch(.205 0 0);
+  --sidebar-foreground: oklch(.985 0 0);
+  --sidebar-primary: oklch(.488 .243 264.376);
+  --sidebar-primary-foreground: oklch(.985 0 0);
+  --sidebar-accent: oklch(.269 0 0);
+  --sidebar-accent-foreground: oklch(.985 0 0);
+  --sidebar-border: oklch(.269 0 0);
+  --sidebar-ring: oklch(.439 0 0);
+}
+

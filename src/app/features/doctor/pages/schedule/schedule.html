@@ -1,0 +1,242 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="container mx-auto px-4 py-8 max-w-5xl">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-gray-900 mb-2">Work Schedule</h1>
+      <p class="text-gray-600">Manage your working hours and availability</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Main Schedule Settings -->
+      <div class="lg:col-span-2 ">
+
+        <!-- General Settings -->
+        <app-card customClasses="p-6">
+          <h2 class="text-gray-900 mb-6">General Settings</h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Session Duration -->
+            <div>
+              <app-label for="sessionDuration" customClasses="mb-2">Session Duration</app-label>
+
+              <app-select  value="30" placeholder="30 minutes">
+                <app-select-trigger [id]="'sessionDuration'">
+                  <lucide-icon [img]="Clock" class="w-4 h-4 mr-2" />
+                  <app-select-value />
+                </app-select-trigger>
+
+                <app-select-content>
+                  <app-select-item value="15">15 minutes</app-select-item>
+                  <app-select-item value="30">30 minutes</app-select-item>
+                  <app-select-item value="45">45 minutes</app-select-item>
+                  <app-select-item value="60">1 hour</app-select-item>
+                </app-select-content>
+              </app-select>
+            </div>
+
+            <!-- Session Cost -->
+            <div>
+              <app-label for="sessionCost">Session Cost ($)</app-label>
+              <div class="relative mt-2">
+                <lucide-icon [img]="DollarSign" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <app-input [id]="'sessionCost'" type="number" customClasses="pl-10" value="150" />
+              </div>
+            </div>
+
+            <!-- Buffer -->
+            <div>
+              <app-label for="bufferTime" customClasses="mb-2">Buffer Between Appointments</app-label>
+
+              <app-select  value="10" placeholder="10 minutes">
+                <app-select-trigger [id]="'bufferTime'">
+                  <lucide-icon [img]="Clock" class="w-4 h-4 mr-2" />
+                  <app-select-value />
+                </app-select-trigger>
+
+                <app-select-content>
+                  <app-select-item value="0">No buffer</app-select-item>
+                  <app-select-item value="5">5 minutes</app-select-item>
+                  <app-select-item value="10">10 minutes</app-select-item>
+                  <app-select-item value="15">15 minutes</app-select-item>
+                </app-select-content>
+              </app-select>
+            </div>
+
+            <!-- Max Appointments -->
+            <div>
+              <app-label for="maxAppointments">Max Appointments/Day</app-label>
+              <app-input [id]="'maxAppointments'" type="number" customClasses="mt-2" value="12" />
+            </div>
+
+          </div>
+        </app-card>
+
+        <!-- Weekly Schedule -->
+        <app-card customClasses="p-6 mt-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-gray-900">Weekly Schedule</h2>
+
+            <app-button variant="outline" size="sm">
+              <lucide-icon [img]="Calendar" class="w-4 h-4 mr-2" />
+              Copy to All Days
+            </app-button>
+          </div>
+
+          <div class="space-y-4">
+            <ng-container *ngFor="let day of weekDays">
+
+              <div class="border rounded-lg p-4">
+                <div class="flex items-center justify-between mb-4">
+
+                  <div class="flex items-center gap-3">
+                    <app-switch [id]="day.id" [checked]="day.id !== 'sunday'" />
+                    <app-label [for]="day.id" customClasses="cursor-pointer">{{ day.label }}</app-label>
+                  </div>
+
+                  <app-button variant="ghost" size="sm">
+                    <lucide-icon [img]="Plus" class="w-4 h-4" />
+                  </app-button>
+
+                </div>
+
+                <!-- Shown for non-Sunday -->
+                <div *ngIf="day.id !== 'sunday'" class="space-y-3 ml-9">
+
+                  <div class="flex items-center gap-3">
+                    <!-- Start -->
+                    <app-select value="9:00 AM" placeholder="9:00 AM" customClasses="flex-1">
+                      <app-select-trigger>
+                        <app-select-value />
+                      </app-select-trigger>
+                      <app-select-content>
+                        <app-select-item *ngFor="let time of timeSlots" [value]="time">
+                          {{ time }}
+                        </app-select-item>
+                      </app-select-content>
+                    </app-select>
+
+                    <span class="text-gray-500">to</span>
+
+                    <!-- End -->
+                    <app-select value="5:00 PM" placeholder="5:00 PM" customClasses="flex-1">
+                      <app-select-trigger>
+                        <app-select-value />
+                      </app-select-trigger>
+                      <app-select-content>
+                        <app-select-item *ngFor="let time of timeSlots" [value]="time">
+                          {{ time }}
+                        </app-select-item>
+                      </app-select-content>
+                    </app-select>
+
+                    <app-button variant="ghost" size="sm" customClasses="shrink-0">
+                      <lucide-icon [img]="Trash2" class="w-4 h-4 text-red-600" />
+                    </app-button>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </ng-container>
+          </div>
+        </app-card>
+
+        <!-- Break Times -->
+        <app-card customClasses="p-6 mt-6">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-gray-900">Break Times</h2>
+            <app-button variant="outline" size="sm">
+              <lucide-icon [img]="Plus" class="w-4 h-4 mr-2" />
+              Add Break
+            </app-button>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center gap-3 p-3 border rounded-lg">
+              <lucide-icon [img]="Clock" class="w-5 h-5 text-gray-400" />
+              <div class="flex-1">
+                <p class="text-sm text-gray-900">Lunch Break</p>
+                <p class="text-xs text-gray-500">12:00 PM - 1:00 PM</p>
+              </div>
+              <app-button variant="ghost" size="sm">
+                <lucide-icon [img]="Trash2" class="w-4 h-4 text-red-600" />
+              </app-button>
+            </div>
+          </div>
+        </app-card>
+
+        <div class="flex justify-end gap-4 mt-6">
+          <app-button variant="outline">Cancel</app-button>
+          <app-button customClasses="bg-[#007bff] hover:bg-[#0056b3]">Save Schedule</app-button>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+
+        <!-- Current Availability -->
+        <app-card customClasses="p-6">
+          <h3 class="text-gray-900 mb-4">Current Availability</h3>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-600">Working Days</span>
+              <span class="text-gray-900">6 days/week</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-600">Daily Hours</span>
+              <span class="text-gray-900">8 hours</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-600">Slots/Day</span>
+              <span class="text-gray-900">16 slots</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-600">Weekly Capacity</span>
+              <span class="text-gray-900">96 appointments</span>
+            </div>
+          </div>
+        </app-card>
+
+        <!-- Time Off -->
+        <app-card customClasses="p-6 mt-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-gray-900">Time Off</h3>
+            <app-button variant="outline" size="sm">
+              <lucide-icon [img]="Plus" class="w-4 h-4" />
+            </app-button>
+          </div>
+
+          <div class="space-y-3">
+            <div class="p-3 bg-gray-50 rounded-lg">
+              <p class="text-sm text-gray-900 mb-1">Holiday Vacation</p>
+              <p class="text-xs text-gray-600">Dec 20 - Dec 31, 2025</p>
+            </div>
+
+            <div class="p-3 bg-gray-50 rounded-lg">
+              <p class="text-sm text-gray-900 mb-1">Medical Conference</p>
+              <p class="text-xs text-gray-600">Nov 15 - Nov 17, 2025</p>
+            </div>
+          </div>
+        </app-card>
+
+        <!-- Tips -->
+        <app-card customClasses="p-6 mt-6 bg-blue-50 border-blue-200">
+          <h3 class="text-gray-900 mb-3">💡 Tips</h3>
+          <ul class="text-sm text-gray-700 space-y-2">
+            <li>• Keep buffer time for emergency cases</li>
+            <li>• Set realistic daily limits</li>
+            <li>• Block time off in advance</li>
+            <li>• Update schedule regularly</li>
+          </ul>
+        </app-card>
+
+      </div>
+
+    </div>
+  </div>
+</div>

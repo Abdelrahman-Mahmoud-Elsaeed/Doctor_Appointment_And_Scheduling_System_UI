@@ -1,0 +1,105 @@
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-2 cursor-pointer" routerLink="/dashboard">
+        <div class="w-10 h-10 bg-[#007bff] rounded-lg flex items-center justify-center">
+          <span class="text-white text-xl">+</span>
+        </div>
+        <span class="text-xl text-gray-900">HealthCare</span>
+        <span class="hidden sm:inline text-sm text-gray-500 ml-2">Doctor Portal</span>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-6">
+        @for (item of navItems; track item.id) {
+          <button
+            type="button"
+            [routerLink]="item.path"
+            class="flex items-center gap-2 transition-colors"
+            [ngClass]="{
+              'text-[#00bfa6]': currentPage(item.path),
+              'text-gray-600 hover:text-[#00bfa6]': !currentPage(item.path)
+            }"
+          >
+            <lucide-icon  [img]="item.icon" [size]="18"></lucide-icon>
+            <span>{{ item.label }}</span>
+          </button>
+        }
+      </div>
+
+      <!-- Desktop User Menu -->
+      <div class="hidden md:flex items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div class="relative flex h-9 w-9 overflow-hidden rounded-full border-2 border-[#007bff]/50">
+            <img
+              src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400"
+              alt="Doctor"
+              class="h-full w-full object-cover"
+            />
+          </div>
+          <div class="text-sm">
+            <div class="text-gray-900">Dr. Sarah Johnson</div>
+            <div class="text-gray-500 text-xs">Cardiologist</div>
+          </div>
+        </div>
+
+        <button class="inline-flex items-center justify-center rounded-full h-9 w-9 p-0 text-gray-600 hover:bg-gray-100">
+          <lucide-icon [img]="LogOut" [size]="18"></lucide-icon >
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-gray-600" (click)="toggleMobileMenu()">
+        @if (mobileMenuOpen()) {
+          <lucide-icon [img]="X" [size]="24"></lucide-icon >
+        } @else {
+          <lucide-icon [img]="Menu" [size]="24"></lucide-icon >
+        }
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    @if (mobileMenuOpen()) {
+      <div class="md:hidden py-4 border-t">
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center gap-3 px-4 pb-4 border-b">
+            <div class="relative flex h-10 w-10 overflow-hidden rounded-full border-2 border-[#007bff]">
+              <img
+                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400"
+                alt="Doctor"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div class="text-sm">
+              <div class="text-gray-900">Dr. Sarah Johnson</div>
+              <div class="text-gray-500 text-xs">Cardiologist</div>
+            </div>
+          </div>
+
+          @for (item of navItems; track item.id) {
+            <button
+              type="button"
+              [routerLink]="item.path"
+              (click)="toggleMobileMenu()"
+              class="flex items-center gap-2 px-4 py-2 bg-transparent rounded-lg transition-colors"
+              [ngClass]="{
+                'text-[#00bfa6]': currentPage(item.path),
+                'text-gray-600 hover:text-[#00bfa6]': !currentPage(item.path)
+              }"
+            >
+              <lucide-icon  [name]="item.icon" [size]="20"></lucide-icon >
+              <span>{{ item.label }}</span>
+            </button>
+          }
+
+          <button class="flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">
+            <lucide-icon [img]="LogOut" [size]="20"></lucide-icon >
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</nav>
