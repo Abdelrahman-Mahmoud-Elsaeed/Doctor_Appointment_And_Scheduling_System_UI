@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { PatientNavbar } from "@components/nav/patient-navbar/patient-navbar";
+import { PatientNavbar } from "@components/layout/nav/patient-navbar/patient-navbar";
 import { FooterComponent } from "@components/layout/footer/footer";
 import { filter } from 'rxjs';
 

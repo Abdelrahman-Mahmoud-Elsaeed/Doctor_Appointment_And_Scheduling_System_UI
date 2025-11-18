@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DoctorNavbarComponent } from "@shared/components/nav/doctor-navbar/doctor-navbar";
+import { DoctorNavbarComponent } from "@shared/components/layout/nav/doctor-navbar/doctor-navbar";
 import { RouterOutlet } from "@angular/router";
 import { FooterComponent } from "@shared/components/layout/footer/footer";
 
