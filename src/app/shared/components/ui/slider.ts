@@ -103,6 +103,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy {
     // Sync with external controlled value
     effect(() => {
       const external = this.value();
+      
       if (external !== undefined) {
         this.internalValues.set(Array.isArray(external) ? external : [external]);
       }

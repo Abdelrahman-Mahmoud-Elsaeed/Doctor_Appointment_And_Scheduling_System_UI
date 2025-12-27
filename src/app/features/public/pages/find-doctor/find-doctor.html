@@ -103,7 +103,7 @@
 
           <!-- Specializations -->
           <div>
-            <app-label customClasses="mb-3 block ">Specialization</app-label>
+            <app-label customClasses="mb-3 block">Specialization</app-label>
             <div class="space-y-3 max-h-64 overflow-y-auto">
               @for (spec of specializations; track spec) {
                 <div class="flex items-center space-x-2">
@@ -132,7 +132,7 @@
             <app-label customClasses="mb-3 block">
               Price Range: ${{ priceRange()[0] }} - ${{ priceRange()[1] }}
             </app-label>
-            <app-slider [value]="priceRange()" [min]="0" [max]="300"  class="mt-4"/>
+            <app-slider [value]="priceRange()" (valueChange)="onPriceChange($event)" [min]="0" [max]="300"  class="mt-4"/>
           </div>
 
           <!-- Location -->

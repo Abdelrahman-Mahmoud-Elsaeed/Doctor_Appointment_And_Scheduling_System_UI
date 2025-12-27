@@ -1,5 +1,3 @@
-// /src/app/app.routes.ts
-
 import { Routes } from '@angular/router';
 import { PublicLayout } from './layouts/public-layout/public-layout';
 import { PatientLayout } from './layouts/patient-layout/patient-layout';

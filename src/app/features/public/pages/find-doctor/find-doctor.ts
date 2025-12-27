@@ -62,5 +62,9 @@ export class FindDoctor {
     this.priceRange.set([80, 200]);
   }
 
-
+  onPriceChange(value: number | number[]) {
+    this.priceRange.set(
+      Array.isArray(value) ? value : [value]
+    );
+  }
 }
