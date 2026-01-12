@@ -19,7 +19,9 @@ import { cn } from '@utils/cn.util';
   standalone: true,
   imports: [],
   template: `
-    <span data-slot="avatar" [class]="hostClasses()">
+    <span 
+      data-slot="avatar" 
+      [class]="hostClasses()">
       <ng-content></ng-content>
     </span>
   `,

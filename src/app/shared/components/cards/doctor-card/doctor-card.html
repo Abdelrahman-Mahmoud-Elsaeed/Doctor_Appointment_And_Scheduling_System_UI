@@ -1,73 +1,91 @@
 <app-card customClasses="overflow-hidden hover:shadow-lg transition-shadow">
-  <div class="p-6">
+  <article class="p-6">
     <div class="flex gap-4">
       <!-- Doctor Image -->
       <div class="flex-shrink-0">
-        <img [src]="doctor.image" [alt]="doctor.name" class="w-24 h-24 rounded-lg object-cover" />
+        <img [src]="doctor.image" [alt]=" 'Photo Of '+ doctor.name" class="w-24 h-24 rounded-lg object-cover" />
       </div>
 
       <!-- Doctor Info -->
       <div class="flex-1 min-w-0">
         <div class="flex items-start justify-between gap-2 mb-1">
-          <h3 class="text-gray-900 cursor-pointer hover:text-[#00bfa6] transition-colors"
-            (click)="onViewProfile.emit()">
+        <h3>
+          <a
+            (click)="viewProfile.emit()"
+            class="hover:text-[#00bfa6] cursor-pointer focus:outline-none focus-visible:ring-2">
             {{ doctor.name }}
-          </h3>
+          </a>
+        </h3>
+
           <app-badge variant="secondary" class="flex-shrink-0">
             {{ doctor.specialization }}
           </app-badge>
         </div>
 
-        <div class="flex items-center gap-1 mb-3">
-          <div class="flex items-center gap-1">
-            <!-- Star Icon (filled) -->
-            <svg class="w-4 h-4 fill-yellow-400 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-              fill="currentColor" stroke="none">
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-            <span class="text-sm text-gray-900">{{ doctor.rating }}</span>
-          </div>
-          <span class="text-sm text-gray-500">({{ doctor.reviewCount }} reviews)</span>
-        </div>
+        <dl class="flex items-center gap-1 mb-3">
+          <!-- Star Icon (filled) -->
+          <dt class="sr-only">Rating</dt>
+          <svg class="w-4 h-4 fill-yellow-400 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            fill="currentColor" stroke="none">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+          <dd class="text-sm text-gray-900">{{ doctor.rating }}</dd>
+          <dd class="text-sm text-gray-500">({{ doctor.reviewCount }} reviews)</dd>
+        </dl>
 
-        <div class="space-y-2">
+        <dl class="space-y-2">
           <div class="flex items-center gap-2 text-sm text-gray-600">
-            <lucide-icon [img]="MapPin" class="w-4 h-4 text-gray-400"></lucide-icon>
-            <span>{{ doctor.location }}</span>
+            <dt class="sr-only">Location</dt>
+            <lucide-icon aria-hidden="true"  [img]="MapPin" class="w-4 h-4 text-gray-400"></lucide-icon>
+            <dd>{{ doctor.location }}</dd>
           </div>
           <div class="flex items-center gap-2 text-sm text-gray-600">
-            <lucide-icon [img]="Clock" class="w-4 h-4 text-gray-400"></lucide-icon>
-            <span>{{ doctor.experience }} years experience</span>
+            <dt class="sr-only">Experience</dt>
+            <lucide-icon aria-hidden="true"  [img]="Clock" class="w-4 h-4 text-gray-400"></lucide-icon>
+            <dd>{{ doctor.experience }} years experience</dd>
           </div>
           <div class="flex items-center gap-2 text-sm text-gray-900">
-            <lucide-icon [img]="DollarSign" class="w-4 h-4 text-gray-400"></lucide-icon>
-            <span>{{ doctor.price | currency}} per session</span>
+            <dt class="sr-only">Price Per Session</dt>
+
+            <lucide-icon aria-hidden="true"  [img]="DollarSign" class="w-4 h-4 text-gray-400"></lucide-icon>
+            <dd aria-label="Price {{ doctor.price }} per session">{{ doctor.price | currency}} per session</dd>
           </div>
-        </div>
+        </dl>
       </div>
     </div>
 
     <!-- Availability -->
-    <div class="mt-4 pt-4 border-t border-gray-100 px-6 -mx-6">
-      <div class="text-xs text-gray-500 mb-2">Available Days:</div>
-      <div class="flex flex-wrap gap-2 mb-4">
+    <section class="mt-4 pt-4 border-t border-gray-100 px-6 -mx-6" aria-labelledby="availability-heading">
+      <h4  id="availability-heading" class="text-xs text-gray-500 mb-2">Available Days:</h4>
+      <ul class="flex flex-wrap gap-2 mb-4">
         @for (day of doctor.availability; track day) {
-        <app-badge variant="outline" customClasses="text-xs">
-          {{ day }}
-        </app-badge>
+          <li>
+            <app-badge variant="outline" customClasses="text-xs">
+              {{ day }}
+            </app-badge>
+          </li>
         }
-      </div>
-    </div>
+      </ul>
+    </section>
 
     <!-- Actions -->
     <div class="flex gap-2 ">
-      <app-button  variant="outline"  class="flex-1" customClasses="w-full " (click)="onViewProfile.emit()">
+      <app-button   
+        [attr.aria-label]="'View Profile Of '+ doctor.name"
+        variant="outline"  
+        class="flex-1" 
+        customClasses="w-full " 
+        (click)="viewProfile.emit()">
         View Profile
       </app-button>
-      <app-button class="flex-1"   customClasses="w-full  bg-[#00bfa6] hover:bg-[#00a890]" (click)="onBookNow.emit()">
+      <app-button 
+        class="flex-1"
+        [attr.aria-label]="'Book Appointment With ' + doctor.name"
+        customClasses="w-full  bg-[#00bfa6] hover:bg-[#00a890]" 
+        (click)="bookNow.emit()">
         Book Now
       </app-button>
     </div>
-  </div>
+  </article>
 </app-card>

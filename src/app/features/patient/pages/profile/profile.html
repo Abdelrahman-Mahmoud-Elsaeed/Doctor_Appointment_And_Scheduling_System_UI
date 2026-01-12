@@ -1,249 +1,266 @@
 <div class="min-h-screen bg-gray-50">
-  <div class="container mx-auto px-4 py-8">
+  <main aria-labelledby="profile-title" class="container mx-auto px-4 py-8">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-gray-900 mb-2">My Profile</h1>
+      <h1 id="profile-title" class="text-gray-900 mb-2">My Profile</h1>
       <p class="text-gray-600">Manage your personal information and settings</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Left Column - Profile Picture & Stats -->
-      <div class="grid lg:col-span-1  space-y-6 gap-6 ">
+      <section aria-labelledby="patient-overview-title" class="grid lg:col-span-1  space-y-6 gap-6 ">
         <!-- Profile Picture Card -->
+        <h2 id="patient-overview-title" class="sr-only">
+          Patient overview
+        </h2>
         <app-card customClasses="p-6">
-          <div class="text-center">
-            <div class="relative inline-block mb-4">
-              <img
-                [src]="mockPatient.image"
-                [alt]="mockPatient.name"
-                class="w-32 h-32 rounded-full object-cover mx-auto"
-              />
-              <button
-                class="absolute bottom-0 right-0 w-10 h-10 bg-[#00bfa6] rounded-full flex items-center justify-center text-white hover:bg-[#00a890] transition-colors"
-                (click)="onChangeAvatar()"
-                type="button"
-                aria-label="Change avatar"
-              >
-                <lucide-icon [img]="Camera" class="w-5 h-5"></lucide-icon>
-              </button>
+          <article aria-labelledby="patient-profile-title">
+            <div class="text-center">
+              <div class="relative inline-block mb-4">
+                <img
+                  [src]="mockPatient.image"
+                  [alt]="'Profile photo of ' + mockPatient.name"
+                  class="w-32 h-32 rounded-full object-cover mx-auto"
+                />
+                <button
+                  class="absolute bottom-0 right-0 w-10 h-10 bg-[#00bfa6] rounded-full flex items-center justify-center text-white hover:bg-[#00a890] transition-colors"
+                  (click)="onChangeAvatar()"
+                  type="button"
+                  aria-label="Change profile photo"
+                >
+                  <lucide-icon  aria-hidden="true" [img]="Camera" class="w-5 h-5"></lucide-icon>
+                </button>
+              </div>
+              <h3 id="patient-profile-title" class="text-gray-900 mb-1">{{ mockPatient.name }}</h3>
+              <p class="text-gray-600">Patient ID: #{{ mockPatient.id }}</p>
             </div>
-            <h2 class="text-gray-900 mb-1">{{ mockPatient.name }}</h2>
-            <p class="text-gray-600">Patient ID: #{{ mockPatient.id }}</p>
-          </div>
+          </article>
         </app-card>
         <!-- Quick Stats Card -->
         <app-card customClasses="p-6">
-          <h3 class="text-gray-900 mb-4">Quick Stats</h3>
-          <div class="space-y-4">
-            <div class="flex items-center justify-between">
-              <span class="text-gray-600">Total Appointments</span>
-              <span class="text-gray-900">12</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-gray-600">Upcoming</span>
-              <span class="text-gray-900">2</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-gray-600">Completed</span>
-              <span class="text-gray-900">10</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span class="text-gray-600">Favorite Doctors</span>
-              <span class="text-gray-900">3</span>
-            </div>
-          </div>
+          <article aria-labelledby="quick-stats-title">
+            <h3 id="quick-stats-title" class="text-gray-900 mb-4">Quick Stats</h3>
+            <ul class="space-y-4">
+              <li class="flex items-center justify-between">
+                <span class="text-gray-600">Total Appointments</span>
+                <span class="text-gray-900">12</span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span class="text-gray-600">Upcoming</span>
+                <span class="text-gray-900">2</span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span class="text-gray-600">Completed</span>
+                <span class="text-gray-900">10</span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span class="text-gray-600">Favorite Doctors</span>
+                <span class="text-gray-900">3</span>
+              </li>
+            </ul>
+          </article>
         </app-card>
 
-      </div>
+      </section>
 
       <!-- Right Column - Profile Details -->
       <div class="lg:col-span-2">
         <app-card customClasses="p-6">
-          <app-tabs [defaultValue]="'personal'">
-            <app-tabs-list customClasses="mb-6">
-              <app-tabs-trigger value="personal">Personal Info</app-tabs-trigger>
-              <app-tabs-trigger value="medical">Medical Info</app-tabs-trigger>
-              <app-tabs-trigger value="security">Security</app-tabs-trigger>
-            </app-tabs-list>
+          <article aria-labelledby="profile-settings-title">
+            <h2 id="profile-settings-title" class="sr-only">
+              Profile settings
+            </h2>
+            <app-tabs [defaultValue]="'personal'"  aria-labelledby="profile-settings-title">
+              <app-tabs-list customClasses="mb-6">
+                <app-tabs-trigger id="tab-personal" value="personal">Personal Info</app-tabs-trigger>
+                <app-tabs-trigger id="tab-medical" value="medical">Medical Info</app-tabs-trigger>
+                <app-tabs-trigger id="tab-security" value="security">Security</app-tabs-trigger>
+              </app-tabs-list>
+  
+              <!-- Personal Info Tab -->
+              <div class="space-y-6">
+                <app-tabs-content value="personal" role="tabpanel"  aria-labelledby="tab-personal">
+                  <fieldset>
+                    <legend class="sr-only">Personal information</legend>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <app-label for="firstName">First Name</app-label>
+                        <div class="relative mt-2">
+                          <lucide-icon  aria-hidden="true" [img]="User" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                          <app-input [id]="'firstName'" [value]="'John'" customClasses="pl-10"></app-input>
+                        </div>
+                      </div>
+      
+                      <div>
+                        <app-label for="lastName">Last Name</app-label>
+                        <div class="relative mt-2">
+                          <lucide-icon  aria-hidden="true" [img]="User" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                          <app-input [id]="'lastName'" [value]="'Smith'" customClasses="pl-10"></app-input>
+                        </div>
+                      </div>
+      
+                      <div>
+                        <app-label for="email">Email</app-label>
+                        <div class="relative mt-2">
+                          <lucide-icon  aria-hidden="true" [img]="Mail" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                          <app-input [id]="'email'" type="email" [value]="mockPatient.email" customClasses="pl-10"></app-input>
+                        </div>
+                      </div>
+      
+                      <div>
+                        <app-label for="phone">Phone</app-label>
+                        <div class="relative mt-2">
+                          <lucide-icon  aria-hidden="true" [img]="Phone" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                          <app-input [id]="'phone'" type="tel" [value]="mockPatient.phone" customClasses="pl-10"></app-input>
+                        </div>
+                      </div>
+      
+                      <div>
+                        <app-label for="dob">Date of Birth</app-label>
+                        <div class="relative mt-2">
+                          <lucide-icon  aria-hidden="true" [img]="Calendar" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                          <app-input [id]="'dob'" type="date" [value]="'1990-05-15'" customClasses="pl-10"></app-input>
+                        </div>
+                      </div>
+      
+                      <div>
+                        <app-label for="gender">Gender</app-label>
+                        <app-select [value]="selctedGender()" (valueChange)="selctedGender.set($event)">
+                          <app-select-trigger [id]="'gender'" customClasses="mt-2">
+                            <app-select-value>{{mockPatient.gender}}</app-select-value>
+                          </app-select-trigger>
+      
+                          <app-select-content>
+                            <app-select-item value="male">Male</app-select-item>
+                            <app-select-item value="female">Female</app-select-item>
+                            <app-select-item value="other">Other</app-select-item>
+                          </app-select-content>
+                        </app-select>
+                      </div>
+      
+                      <div class="md:col-span-2">
+                        <app-label for="address">Address</app-label>
+                        <div class="relative mt-2">
+                          <lucide-icon  aria-hidden="true" [img]="MapPin" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                          <app-input [id]="'address'" [value]="'123 Main Street, New York, NY 10001'" customClasses="pl-10"></app-input>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+    
+                  <div class="flex justify-end gap-4 pt-4">
+                    <app-button variant="outline">Cancel</app-button>
+                    <app-button customClasses="bg-[#00bfa6] hover:bg-[#00a890]">Save Changes</app-button>
+                  </div>
+                </app-tabs-content>
+              </div>
+              <!-- Medical Info Tab -->
+              <div class="space-y-6">
+                <app-tabs-content value="medical" role="tabpanel" aria-labelledby="tab-medical" customClasses="space-y-6">
+                  <fieldset>
+                      <legend class="sr-only">Medical information</legend>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <app-label for="bloodType" customClasses="mb-3">Blood Type</app-label>
+                          <app-select [value]="selectedBloodType()" (valueChange)="selectedBloodType.set($event)">
+                            <app-select-trigger [id]="'bloodType'" class="mt-2">
+                              <app-select-value>O+</app-select-value>
+                            </app-select-trigger>
+                            <app-select-content>
+                              <app-select-item value="a-positive">A+</app-select-item>
+                              <app-select-item value="a-negative">A-</app-select-item>
+                              <app-select-item value="b-positive">B+</app-select-item>
+                              <app-select-item value="b-negative">B-</app-select-item>
+                              <app-select-item value="ab-positive">AB+</app-select-item>
+                              <app-select-item value="ab-negative">AB-</app-select-item>
+                              <app-select-item value="o-positive">O+</app-select-item>
+                              <app-select-item value="o-negative">O-</app-select-item>
+                            </app-select-content>
+                          </app-select>
+                        </div>
+        
+                        <div>
+                          <app-label for="height" customClasses="mb-3">Height (cm)</app-label>
+                          <app-input [id]="'height'" type="number" [value]="'175'" class="mt-2"></app-input>
+                        </div>
+        
+                        <div>
+                          <app-label for="weight" customClasses="mb-3">Weight (kg)</app-label>
+                          <app-input [id]="'weight'" type="number" [value]="'70'" class="mt-2"></app-input>
+                        </div>
+        
+                        <div>
+                          <app-label for="emergencyContact" customClasses="mb-3">Emergency Contact</app-label>
+                          <app-input [id]="'emergencyContact'" type="tel" [value]="'+1 (555) 987-6543'" class="mt-2"></app-input>
+                        </div>
+        
+                        <div class="md:col-span-2">
+                          <app-label for="allergies" customClasses="mb-3">Allergies</app-label>
+                          <app-input [id]="'allergies'" placeholder="List any allergies (e.g., Penicillin, Peanuts)" class="mt-2"></app-input>
+                        </div>
+        
+                        <div class="md:col-span-2">
+                          <app-label for="conditions" customClasses="mb-3">Chronic Conditions</app-label>
+                          <app-input [id]="'conditions'" placeholder="List any chronic conditions" class="mt-2"></app-input>
+                        </div>
+                      </div>
+        
+                  </fieldset>
 
-            <!-- Personal Info Tab -->
-            <div class="space-y-6">
-              <app-tabs-content value="personal" >
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <app-label for="firstName">First Name</app-label>
-                    <div class="relative mt-2">
-                      <lucide-icon [img]="User" class="ab w-4 h-4 text-gray-400"></lucide-icon>
-                      <app-input [id]="'firstName'" [value]="'John'" customClasses="pl-10"></app-input>
-                    </div>
+                  <div class="flex justify-end gap-4 pt-4">
+                    <app-button variant="outline">Cancel</app-button>
+                    <app-button customClasses="bg-[#00bfa6] hover:bg-[#00a890]">Save Changes</app-button>
                   </div>
+                </app-tabs-content>
+    
+              </div>
+              <!-- Security Tab -->
   
-                  <div>
-                    <app-label for="lastName">Last Name</app-label>
-                    <div class="relative mt-2">
-                      <lucide-icon [img]="User" class="ab w-4 h-4 text-gray-400"></lucide-icon>
-                      <app-input [id]="'lastName'" [value]="'Smith'" customClasses="pl-10"></app-input>
-                    </div>
-                  </div>
-  
-                  <div>
-                    <app-label for="email">Email</app-label>
-                    <div class="relative mt-2">
-                      <lucide-icon [img]="Mail" class="ab w-4 h-4 text-gray-400"></lucide-icon>
-                      <app-input [id]="'email'" type="email" [value]="mockPatient.email" customClasses="pl-10"></app-input>
-                    </div>
-                  </div>
-  
-                  <div>
-                    <app-label for="phone">Phone</app-label>
-                    <div class="relative mt-2">
-                      <lucide-icon [img]="Phone" class="ab w-4 h-4 text-gray-400"></lucide-icon>
-                      <app-input [id]="'phone'" type="tel" [value]="mockPatient.phone" customClasses="pl-10"></app-input>
-                    </div>
-                  </div>
-  
-                  <div>
-                    <app-label for="dob">Date of Birth</app-label>
-                    <div class="relative mt-2">
-                      <lucide-icon [img]="Calendar" class="ab w-4 h-4 text-gray-400"></lucide-icon>
-                      <app-input [id]="'dob'" type="date" [value]="'1990-05-15'" customClasses="pl-10"></app-input>
-                    </div>
-                  </div>
-  
-                  <div>
-                    <app-label for="gender">Gender</app-label>
-                    <app-select [value]="selctedGender()" (valueChange)="selctedGender.set($event)">
-                      <app-select-trigger [id]="'gender'" customClasses="mt-2">
-                        <app-select-value>{{mockPatient.gender}}</app-select-value>
-                      </app-select-trigger>
-  
-                      <app-select-content>
-                        <app-select-item value="male">Male</app-select-item>
-                        <app-select-item value="female">Female</app-select-item>
-                        <app-select-item value="other">Other</app-select-item>
-                      </app-select-content>
-                    </app-select>
-                  </div>
-  
-                  <div class="md:col-span-2">
-                    <app-label for="address">Address</app-label>
-                    <div class="relative mt-2">
-                      <lucide-icon [img]="MapPin" class="ab w-4 h-4 text-gray-400"></lucide-icon>
-                      <app-input [id]="'address'" [value]="'123 Main Street, New York, NY 10001'" customClasses="pl-10"></app-input>
-                    </div>
-                  </div>
-                </div>
-  
-                <div class="flex justify-end gap-4 pt-4">
-                  <app-button variant="outline">Cancel</app-button>
-                  <app-button customClasses="bg-[#00bfa6] hover:bg-[#00a890]">Save Changes</app-button>
-                </div>
-              </app-tabs-content>
-            </div>
-            <!-- Medical Info Tab -->
-            <div class="space-y-6">
-              <app-tabs-content value="medical" customClasses="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <app-label for="bloodType" customClasses="mb-3">Blood Type</app-label>
-                    <app-select [value]="selectedBloodType()" (valueChange)="selectedBloodType.set($event)">
-                      <app-select-trigger [id]="'bloodType'" class="mt-2">
-                        <app-select-value>O+</app-select-value>
-                      </app-select-trigger>
-                      <app-select-content>
-                        <app-select-item value="a-positive">A+</app-select-item>
-                        <app-select-item value="a-negative">A-</app-select-item>
-                        <app-select-item value="b-positive">B+</app-select-item>
-                        <app-select-item value="b-negative">B-</app-select-item>
-                        <app-select-item value="ab-positive">AB+</app-select-item>
-                        <app-select-item value="ab-negative">AB-</app-select-item>
-                        <app-select-item value="o-positive">O+</app-select-item>
-                        <app-select-item value="o-negative">O-</app-select-item>
-                      </app-select-content>
-                    </app-select>
-                  </div>
-  
-                  <div>
-                    <app-label for="height" customClasses="mb-3">Height (cm)</app-label>
-                    <app-input [id]="'height'" type="number" [value]="'175'" class="mt-2"></app-input>
-                  </div>
-  
-                  <div>
-                    <app-label for="weight" customClasses="mb-3">Weight (kg)</app-label>
-                    <app-input [id]="'weight'" type="number" [value]="'70'" class="mt-2"></app-input>
-                  </div>
-  
-                  <div>
-                    <app-label for="emergencyContact" customClasses="mb-3">Emergency Contact</app-label>
-                    <app-input [id]="'emergencyContact'" type="tel" [value]="'+1 (555) 987-6543'" class="mt-2"></app-input>
-                  </div>
-  
-                  <div class="md:col-span-2">
-                    <app-label for="allergies" customClasses="mb-3">Allergies</app-label>
-                    <app-input [id]="'allergies'" placeholder="List any allergies (e.g., Penicillin, Peanuts)" class="mt-2"></app-input>
-                  </div>
-  
-                  <div class="md:col-span-2">
-                    <app-label for="conditions" customClasses="mb-3">Chronic Conditions</app-label>
-                    <app-input [id]="'conditions'" placeholder="List any chronic conditions" class="mt-2"></app-input>
-                  </div>
-                </div>
-  
-                <div class="flex justify-end gap-4 pt-4">
-                  <app-button variant="outline">Cancel</app-button>
-                  <app-button customClasses="bg-[#00bfa6] hover:bg-[#00a890]">Save Changes</app-button>
-                </div>
-              </app-tabs-content>
-  
-            </div>
-            <!-- Security Tab -->
-
-            <div class="space-y-6">
-              <app-tabs-content value="security" customClasses="space-y-6">
-                <div>
-                  <h3 class="text-gray-900 mb-4">Change Password</h3>
-                  <div class="space-y-4 max-w-md">
+              <div class="space-y-6">
+                <app-tabs-content role="tabpanel" aria-labelledby="tab-security" value="security" customClasses="space-y-6">
+                  <fieldset>
+                    <legend class="sr-only">Security settings</legend>
                     <div>
-                      <app-label for="currentPassword" customClasses="mb-3">Current Password</app-label>
-                      <app-input [id]="'currentPassword'" type="password" ></app-input>
+                      <h3 class="text-gray-900 mb-4">Change Password</h3>
+                      <div class="space-y-4 max-w-md">
+                        <div>
+                          <app-label for="currentPassword" customClasses="mb-3">Current Password</app-label>
+                          <app-input [id]="'currentPassword'" type="password" ></app-input>
+                        </div>
+      
+                        <div>
+                          <app-label for="newPassword" customClasses="mb-3">New Password</app-label>
+                          <app-input [id]="'newPassword'" type="password" class="mt-2"></app-input>
+                        </div>
+      
+                        <div>
+                          <app-label for="confirmPassword" customClasses="mb-3">Confirm New Password</app-label>
+                          <app-input [id]="'confirmPassword'" type="password" class="mt-2"></app-input>
+                        </div>
+                      </div>
                     </div>
-  
-                    <div>
-                      <app-label for="newPassword" customClasses="mb-3">New Password</app-label>
-                      <app-input [id]="'newPassword'" type="password" class="mt-2"></app-input>
-                    </div>
-  
-                    <div>
-                      <app-label for="confirmPassword" customClasses="mb-3">Confirm New Password</app-label>
-                      <app-input [id]="'confirmPassword'" type="password" class="mt-2"></app-input>
+                  </fieldset>
+                  <div class="pt-4 border-t">
+                    <h3 class="text-gray-900 mb-4">Two-Factor Authentication</h3>
+                    <div class="flex items-center justify-between max-w-md">
+                      <div>
+                        <p class="text-gray-900">Enable 2FA</p>
+                        <p class="text-sm text-gray-600">Add an extra layer of security</p>
+                      </div>
+                      <app-button variant="outline">Enable</app-button>
                     </div>
                   </div>
-                </div>
-  
-                <div class="pt-4 border-t">
-                  <h3 class="text-gray-900 mb-4">Two-Factor Authentication</h3>
-                  <div class="flex items-center justify-between max-w-md">
-                    <div>
-                      <p class="text-gray-900">Enable 2FA</p>
-                      <p class="text-sm text-gray-600">Add an extra layer of security</p>
-                    </div>
-                    <app-button variant="outline">Enable</app-button>
+    
+                  <div class="flex justify-end gap-4 pt-4">
+                    <app-button variant="outline">Cancel</app-button>
+                    <app-button customClasses="bg-[#00bfa6] hover:bg-[#00a890]">Update Password</app-button>
                   </div>
-                </div>
-  
-                <div class="flex justify-end gap-4 pt-4">
-                  <app-button variant="outline">Cancel</app-button>
-                  <app-button customClasses="bg-[#00bfa6] hover:bg-[#00a890]">Update Password</app-button>
-                </div>
-              </app-tabs-content>
-            </div>
-
-
-
-
-          </app-tabs>
+                </app-tabs-content>
+              </div>
+            </app-tabs>
+          </article>
         </app-card>
       </div>
     </div>
-  </div>
+  </main>
 </div>

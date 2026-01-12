@@ -18,8 +18,8 @@ import { ButtonComponent } from '@ui/button';
 })
 export class DoctorCardComponent {
   @Input({ required: true }) doctor!: Doctor;
-  @Output() onBookNow = new EventEmitter<void>();
-  @Output() onViewProfile = new EventEmitter<void>();
+  @Output() bookNow = new EventEmitter<void>();
+  @Output() viewProfile = new EventEmitter<void>();
   
   readonly Star = Star
   readonly MapPin = MapPin

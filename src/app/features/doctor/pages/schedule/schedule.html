@@ -24,7 +24,7 @@
 
               <app-select  value="30" placeholder="30 minutes">
                 <app-select-trigger [id]="'sessionDuration'">
-                  <lucide-icon [img]="Clock" class="w-4 h-4 mr-2" />
+                  <lucide-icon  aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2" />
                   <app-select-value />
                 </app-select-trigger>
 
@@ -41,7 +41,7 @@
             <div>
               <app-label for="sessionCost">Session Cost ($)</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="DollarSign" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <lucide-icon  aria-hidden="true" [img]="DollarSign" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <app-input [id]="'sessionCost'" type="number" customClasses="pl-10" value="150" />
               </div>
             </div>
@@ -52,7 +52,7 @@
 
               <app-select  value="10" placeholder="10 minutes">
                 <app-select-trigger [id]="'bufferTime'">
-                  <lucide-icon [img]="Clock" class="w-4 h-4 mr-2" />
+                  <lucide-icon  aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2" />
                   <app-select-value />
                 </app-select-trigger>
 
@@ -80,7 +80,7 @@
             <h2 class="text-gray-900">Weekly Schedule</h2>
 
             <app-button variant="outline" size="sm">
-              <lucide-icon [img]="Calendar" class="w-4 h-4 mr-2" />
+              <lucide-icon  aria-hidden="true" [img]="Calendar" class="w-4 h-4 mr-2" />
               Copy to All Days
             </app-button>
           </div>
@@ -93,11 +93,11 @@
 
                   <div class="flex items-center gap-3">
                     <app-switch [id]="day.id" [checked]="day.id !== 'sunday'" />
-                    <app-label [for]="day.id" customClasses="cursor-pointer">{{ day.label }}</app-label>
+                    <app-label  customClasses="cursor-pointer">{{ day.label }}</app-label>
                   </div>
 
                   <app-button variant="ghost" size="sm">
-                    <lucide-icon [img]="Plus" class="w-4 h-4" />
+                    <lucide-icon  aria-hidden="true" [img]="Plus" class="w-4 h-4" />
                   </app-button>
 
                 </div>
@@ -133,7 +133,7 @@
                     </app-select>
 
                     <app-button variant="ghost" size="sm" customClasses="shrink-0">
-                      <lucide-icon [img]="Trash2" class="w-4 h-4 text-red-600" />
+                      <lucide-icon  aria-hidden="true" [img]="Trash2" class="w-4 h-4 text-red-600" />
                     </app-button>
                   </div>
 
@@ -150,20 +150,20 @@
           <div class="flex items-center justify-between mb-6">
             <h2 class="text-gray-900">Break Times</h2>
             <app-button variant="outline" size="sm">
-              <lucide-icon [img]="Plus" class="w-4 h-4 mr-2" />
+              <lucide-icon  aria-hidden="true" [img]="Plus" class="w-4 h-4 mr-2" />
               Add Break
             </app-button>
           </div>
 
           <div class="space-y-3">
             <div class="flex items-center gap-3 p-3 border rounded-lg">
-              <lucide-icon [img]="Clock" class="w-5 h-5 text-gray-400" />
+              <lucide-icon  aria-hidden="true" [img]="Clock" class="w-5 h-5 text-gray-400" />
               <div class="flex-1">
                 <p class="text-sm text-gray-900">Lunch Break</p>
                 <p class="text-xs text-gray-500">12:00 PM - 1:00 PM</p>
               </div>
               <app-button variant="ghost" size="sm">
-                <lucide-icon [img]="Trash2" class="w-4 h-4 text-red-600" />
+                <lucide-icon  aria-hidden="true" [img]="Trash2" class="w-4 h-4 text-red-600" />
               </app-button>
             </div>
           </div>
@@ -207,7 +207,7 @@
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-gray-900">Time Off</h3>
             <app-button variant="outline" size="sm">
-              <lucide-icon [img]="Plus" class="w-4 h-4" />
+              <lucide-icon  aria-hidden="true" [img]="Plus" class="w-4 h-4" />
             </app-button>
           </div>
 

@@ -1,20 +1,21 @@
-<nav class="bg-white shadow-sm sticky top-0 z-50">
+<nav class="bg-white shadow-sm sticky top-0 z-50" aria-label="Main Navigation">
   <div class="container mx-auto px-4">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <div class="flex items-center gap-2 cursor-pointer" routerLink="home">
+      <a class="flex items-center gap-2 cursor-pointer" aria-label="Go to home" routerLink="/home">
         <div class="w-10 h-10 bg-[#00bfa6] rounded-lg flex items-center justify-center">
           <span class="text-white text-xl">+</span>
         </div>
         <span class="text-xl text-gray-900">HealthCare</span>
-      </div>
+      </a>
 
       <!-- Desktop Navigation -->
       <div class="hidden lg:flex items-center gap-8">
         @for (item of navItems; track $index) {
 
-          <button
+          <a
             [routerLink]="[item.path]"
+            [attr.aria-current]="currentPage(item.path) ? 'page' : null"
             class="flex items-center gap-2 transition-colors"
             [ngClass]="{
               'text-[#00bfa6]': currentPage(item.path),
@@ -23,7 +24,7 @@
           >
             <lucide-icon [img]="item.icon" class="w-4 h-4"></lucide-icon>
             <span>{{ item.label }}</span>
-          </button>
+          </a>
         }
       </div>
 
@@ -34,8 +35,14 @@
       </div>
 
       <!-- Mobile Menu Button -->
-      <button class="lg:hidden text-gray-600" (click)="toggleMobileMenu()">
-        <lucide-icon [img]="mobileMenuOpen ? X : Menu" class="w-6 h-6"></lucide-icon>
+      <button class="lg:hidden text-gray-600" [attr.aria-expanded]="mobileMenuOpen"  aria-controls="mobile-menu"  (click)="toggleMobileMenu()">
+        @if (mobileMenuOpen) {
+          <span class="sr-only"> Close Menu</span>
+          <lucide-icon aria-hidden="true" [img]="X" class="w-6 h-6"></lucide-icon>
+        } @else { 
+          <span class="sr-only">Open Menu</span>
+          <lucide-icon aria-hidden="true"  [img]="Menu" class="w-6 h-6"></lucide-icon>
+        }
       </button>
     </div>
 
@@ -44,8 +51,9 @@
       <div class="lg:hidden py-4 border-t">
         <div class="flex flex-col gap-4">
           @for (item of navItems; track $index) {
-            <button
+            <a
               [routerLink]="[item.path]"
+              [attr.aria-current]="currentPage(item.path) ? 'page' : null"
               class="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
               [ngClass]="{
                 'bg-[#00bfa6]/10 text-[#00bfa6]': currentPage(item.path) ,
@@ -54,7 +62,7 @@
             >
               <lucide-icon [img]="item.icon" class="w-5 h-5"></lucide-icon>
               <span>{{ item.label }}</span>
-            </button>
+            </a>
           }
           <div class="flex flex-col gap-2 px-4 pt-4 border-t">
             <app-button  variant="outline" routerLink="/login">Login</app-button>

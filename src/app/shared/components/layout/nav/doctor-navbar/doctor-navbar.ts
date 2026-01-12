@@ -51,7 +51,6 @@ export class DoctorNavbarComponent {
       fragment: 'ignored',     
       matrixParams: 'ignored'  
     };
-    console.log(this.router.isActive(tree, matchOptions))
     return this.router.isActive(tree, matchOptions);
   }
 }

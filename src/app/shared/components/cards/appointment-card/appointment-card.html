@@ -1,9 +1,9 @@
 <app-card class="overflow-hidden">
-  <div class="p-6">
+  <article class="p-6">
     <div class="flex gap-4">
       <!-- Doctor Image -->
       <div class="shrink-0">
-        <img [src]="appointment.doctor.image" [alt]="appointment.doctor.name"
+        <img [src]="appointment.doctor.image" [alt]="'Photo of  ' + appointment.doctor.name"
           class="w-20 h-20 rounded-lg object-cover" />
       </div>
 
@@ -14,25 +14,27 @@
             <h3 class="text-xl font-semibold text-gray-900 mb-1">{{ appointment.doctor.name }}</h3>
             <p class="text-sm text-gray-600">{{ appointment.doctor.specialization }}</p>
           </div>
-          <app-badge [customClasses]="getStatusClasses(appointment.status)">
+          <app-badge role="status" aria-live="polite" [customClasses]="getStatusClasses(appointment.status)">
             {{ appointment.status | titlecase }}
           </app-badge>
         </div>
 
         <div class="space-y-2 mt-4">
           <div class="flex items-center gap-2 text-sm text-gray-600">
-            <lucide-icon [img]="Calendar" class="w-4 h-4 text-gray-400"></lucide-icon>
-
-            <span>{{ formatDate(appointment.date) }}</span>
+            <dt class="sr-only">Date</dt>
+            <lucide-icon  aria-hidden="true"  [img]="Calendar"class="w-4 h-4 text-gray-400"></lucide-icon>
+            <dd>{{ formatDate(appointment.date) }}</dd>
           </div>
           <div class="flex items-center gap-2 text-sm text-gray-600">
-            <lucide-icon [img]="Clock" class="w-4 h-4 text-gray-400"></lucide-icon>
-            <span>{{ appointment.time }}</span>
+            <dt class="sr-only">Time</dt>
+            <lucide-icon  aria-hidden="true"  [img]="Clock"  class="w-4 h-4 text-gray-400"></lucide-icon>
+            <dd>{{ appointment.time }}</dd>
           </div>
           @if (appointment.notes) {
           <div class="flex items-start gap-2 text-sm text-gray-600">
-            <lucide-icon [img]="FileText" class="w-4 h-4 text-gray-400"></lucide-icon>
-            <span>{{ appointment.notes }}</span>
+            <dt class="sr-only">Notes</dt>
+            <lucide-icon  aria-hidden="true"   [img]="FileText" class="w-4 h-4 text-gray-400"></lucide-icon>
+            <dd>{{ appointment.notes }}</dd>
           </div>
           }
         </div>
@@ -42,14 +44,23 @@
     <!-- Actions - Only show for pending and confirmed appointments -->
     @if (appointment.status === 'pending' || appointment.status === 'confirmed') {
     <div class="flex gap-2 mt-4 pt-4 border-t border-gray-100">
-      <app-button  variant="outline"  class="flex-1 " customClasses="w-full"  (click)="rescheduleAppointment.emit()" >
+      <app-button  
+        [attr.aria-label]="'Reschedule appointment with Dr. ' + appointment.doctor.name" 
+        variant="outline"
+        class="flex-1 "
+        customClasses="w-full"  
+        (click)="rescheduleAppointment.emit()" >
         Reschedule
       </app-button>
-      <app-button  variant="outline" class="flex-1" customClasses="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
+      <app-button 
+        [attr.aria-label]="'Cancel appointment with Dr. ' + appointment.doctor.name"  
+        variant="outline" 
+        class="flex-1" 
+        customClasses="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
         (click)="cancelAppointment.emit()">
         Cancel
       </app-button>
     </div>
     }
-  </div>
+  </article>
 </app-card>

@@ -47,15 +47,20 @@ export class FindDoctor {
   mockDoctors = mockDoctors;
 
   constructor(private router: Router) {}
+
   sortOptions = [
     { value: 'rating', label: 'Highest Rated' },
     { value: 'price-low', label: 'Price: Low to High' },
     { value: 'price-high', label: 'Price: High to Low' },
     { value: 'experience', label: 'Most Experienced' },
   ];
+
   selected = signal<string | null>(this.sortOptions[0].value); 
+
   onNavigate(page: string, doctorId?: string) {
-    this.router.navigate([page, doctorId ?? '']);
+    const route = doctorId ? [page, doctorId] : [page];
+    console.log(route)
+    this.router.navigate(route);
   }
 
   resetFilters() {

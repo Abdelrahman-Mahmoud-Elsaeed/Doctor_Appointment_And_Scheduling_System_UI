@@ -52,7 +52,7 @@
         <div>
           <app-label for="email">Email Address</app-label>
           <div class="relative mt-2">
-            <lucide-icon [img]="Mail" class="ab w-5 h-5 text-gray-400"></lucide-icon>
+            <lucide-icon  aria-hidden="true" [img]="Mail" class="ab w-5 h-5 text-gray-400"></lucide-icon>
             <app-input [id]="'email'" type="email" placeholder="john.smith@example.com" customClasses="pl-11" [value]="email()"></app-input>
           </div>
         </div>
@@ -64,7 +64,7 @@
             <a href="#" class="text-sm text-[#00bfa6] hover:underline">Forgot password?</a>
           </div>
           <div class="relative mt-2">
-            <lucide-icon [img]="Lock" class="ab w-5 h-5 text-gray-400"></lucide-icon>
+            <lucide-icon  aria-hidden="true" [img]="Lock" class="ab w-5 h-5 text-gray-400"></lucide-icon>
             <app-input [id]="'password'" type="password" placeholder="Enter your password" customClasses="pl-11" [value]="password()"></app-input>
           </div>
         </div>
@@ -78,7 +78,7 @@
         <!-- Login Button -->
         <app-button customClasses="w-full bg-[#00bfa6] hover:bg-[#00a890]" routerLink="/home">
           Sign In
-          <lucide-icon [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
+          <lucide-icon  aria-hidden="true" [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
         </app-button>
 
         <!-- Divider -->

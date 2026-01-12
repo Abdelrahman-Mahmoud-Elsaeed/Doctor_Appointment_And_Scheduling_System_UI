@@ -9,17 +9,27 @@ import { cn } from '@utils/cn.util';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <label
-      [attr.data-slot]="'label'"
-      [attr.for]="htmlFor()"
-      [class]="hostClasses()"
-    >
+    <ng-template #content>
       <ng-content></ng-content>
-    </label>
+    </ng-template>
+    <ng-container *ngIf="hasHtmlFor(); else spanOnly">
+      <label
+        [attr.for]="htmlFor()"
+        [class]="hostClasses()"
+        [attr.data-slot]="'label'"
+      >
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </label>
+    </ng-container>
+
+    <ng-template #spanOnly>
+      <span [class]="hostClasses()" [attr.data-slot]="'label'">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </span>
+    </ng-template>
   `,
   styles: [
     `
-      /* Ensures the component itself doesn't wrap the label */
       :host {
         display: contents;
       }
@@ -49,4 +59,8 @@ export class LabelComponent {
       this.customClasses(),
     ),
   );
+
+  protected hasHtmlFor() {
+    return this.htmlFor().length > 0;
+  }
 }

@@ -1,1 +1,214 @@
-<p>doctor-details works!</p>
+<div class="min-h-screen bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Back Button -->
+    <app-button variant="ghost" customClasses="mb-6" routerLink="/find-doctor">
+      ← Back to Search
+    </app-button>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left Column - Doctor Info -->
+      <div class="lg:col-span-2">
+        <!-- Doctor Header Card -->
+        <app-card customClasses="p-6">
+          <div class="flex flex-col md:flex-row gap-6">
+            <img
+              [src]="doctor.image"
+              [alt]="doctor.name"
+              class="w-48 h-48 rounded-lg object-cover mx-auto md:mx-0"
+            />
+            <div class="flex-1">
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <h1 class="text-gray-900 mb-2">{{ doctor.name }}</h1>
+                  <app-badge customClasses="mb-3">{{ doctor.specialization }}</app-badge>
+                </div>
+                <div class="text-right">
+                  <div class="text-2xl text-gray-900 mb-1">${{ doctor.price }}</div>
+                  <div class="text-sm text-gray-500">per session</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 mb-6">
+                <div class="flex items-center gap-1">
+                  <lucide-icon  aria-hidden="true" [img]="Star" class="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  <span class="text-gray-900">{{ doctor.rating }}</span>
+                </div>
+                <span class="text-gray-500">({{ doctor.reviewCount }} reviews)</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex items-start gap-3">
+                  <lucide-icon  aria-hidden="true" [img]="MapPin" class="w-5 h-5 text-gray-400 shrink-0 mt-0.5" />
+                  <div>
+                    <div class="text-sm text-gray-500">Location</div>
+                    <div class="text-gray-900">{{ doctor.location }}</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <lucide-icon  aria-hidden="true" [img]="Briefcase" class="w-5 h-5 text-gray-400 shrink-0 mt-0.5" />
+                  <div>
+                    <div class="text-sm text-gray-500">Experience</div>
+                    <div class="text-gray-900">{{ doctor.experience }} years</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <lucide-icon  aria-hidden="true" [img]="GraduationCap" class="w-5 h-5 text-gray-400 shrink-0 mt-0.5" />
+                  <div>
+                    <div class="text-sm text-gray-500">Education</div>
+                    <div class="text-gray-900">Harvard Medical School</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <lucide-icon  aria-hidden="true" [img]="Award" class="w-5 h-5 text-gray-400 shrink-0 mt-0.5" />
+                  <div>
+                    <div class="text-sm text-gray-500">Certifications</div>
+                    <div class="text-gray-900">Board Certified</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </app-card>
+
+        <!-- Tabs Section -->
+        <app-card customClasses="p-6 mt-6">
+          <app-tabs value="about">
+            <app-tabs-list customClasses="w-full justify-start mb-6">
+              <app-tabs-trigger value="about" class="w-full" customClasses="w-full">About</app-tabs-trigger>
+              <app-tabs-trigger value="reviews" class="w-full" customClasses="w-full">Reviews</app-tabs-trigger>
+              <app-tabs-trigger value="availability" class="w-full" customClasses="w-full">Availability</app-tabs-trigger>
+            </app-tabs-list>
+
+            <app-tabs-content value="about" customClasses="space-y-6">
+              <div>
+                <h3 class="text-gray-900 mb-3">About Dr. {{ doctor.name.split(' ')[1] }}</h3>
+                <p class="text-gray-600 leading-relaxed">{{ doctor.about }}</p>
+              </div>
+
+              <div>
+                <h3 class="text-gray-900 mb-3">Specializations</h3>
+                <div class="flex flex-wrap gap-2">
+                  <app-badge variant="secondary">{{ doctor.specialization }}</app-badge>
+                  <app-badge variant="secondary">Preventive Medicine</app-badge>
+                  <app-badge variant="secondary">Chronic Disease Management</app-badge>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-gray-900 mb-3">Services Offered</h3>
+                <ul class="space-y-2">
+                  <li class="flex items-start gap-2 text-gray-600" *ngFor="let service of ['General Consultation','Follow-up Visits','Health Screenings','Treatment Planning']">
+                    <span class="text-[#00bfa6] mt-1">✓</span>
+                    <span>{{ service }}</span>
+                  </li>
+                </ul>
+              </div>
+            </app-tabs-content>
+
+            <app-tabs-content value="reviews">
+              <app-card *ngFor="let review of [1,2,3]" customClasses="p-4 mt-4">
+                <div class="flex items-start gap-4">
+                  <img
+                    [src]="'https://images.unsplash.com/photo-' + (1438761681033 + review) + '-6461ffad8d80?w=400'"
+                    alt="Patient"
+                    class="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="text-gray-900">Patient Name</div>
+                      <div class="flex items-center gap-1">
+                        <lucide-icon  aria-hidden="true" [img]="Star" *ngFor="let i of [1,2,3,4,5]" class="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      </div>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      Excellent doctor! Very professional and caring. Took time to explain everything clearly.
+                    </p>
+                    <div class="text-xs text-gray-500 mt-2">2 weeks ago</div>
+                  </div>
+                </div>
+              </app-card>
+            </app-tabs-content>
+
+            <app-tabs-content value="availability" customClasses="space-y-4">
+              <div>
+                <h3 class="text-gray-900 mb-3">Available Days</h3>
+                <div class="flex flex-wrap gap-2">
+                  <app-badge *ngFor="let day of doctor.availability" customClasses="bg-green-100 text-green-700">{{ day }}</app-badge>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-gray-900 mb-3">Working Hours</h3>
+                <div class="flex items-center gap-2 text-gray-600">
+                  <lucide-icon  aria-hidden="true" [img]="Clock" class="w-5 h-5 text-gray-400" />
+                  <span>9:00 AM - 5:00 PM</span>
+                </div>
+              </div>
+            </app-tabs-content>
+          </app-tabs>
+        </app-card>
+      </div>
+
+      <!-- Right Column - Booking Form -->
+      <div class="lg:col-span-1">
+        <app-card customClasses="p-6 sticky top-20">
+          <h3 class="text-gray-900 mb-6">Book Appointment</h3>
+
+          <div class="space-y-6">
+            <div>
+              <app-label customClasses="mb-3 block">Select Date</app-label>
+              <app-calendar
+                mode="single"
+                [selected]="selectedDate"
+                customClasses="rounded-md border"
+              ></app-calendar>
+            </div>
+
+            <div>
+              <app-label customClasses="mb-3 block">Select Time</app-label>
+              <div class="grid grid-cols-3 gap-2">
+                <app-button *ngFor="let time of timeSlots" variant="outline" customClasses="text-xs h-auto py-2">
+                  {{ time }}
+                </app-button>
+              </div>
+            </div>
+
+            <div>
+              <app-label for="notes" customClasses="mb-2 block">
+                Additional Notes (Optional)
+              </app-label>
+              <app-textarea
+                id="notes"
+                placeholder="Describe your symptoms or reason for visit..."
+                rows="4"
+              ></app-textarea>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 space-y-2">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Consultation Fee:</span>
+                <span class="text-gray-900">${{ doctor.price }}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Booking Fee:</span>
+                <span class="text-gray-900">$10</span>
+              </div>
+              <div class="border-t pt-2 flex justify-between">
+                <span class="text-gray-900">Total:</span>
+                <span class="text-gray-900">${{ doctor.price + 10 }}</span>
+              </div>
+            </div>
+
+            <app-button customClasses="w-full bg-[#00bfa6] hover:bg-[#00a890]">
+              <lucide-icon  aria-hidden="true" [img]="Calendar" class="w-4 h-4 mr-2" />
+              Confirm Booking
+            </app-button>
+
+            <p class="text-xs text-gray-500 text-center">
+              By booking, you agree to our Terms of Service and Privacy Policy
+            </p>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+</div>

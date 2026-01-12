@@ -1,0 +1,62 @@
+<div class="min-h-screen bg-gradient-to-br from-[#00bfa6]/10 via-white to-[#007bff]/10 flex items-center justify-center p-4">
+  <div class="max-w-2xl w-full text-center">
+    <!-- 404 Illustration -->
+    <div class="mb-8">
+      <div class="text-9xl text-[#00bfa6]/20 mb-4">404</div>
+      <div class="w-24 h-24 bg-[#00bfa6]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        <lucide-icon [img]="Search" class="w-12 h-12 text-[#00bfa6]"></lucide-icon>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <h1 class="text-gray-900 mb-4">Page Not Found</h1>
+    <p class="text-xl text-gray-600 mb-8 max-w-md mx-auto">
+      Oops! The page you're looking for doesn't exist. It might have been moved or deleted.
+    </p>
+
+    <!-- Actions -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <app-button
+        size="lg"
+        variant="outline"
+        (click)="goBack()"
+      >
+        <lucide-icon [img]="ArrowLeft" class="w-4 h-4 mr-2"></lucide-icon>
+        Go Back
+      </app-button>
+      <app-button
+        size="lg"
+        customClasses="bg-[#00bfa6] hover:bg-[#00a890]"
+        routerLink="/"
+      >
+        <lucide-icon [img]="Home" class="w-4 h-4 mr-2"></lucide-icon>
+        Back to Home
+      </app-button>
+    </div>
+
+    <!-- Helpful Links -->
+    <div class="mt-12 pt-8 border-t">
+      <p class="text-gray-600 mb-4">Looking for something? Try these:</p>
+      <div class="flex flex-wrap gap-3 justify-center">
+        <app-button
+          variant="ghost"
+          routerLink="/find-doctor"
+        >
+          Find a Doctor
+        </app-button>
+        <app-button
+          variant="ghost"
+          routerLink="/appointments"
+        >
+          My Appointments
+        </app-button>
+        <app-button
+          variant="ghost"
+          routerLink="/profile"
+        >
+          My Profile
+        </app-button>
+      </div>
+    </div>
+  </div>
+</div>

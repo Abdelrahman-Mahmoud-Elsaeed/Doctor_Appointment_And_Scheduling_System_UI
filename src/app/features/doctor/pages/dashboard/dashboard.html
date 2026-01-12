@@ -18,12 +18,12 @@
         <app-card customClasses="p-6">
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-2">
-              <lucide-icon [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+              <lucide-icon  aria-hidden="true" [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
               <h2 class="text-gray-900">Today's Appointments</h2>
             </div>
             <app-button variant="ghost" (click)="viewPage('doctor-appointments')">
               View All
-              <lucide-icon [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
+              <lucide-icon  aria-hidden="true" [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
             </app-button>
           </div>
 
@@ -50,7 +50,7 @@
                   </div>
                   <div class="flex items-center gap-4 text-sm text-gray-600">
                     <div class="flex items-center gap-1">
-                      <lucide-icon [img]="Clock" class="w-4 h-4"></lucide-icon>
+                      <lucide-icon  aria-hidden="true" [img]="Clock" class="w-4 h-4"></lucide-icon>
                       <span>{{ appointment.time }}</span>
                     </div>
                     <span>•</span>
@@ -84,7 +84,7 @@
             >
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center">
-                  <lucide-icon [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+                  <lucide-icon  aria-hidden="true" [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
                 </div>
                 <div>
                   <p class="text-sm text-gray-900">Patient Appointment</p>
@@ -106,15 +106,15 @@
           <h3 class="text-gray-900 mb-4">Quick Actions</h3>
           <div >
             <app-button variant="outline" customClasses="w-full justify-start" (click)="viewPage('work-schedule')">
-              <lucide-icon [img]="Clock" class="w-4 h-4 mr-2"></lucide-icon>
+              <lucide-icon  aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2"></lucide-icon>
               Manage Schedule
             </app-button>
             <app-button variant="outline" customClasses="w-full justify-start mt-3" (click)="viewPage('doctor-appointments')">
-              <lucide-icon [img]="Calendar" class="w-4 h-4 mr-2"></lucide-icon>
+              <lucide-icon  aria-hidden="true" [img]="Calendar" class="w-4 h-4 mr-2"></lucide-icon>
               View All Appointments
             </app-button>
             <app-button variant="outline" customClasses="w-full justify-start mt-3" (click)="viewPage('doctor-profile')">
-              <lucide-icon [img]="User" class="w-4 h-4 mr-2"></lucide-icon>
+              <lucide-icon  aria-hidden="true" [img]="User" class="w-4 h-4 mr-2"></lucide-icon>
               Update Profile
             </app-button>
           </div>

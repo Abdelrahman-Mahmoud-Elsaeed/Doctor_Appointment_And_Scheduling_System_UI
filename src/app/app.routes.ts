@@ -4,6 +4,7 @@ import { PatientLayout } from './layouts/patient-layout/patient-layout';
 import { DoctorLayout } from './layouts/doctor-layout/doctor-layout';
 import { authGuard } from './core/guards/auth.guard'; 
 import { roleGuard } from './core/guards/role.guard'; 
+import { NotFound } from '@features/public/pages/not-found/not-found';
 
 export const routes: Routes = [
   {
@@ -43,5 +44,8 @@ export const routes: Routes = [
                             .then(m => m.DOCTOR_ROUTES)
       }
     ]
-  }
+  },
+
+  { path: '**', component: NotFound }
+
 ];
