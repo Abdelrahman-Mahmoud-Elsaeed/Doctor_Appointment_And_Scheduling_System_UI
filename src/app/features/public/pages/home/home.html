@@ -1,241 +1,261 @@
 <div class="min-h-screen">
 
-  <!-- Hero Section -->
-  <section aria-labelledby="hero-title" class="bg-linear-to-br from-[#00bfa6]/10 via-white to-[#007bff]/10 py-20">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 id="hero-title" class="text-gray-900 mb-6">Find & Book Appointments with Top Doctors</h1>
-        <p class="text-xl text-gray-600 mb-8">
-          Connect with certified healthcare professionals in your area. Quick, easy, and secure.
-        </p>
+  <main>
+    
+    <section aria-labelledby="hero-title" class="bg-linear-to-br from-[#00bfa6]/10 via-white to-[#007bff]/10 py-20">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h1 id="hero-title" class="text-gray-900 mb-6 text-4xl md:text-5xl font-bold leading-tight">
+            Find & Book Appointments with Top Doctors
+          </h1>
+          <p class="text-xl text-gray-600 mb-8">
+            Connect with certified healthcare professionals in your area. Quick, easy, and secure.
+          </p>
 
-        <!-- Search Bar -->
-        <div class="bg-white rounded-2xl shadow-lg p-4 flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto">
-          <app-input [type]="'text'" aria-label="Search for doctors by name or specialization"  placeholder="Search doctors, specializations..." class="flex-1"/>
-          <app-button customClasses="hover:bg-[#00a890] bg-[#00bfa6]  flex items-center justify-center gap-2 text-white"
-            routerLink="/find-doctor">
-            <lucide-icon  aria-hidden="true" [img]="Search" class="w-4 h-4"></lucide-icon>
-            Search
+          <form role="search" class="bg-white rounded-2xl shadow-lg p-4 flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto">
+            <app-input 
+              [type]="'text'" 
+              name="search"
+              aria-label="Search for doctors by name or specialization"  
+              placeholder="Search doctors, specializations..." 
+              class="flex-1">
+            </app-input>
+            <app-button 
+              type="submit"
+              customClasses="hover:bg-[#00a890] bg-[#00bfa6] flex items-center justify-center gap-2 text-white"
+              routerLink="/find-doctor">
+              <lucide-icon aria-hidden="true" [img]="Search" class="w-4 h-4"></lucide-icon>
+              Search
+            </app-button>
+          </form>
+
+          <dl class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12">
+            <div class="text-center">
+              <dt class="text-gray-600 order-2">Verified Doctors</dt>
+              <dd class="text-4xl text-[#00bfa6] mb-2 font-bold order-1">500+</dd>
+            </div>
+            <div class="text-center">
+              <dt class="text-gray-600 order-2">Happy Patients</dt>
+              <dd class="text-4xl text-[#00bfa6] mb-2 font-bold order-1">10k+</dd>
+            </div>
+            <div class="text-center">
+              <dt class="text-gray-600 order-2">Specializations</dt>
+              <dd class="text-4xl text-[#00bfa6] mb-2 font-bold order-1">50+</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="specializations-title" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 id="specializations-title" class="text-gray-900 mb-4 text-3xl font-bold">Browse by Specialization</h2>
+          <p class="text-gray-600">Find the right specialist for your health needs</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
+          @for (spec of specializations; track $index) {
+            <app-card
+              role="link"
+              [attr.aria-label]="'Browse doctors specializing in ' + spec"
+              tabindex="0"
+              customClasses="p-4 cursor-pointer hover:shadow-lg hover:border-[#00bfa6] transition-all text-center h-full group"
+              routerLink="/find-doctor"
+              [queryParams]="{ spec: spec }">
+              <div class="w-12 h-12 bg-[#00bfa6]/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-[#00bfa6] transition-colors">
+                <div class="w-6 h-6 bg-[#00bfa6] rounded-full group-hover:bg-white transition-colors"></div>
+              </div>
+              <div class="text-sm text-gray-900 truncate max-w-full font-medium">{{ spec }}</div>
+            </app-card>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="featured-doctors-title" class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 id="featured-doctors-title" class="text-gray-900 mb-4 text-3xl font-bold">Featured Doctors</h2>
+          <p class="text-gray-600">Meet our top-rated healthcare professionals</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          @for (doctor of featuredDoctors; track $index) {
+            <app-card customClasses="overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
+              <div class="aspect-4/3 overflow-hidden bg-gray-200">
+                <img [src]="doctor.image" [alt]="'Photo of Dr. ' + doctor.name" 
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                  loading="lazy" />
+              </div>
+              <div class="p-6 flex flex-col flex-1">
+                <app-badge class="mb-3 self-start">{{ doctor.specialization }}</app-badge>
+                <h3 class="text-gray-900 mb-2 text-xl font-semibold">{{ doctor.name }}</h3>
+                
+                <div class="flex items-center gap-2 mb-4">
+                  <div class="flex items-center gap-1" [attr.aria-label]="doctor.rating + ' out of 5 stars'" role="img">
+                    <lucide-icon aria-hidden="true" [img]="Star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></lucide-icon>
+                    <span aria-hidden="true" class="text-sm text-gray-900 font-medium">{{ doctor.rating }}</span>
+                  </div>
+                  <span class="text-sm text-gray-500">({{ doctor.reviewCount }} reviews)</span>
+                </div>
+
+                <div class="flex gap-3 justify-center mt-auto">
+                  <app-button 
+                    [attr.aria-label]="'View Profile of ' + doctor.name" 
+                    variant="outline"  
+                    class="flex-1" 
+                    customClasses="w-full" 
+                    [routerLink]="['/doctor-details', doctor.id]">
+                    View Profile
+                  </app-button>
+                  <app-button 
+                    [attr.aria-label]="'Book appointment with ' + doctor.name"  
+                    class="flex-1" 
+                    customClasses="bg-[#00bfa6] w-full hover:bg-[#00a890] text-white"
+                    [routerLink]="['/appointment-booking', doctor.id]">
+                    Book Now
+                  </app-button>
+                </div>
+              </div>
+            </app-card>
+          }
+        </div>
+
+        <div class="text-center mt-8">
+          <app-button variant="outline" size="lg" routerLink="/find-doctor">
+            View All Doctors
           </app-button>
         </div>
+      </div>
+    </section>
 
-        <!-- Quick Stats -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12">
-          <div class="text-center">
-            <div class="text-4xl text-[#00bfa6] mb-2">500+</div>
-            <div class="text-gray-600">Verified Doctors</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl text-[#00bfa6] mb-2">10k+</div>
-            <div class="text-gray-600">Happy Patients</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl text-[#00bfa6] mb-2">50+</div>
-            <div class="text-gray-600">Specializations</div>
-          </div>
+    <section aria-labelledby="how-it-works-title" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 id="how-it-works-title" class="text-gray-900 mb-4 text-3xl font-bold">How It Works</h2>
+          <p class="text-gray-600">Book your appointment in three simple steps</p>
         </div>
+
+        <ol class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <li class="text-center">
+            <div class="w-16 h-16 bg-[#00bfa6] rounded-full flex items-center justify-center mx-auto mb-4">
+              <lucide-icon aria-hidden="true" [img]="Search" class="w-8 h-8 text-white"></lucide-icon>
+            </div>
+            <h3 class="text-gray-900 mb-2 font-semibold text-lg">1. Search Doctor</h3>
+            <p class="text-gray-600">Find the right doctor by specialization, location, or name</p>
+          </li>
+          <li class="text-center">
+            <div class="w-16 h-16 bg-[#00bfa6] rounded-full flex items-center justify-center mx-auto mb-4">
+              <lucide-icon aria-hidden="true" [img]="Clock" class="w-8 h-8 text-white"></lucide-icon>
+            </div>
+            <h3 class="text-gray-900 mb-2 font-semibold text-lg">2. Choose Time</h3>
+            <p class="text-gray-600">Select a convenient date and time from available slots</p>
+          </li>
+          <li class="text-center">
+            <div class="w-16 h-16 bg-[#00bfa6] rounded-full flex items-center justify-center mx-auto mb-4">
+              <lucide-icon aria-hidden="true" [img]="CheckCircle" class="w-8 h-8 text-white"></lucide-icon>
+            </div>
+            <h3 class="text-gray-900 mb-2 font-semibold text-lg">3. Book Appointment</h3>
+            <p class="text-gray-600">Confirm your booking and get instant confirmation</p>
+          </li>
+        </ol>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Specializations Section -->
-  <section aria-labelledby="specializations-title" class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 id="specializations-title" class="text-gray-900 mb-4">Browse by Specialization</h2>
-        <p class="text-gray-600">Find the right specialist for your health needs</p>
-      </div>
+    <section aria-labelledby="testimonials-title" class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 id="testimonials-title" class="text-gray-900 mb-4 text-3xl font-bold">What Our Patients Say</h2>
+          <p class="text-gray-600">Real experiences from real patients</p>
+        </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
-        @for (spec of specializations; track $index) {
-        <app-card
-          customClasses="p-4 cursor-pointer hover:shadow-lg hover:border-[#00bfa6] transition-all text-center h-full"
-          routerLink="/find-doctor">
-          <div class="w-12 h-12 bg-[#00bfa6]/10 rounded-full flex items-center justify-center mx-auto mb-3">
-            <div class="w-6 h-6 bg-[#00bfa6] rounded-full"></div>
-          </div>
-          <div class="text-sm text-gray-900 truncate max-w-full">{{ spec }}</div>
-        </app-card>
-        }
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Doctors Section -->
-  <section aria-labelledby="featured-doctors-title" class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 id="featured-doctors-title" class="text-gray-900 mb-4">Featured Doctors</h2>
-        <p class="text-gray-600">Meet our top-rated healthcare professionals</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @for (doctor of featuredDoctors; track $index) {
-        <app-card customClasses="overflow-hidden hover:shadow-lg transition-shadow">
-          <div class="aspect-4/3 overflow-hidden">
-            <img [src]="doctor.image" [alt]="'Photo of ' + doctor.name" 
-              class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
-          </div>
-          <div class="p-6">
-            <app-badge class="mb-3">{{ doctor.specialization }}</app-badge>
-            <h3 class="text-gray-900 mb-2">{{ doctor.name }}</h3>
-            <div class="flex items-center gap-2 mb-4">
-              <div class="flex items-center gap-1">
-                <span class="sr-only">{{ doctor.rating }} out of 5 stars</span>
-                <lucide-icon  aria-hidden="true" [img]="Star" class="w-4 h-4 fill-yellow-400 text-yellow-400"></lucide-icon>
-                <span aria-hidden="true" class="text-sm text-gray-900">{{ doctor.rating }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          @for (testimonial of testimonials; track $index) {
+            <app-card customClasses="p-6 h-full flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-1 mb-4" [attr.aria-label]="'Rated ' + testimonial.rating + ' out of 5 stars'" role="img">
+                  @for (s of [].constructor(testimonial.rating); track $index) {
+                    <lucide-icon aria-hidden="true" [img]="Star" class="w-5 h-5 fill-yellow-400 text-yellow-400"></lucide-icon>
+                  }
+                </div>
+                <blockquote class="text-gray-600 mb-6">"{{ testimonial.text }}"</blockquote>
               </div>
-              <span class="text-sm text-gray-500">({{ doctor.reviewCount }} reviews)</span>
+              
+              <div class="flex items-center gap-3">
+                <img [src]="testimonial.image" [alt]="'Photo of ' + testimonial.name" class="w-12 h-12 rounded-full object-cover bg-gray-200" loading="lazy" />
+                <div>
+                  <div class="text-gray-900 font-medium">{{ testimonial.name }}</div>
+                  <div class="text-sm text-gray-500">Patient</div>
+                </div>
+              </div>
+            </app-card>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="why-choose-us-title" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 id="why-choose-us-title" class="text-gray-900 mb-4 text-3xl font-bold">Why Choose HealthCare</h2>
+          <p class="text-gray-600">Your health is our priority</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <lucide-icon aria-hidden="true" [img]="Shield" class="w-8 h-8 text-blue-600"></lucide-icon>
             </div>
-            <div class="flex gap-3 justify-center">
-              <app-button [attr.aria-label]="'View Profile Of ' + doctor.name" variant="outline"  class="flex-1" customClasses="w-full " [routerLink]="['/doctor-profile', doctor.id]">
-                View Profile
-              </app-button>
-              <app-button [attr.aria-label]="'Book appointment with ' + doctor.name"  class=" flex-1" customClasses=" bg-[#00bfa6] w-full hover:bg-[#00a890] text-white"
-                [routerLink]="['/doctor-profile', doctor.id]">
-                Book Now
-              </app-button>
+            <h3 class="text-gray-900 mb-2 font-semibold">Verified Doctors</h3>
+            <p class="text-sm text-gray-600">All our doctors are certified and verified professionals</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <lucide-icon aria-hidden="true" [img]="Clock" class="w-8 h-8 text-green-600"></lucide-icon>
             </div>
+            <h3 class="text-gray-900 mb-2 font-semibold">Easy Booking</h3>
+            <p class="text-sm text-gray-600">Book appointments in just a few clicks, anytime</p>
           </div>
-        </app-card>
-        }
-
-      </div>
-
-      <div class="text-center mt-8">
-        <app-button variant="outline" size="lg" routerLink="/find-doctor">
-          View All Doctors
-        </app-button>
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works Section -->
-  <section aria-labelledby="how-it-works-title"  class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 id="how-it-works-title" class="text-gray-900 mb-4">How It Works</h2>
-        <p class="text-gray-600">Book your appointment in three simple steps</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        <div class="text-center">
-          <div class="w-16 h-16 bg-[#00bfa6] rounded-full flex items-center justify-center mx-auto mb-4">
-            <lucide-icon  aria-hidden="true" [img]="Search" class="w-8 h-8 text-white"></lucide-icon>
-          </div>
-          <h3 class="text-gray-900 mb-2">1. Search Doctor</h3>
-          <p class="text-gray-600">Find the right doctor by specialization, location, or name</p>
-        </div>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-[#00bfa6] rounded-full flex items-center justify-center mx-auto mb-4">
-            <lucide-icon  aria-hidden="true" [img]="Clock" class="w-8 h-8 text-white"></lucide-icon>
-          </div>
-          <h3 class="text-gray-900 mb-2">2. Choose Time</h3>
-          <p class="text-gray-600">Select a convenient date and time from available slots</p>
-        </div>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-[#00bfa6] rounded-full flex items-center justify-center mx-auto mb-4">
-            <lucide-icon  aria-hidden="true" [img]="CheckCircle" class="w-8 h-8 text-white"></lucide-icon>
-          </div>
-          <h3 class="text-gray-900 mb-2">3. Book Appointment</h3>
-          <p class="text-gray-600">Confirm your booking and get instant confirmation</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section aria-labelledby="testimonials-title" class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 id="testimonials-title" class="text-gray-900 mb-4">What Our Patients Say</h2>
-        <p class="text-gray-600">Real experiences from real patients</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        @for (testimonial of testimonials; track $index) {
-          <app-card customClasses="p-6 h-full justify-between">
-          <div class="flex items-center gap-1 mb-4 ">
-            @for (s of [].constructor(testimonial.rating); track $index) {
-              <lucide-icon  aria-hidden="true" [img]="Star"
-                class="w-5 h-5 fill-yellow-400 text-yellow-400"></lucide-icon>
-            }
-
-          </div>
-          <p class="text-gray-600 mb-6">{{ testimonial.text }}</p>
-          <div class="flex items-center gap-3">
-            <img [src]="testimonial.image" [alt]="'Photo of ' + testimonial.name + ', Patient'" class="w-12 h-12 rounded-full object-cover" />
-            <div>
-              <div class="text-gray-900">{{ testimonial.name }}</div>
-              <div class="text-sm text-gray-500">Patient</div>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <lucide-icon aria-hidden="true" [img]="Users" class="w-8 h-8 text-purple-600"></lucide-icon>
             </div>
+            <h3 class="text-gray-900 mb-2 font-semibold">Wide Network</h3>
+            <p class="text-sm text-gray-600">Access to 500+ doctors across all specializations</p>
           </div>
-        </app-card>
-        }
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Why Choose Us Section -->
-  <section aria-labelledby="why-choose-us-title" class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h2 id="why-choose-us-title" class="text-gray-900 mb-4">Why Choose HealthCare</h2>
-        <p class="text-gray-600">Your health is our priority</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-        <div class="text-center">
-          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <lucide-icon  aria-hidden="true" [img]="Shield" class="w-8 h-8 text-blue-600"></lucide-icon>
+          <div class="text-center">
+            <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <lucide-icon aria-hidden="true" [img]="CheckCircle" class="w-8 h-8 text-orange-600"></lucide-icon>
+            </div>
+            <h3 class="text-gray-900 mb-2 font-semibold">Instant Confirmation</h3>
+            <p class="text-sm text-gray-600">Get immediate confirmation for your appointments</p>
           </div>
-          <h3 class="text-gray-900 mb-2">Verified Doctors</h3>
-          <p class="text-sm text-gray-600">All our doctors are certified and verified professionals</p>
-        </div>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <lucide-icon  aria-hidden="true" [img]="Clock" class="w-8 h-8 text-green-600"></lucide-icon>
-          </div>
-          <h3 class="text-gray-900 mb-2">Easy Booking</h3>
-          <p class="text-sm text-gray-600">Book appointments in just a few clicks, anytime</p>
-        </div>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <lucide-icon  aria-hidden="true" [img]="Users" class="w-8 h-8 text-purple-600"></lucide-icon>
-          </div>
-          <h3 class="text-gray-900 mb-2">Wide Network</h3>
-          <p class="text-sm text-gray-600">Access to 500+ doctors across all specializations</p>
-        </div>
-        <div class="text-center">
-          <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <lucide-icon  aria-hidden="true" [img]="CheckCircle" class="w-8 h-8 text-orange-600"></lucide-icon>
-          </div>
-          <h3 class="text-gray-900 mb-2">Instant Confirmation</h3>
-          <p class="text-sm text-gray-600">Get immediate confirmation for your appointments</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA Section -->
-  <section  aria-labelledby="cta-title" class="py-16 bg-linear-to-r from-[#00bfa6] to-[#007bff]">
-    <div class="container mx-auto px-4 text-center">
-      <h2 id="cta-title" class="text-white mb-4">Ready to Get Started?</h2>
-      <p class="text-white/90 mb-8 text-lg">Join thousands of patients who trust HealthCare for their medical needs</p>
-      <div class="flex gap-4 justify-center flex-wrap">
-        <app-button   size="lg" customClasses="bg-white text-[#00bfa6] hover:bg-white/90 shadow-lg hover:shadow-xl"
-          routerLink="/find-doctor">
-          Find a Doctor
-        </app-button>
-        <app-button size="lg" variant="outline"
-          customClasses="border-2 border-white text-white hover:bg-white hover:text-[#00bfa6] bg-white/10 backdrop-blur-sm"
-          routerLink="/register">
-          Create Account
-        </app-button>
+    <section aria-labelledby="cta-title" class="py-16 bg-linear-to-r from-[#00bfa6] to-[#007bff]">
+      <div class="container mx-auto px-4 text-center">
+        <h2 id="cta-title" class="text-white mb-4 text-3xl font-bold">Ready to Get Started?</h2>
+        <p class="text-white/90 mb-8 text-lg">Join thousands of patients who trust HealthCare for their medical needs</p>
+        <div class="flex gap-4 justify-center flex-wrap">
+          <app-button 
+            size="lg" 
+            customClasses="bg-white text-[#00bfa6] hover:bg-white/90 shadow-lg hover:shadow-xl font-semibold"
+            routerLink="/find-doctor">
+            Find a Doctor
+          </app-button>
+          <app-button 
+            size="lg" 
+            variant="outline"
+            customClasses="border-2 border-white text-white hover:bg-white hover:text-[#00bfa6] bg-white/10 backdrop-blur-sm font-semibold"
+            routerLink="/register">
+            Create Account
+          </app-button>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
+  </main>
 </div>

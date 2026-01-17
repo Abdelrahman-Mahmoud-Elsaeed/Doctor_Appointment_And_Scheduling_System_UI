@@ -81,7 +81,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy {
   disabled = input(false);
 
   // Outputs
-  readonly valueChange = output<number | number[]>();
+  readonly valueChange = output< number[]>();
 
   // Internal state
   private internalValues = signal<number[]>([]);
@@ -230,7 +230,10 @@ export class SliderComponent implements AfterViewInit, OnDestroy {
     if (newValues.length > 1) newValues.sort((a, b) => a - b);
 
     this.internalValues.set(newValues);
-    this.valueChange.emit(newValues.length === 1 ? newValues[0] : newValues);
+    this.valueChange.emit([
+      newValues[0],
+      newValues[1] ?? newValues[0],
+    ]);
   }
 
   // --- Classes ---

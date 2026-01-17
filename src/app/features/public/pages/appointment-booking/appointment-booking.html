@@ -1,0 +1,316 @@
+@if (showConfirmation()) {
+  <div class="min-h-screen bg-gray-50 py-12" role="alert" aria-live="polite">
+    <div class="container mx-auto px-4">
+      <app-card customClasses="max-w-2xl mx-auto p-8 text-center">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6" aria-hidden="true">
+          <lucide-icon [img]="icons.CheckCircle" class="w-12 h-12 text-green-600"></lucide-icon>
+        </div>
+        
+        <h1 class="text-gray-900 text-2xl font-bold mb-4" tabindex="-1">Appointment Confirmed!</h1>
+        <p class="text-gray-600 mb-8">
+          Your appointment has been successfully booked. A confirmation email has been sent to your registered email address.
+        </p>
+
+        <app-card customClasses="bg-gray-50 p-6 mb-8 text-left">
+          <div class="flex items-start gap-4 mb-4">
+            <img
+              [src]="doctor.image"
+              [alt]="'Photo of ' + doctor.name" 
+              class="w-20 h-20 rounded-lg object-cover"
+            />
+            <div>
+              <h3 class="text-gray-900 font-semibold mb-1">{{ doctor.name }}</h3>
+              <p class="text-gray-600 text-sm mb-2">{{ doctor.specialization }}</p>
+              <app-badge>
+                {{ appointmentType() === 'in-person' ? 'In-Person Visit' : 'Video Consultation' }}
+              </app-badge>
+            </div>
+          </div>
+          
+          <ul class="border-t pt-4 space-y-2 list-none p-0">
+            <li class="flex items-center gap-3 text-gray-700">
+              <lucide-icon [img]="icons.Calendar" class="w-5 h-5 text-[#00bfa6]" aria-hidden="true"></lucide-icon>
+              <span class="sr-only">Date:</span>
+              <span>{{ selectedDate() }}</span>
+            </li>
+            <li class="flex items-center gap-3 text-gray-700">
+              <lucide-icon [img]="icons.Clock" class="w-5 h-5 text-[#00bfa6]" aria-hidden="true"></lucide-icon>
+              <span class="sr-only">Time:</span>
+              <span>{{ selectedTime() }}</span>
+            </li>
+            @if (appointmentType() === 'in-person') {
+              <li class="flex items-center gap-3 text-gray-700">
+                <lucide-icon [img]="icons.MapPin" class="w-5 h-5 text-[#00bfa6]" aria-hidden="true"></lucide-icon>
+                <span class="sr-only">Location:</span>
+                <span>{{ doctor.location }}</span>
+              </li>
+            }
+          </ul>
+        </app-card>
+
+        <div class="flex gap-4 justify-center">
+          <app-button 
+            variant="outline"
+            (click)="navigate('appointments')"
+            aria-label="View my appointments list"
+          >
+            View My Appointments
+          </app-button>
+          <app-button
+            customClasses="bg-[#00bfa6] hover:bg-[#00a890]"
+            (click)="navigate('home')"
+          >
+            Back to Home
+          </app-button>
+        </div>
+      </app-card>
+    </div>
+  </div>
+} @else {
+  <div class="min-h-screen bg-gray-50 py-8">
+    <div class="container mx-auto px-4">
+      <nav aria-label="Back navigation">
+        <app-button
+            variant="ghost"
+            customClasses="mb-6"
+            [routerLink]="['/doctor-details', doctorId]"
+        >
+          <lucide-icon [img]="icons.ArrowLeft" class="w-4 h-4 mr-2" aria-hidden="true"></lucide-icon>
+          Back to Doctor Profile
+        </app-button>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <app-card customClasses="p-6">
+            <h1 class="text-gray-900 text-2xl font-bold mb-2">Book Appointment</h1>
+            <p class="text-gray-600">Choose your preferred date, time, and appointment type</p>
+          </app-card>
+
+          <section aria-labelledby="appointment-type-heading">
+            <app-card customClasses="p-6 mt-6">
+              <h2 id="appointment-type-heading" class="text-gray-900 text-lg font-semibold mb-4">Appointment Type</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" role="radiogroup">
+                @for (type of appointmentTypes; track type.id) {
+                  <app-card
+                    [customClasses]="appointmentType() === type.id 
+                      ? 'border-2 border-[#00bfa6] bg-[#00bfa6]/5 p-4 cursor-pointer focus:ring-2 focus:ring-[#00bfa6] outline-none' 
+                      : 'border hover:border-[#00bfa6]/50 p-4 cursor-pointer focus:ring-2 focus:ring-[#00bfa6] outline-none'"
+                    (click)="appointmentType.set(type.id)"
+                    (keydown.enter)="appointmentType.set(type.id)"
+                    (keydown.space)="appointmentType.set(type.id)"
+                    tabindex="0"
+                    role="radio"
+                    [attr.aria-checked]="appointmentType() === type.id"
+                    [attr.aria-label]="type.label + ', price $' + type.price"
+                  >
+                    <div class="flex items-start gap-3">
+                      <div 
+                        class="w-10 h-10 rounded-lg flex items-center justify-center"
+                        [class]="appointmentType() === type.id ? 'bg-[#00bfa6]' : 'bg-gray-100'"
+                        aria-hidden="true"
+                      >
+                        <lucide-icon 
+                          [img]="type.icon" 
+                          class="w-5 h-5"
+                          [class]="appointmentType() === type.id ? 'text-white' : 'text-gray-600'"
+                        ></lucide-icon>
+                      </div>
+                      <div class="flex-1">
+                        <div class="text-gray-900 font-medium mb-1">{{ type.label }}</div>
+                        <div class="text-sm text-gray-600">${{ type.price }} consultation fee</div>
+                      </div>
+                    </div>
+                  </app-card>
+                }
+              </div>
+            </app-card>
+          </section>
+
+          <section aria-labelledby="date-heading">
+            <app-card customClasses="p-6 mt-6">
+              <h2 id="date-heading" class="text-gray-900 text-lg font-semibold mb-4">Select Date</h2>
+              <div class="grid grid-cols-7 gap-2" role="listbox" aria-label="Available dates">
+                @for (date of dates(); track $index) {
+                  @let dateStr = getDateStr(date);
+                  <app-card
+                    [customClasses]="selectedDate() === dateStr 
+                      ? 'border-2 border-[#00bfa6] bg-[#00bfa6] text-white p-3 cursor-pointer text-center focus:ring-2 focus:ring-offset-2 focus:ring-[#00bfa6] outline-none' 
+                      : 'border hover:border-[#00bfa6]/50 p-3 cursor-pointer text-center focus:ring-2 focus:ring-offset-2 focus:ring-[#00bfa6] outline-none'"
+                    (click)="selectedDate.set(dateStr)"
+                    (keydown.enter)="selectedDate.set(dateStr)"
+                    (keydown.space)="selectedDate.set(dateStr)"
+                    tabindex="0"
+                    role="option"
+                    [attr.aria-selected]="selectedDate() === dateStr"
+                    [attr.aria-label]="getDayStr(date) + ' ' + date.getDate() + ' ' + (date | date:'MMMM')"
+                  >
+                    <div class="text-xs mb-1" aria-hidden="true">{{ getDayStr(date) }}</div>
+                    <div class="text-lg font-bold" aria-hidden="true">{{ date.getDate() }}</div>
+                  </app-card>
+                }
+              </div>
+            </app-card>
+          </section>
+
+          @if (selectedDate()) {
+            <section aria-labelledby="time-heading">
+              <app-card customClasses="p-6 mt-6">
+                <h2 id="time-heading" class="text-gray-900 text-lg font-semibold mb-4">Select Time Slot</h2>
+                
+                <div class="space-y-6">
+                  <div role="group" aria-label="Morning time slots">
+                    <h3 class="text-gray-700 font-medium mb-3">Morning</h3>
+                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                      @for (time of timeSlots.morning; track time) {
+                        <app-button
+                          [variant]="selectedTime() === time ? 'default' : 'outline'"
+                          [customClasses]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
+                          (click)="selectedTime.set(time)"
+                          [attr.aria-pressed]="selectedTime() === time"
+                          [attr.aria-label]="'Select ' + time"
+                        >
+                          {{ time }}
+                        </app-button>
+                      }
+                    </div>
+                  </div>
+
+                  <div role="group" aria-label="Afternoon time slots">
+                    <h3 class="text-gray-700 font-medium mb-3">Afternoon</h3>
+                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                      @for (time of timeSlots.afternoon; track time) {
+                        <app-button
+                          [variant]="selectedTime() === time ? 'default' : 'outline'"
+                          [customClasses]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
+                          (click)="selectedTime.set(time)"
+                          [attr.aria-pressed]="selectedTime() === time"
+                          [attr.aria-label]="'Select ' + time"
+                        >
+                          {{ time }}
+                        </app-button>
+                      }
+                    </div>
+                  </div>
+
+                  <div role="group" aria-label="Evening time slots">
+                    <h3 class="text-gray-700 font-medium mb-3">Evening</h3>
+                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                      @for (time of timeSlots.evening; track time) {
+                        <app-button
+                          [variant]="selectedTime() === time ? 'default' : 'outline'"
+                          [customClasses]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
+                          (click)="selectedTime.set(time)"
+                          [attr.aria-pressed]="selectedTime() === time"
+                          [attr.aria-label]="'Select ' + time"
+                        >
+                          {{ time }}
+                        </app-button>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </app-card>
+            </section>
+          }
+
+          @if (selectedDate() && selectedTime()) {
+            <section aria-labelledby="notes-heading">
+              <app-card customClasses="p-6 mt-6">
+                <h2 id="notes-heading" class="text-gray-900 text-lg font-semibold mb-4">Additional Information</h2>
+                <div class="space-y-2">
+                  <label for="visit-notes" class="flex items-center gap-2 text-gray-700 font-medium">
+                    <lucide-icon [img]="icons.FileText" class="w-4 h-4" aria-hidden="true"></lucide-icon>
+                    Reason for visit / Notes (Optional)
+                  </label>
+                  <textarea
+                    id="visit-notes"
+                    class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00bfa6] min-h-[120px]"
+                    placeholder="Please describe your symptoms or reason for consultation..."
+                    [ngModel]="notes()"
+                    (ngModelChange)="notes.set($event)"
+                  ></textarea>
+                </div>
+              </app-card>
+            </section>
+          }
+        </div>
+
+        <aside class="space-y-6" aria-label="Booking Summary">
+          <app-card customClasses="p-6">
+            <h2 class="text-gray-900 text-lg font-semibold mb-4">Doctor Details</h2>
+            <div class="flex items-start gap-4 mb-4">
+              <img
+                [src]="doctor.image"
+                [alt]="'Photo of ' + doctor.name"
+                class="w-20 h-20 rounded-lg object-cover"
+              />
+              <div>
+                <h3 class="text-gray-900 font-medium mb-1">{{ doctor.name }}</h3>
+                <p class="text-gray-600 text-sm mb-2">{{ doctor.specialization }}</p>
+                <app-badge variant="outline">
+                  {{ doctor.experience }} Experience
+                </app-badge>
+              </div>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-2 text-gray-600">
+                <lucide-icon [img]="icons.MapPin" class="w-4 h-4 text-[#00bfa6]" aria-hidden="true"></lucide-icon>
+                <span>{{ doctor.location }}</span>
+              </div>
+            </div>
+          </app-card>
+
+          <app-card customClasses="p-6 bg-[#00bfa6]/5 border-[#00bfa6] mt-6">
+            <h2 class="text-gray-900 text-lg font-semibold mb-4">Booking Summary</h2>
+            <dl class="space-y-3">
+              <div class="flex justify-between text-sm">
+                <dt class="text-gray-600">Appointment Type:</dt>
+                <dd class="text-gray-900 font-medium">
+                  {{ appointmentType() === 'in-person' ? 'In-Person' : 'Video Call' }}
+                </dd>
+              </div>
+              @if (selectedDate()) {
+                <div class="flex justify-between text-sm">
+                  <dt class="text-gray-600">Date:</dt>
+                  <dd class="text-gray-900 font-medium">{{ selectedDate() }}</dd>
+                </div>
+              }
+              @if (selectedTime()) {
+                <div class="flex justify-between text-sm">
+                  <dt class="text-gray-600">Time:</dt>
+                  <dd class="text-gray-900 font-medium">{{ selectedTime() }}</dd>
+                </div>
+              }
+              <div class="border-t border-[#00bfa6]/20 pt-3 mt-3">
+                <div class="flex justify-between">
+                  <dt class="text-gray-900 font-bold">Total Fee:</dt>
+                  <dd class="text-gray-900 font-bold">
+                    ${{ selectedTypePrice() }}
+                  </dd>
+                </div>
+              </div>
+            </dl>
+
+            <app-button
+              customClasses="w-full mt-6 bg-[#00bfa6] hover:bg-[#00a890]"
+              [disabled]="!selectedDate() || !selectedTime()"
+              (click)="handleBooking()"
+              aria-label="Confirm Booking for "
+            >
+              Confirm Booking
+            </app-button>
+
+            <div aria-live="polite">
+              @if (!selectedDate() || !selectedTime()) {
+                <p class="text-sm text-gray-500 text-center mt-3">
+                  Please select date and time to continue
+                </p>
+              }
+            </div>
+          </app-card>
+        </aside>
+      </div>
+    </div>
+  </div>
+}

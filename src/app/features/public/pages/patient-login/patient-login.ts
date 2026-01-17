@@ -18,7 +18,20 @@ export class PatientLogin {
   readonly Mail = Mail;
   readonly Lock = Lock;
   readonly ArrowRight = ArrowRight;
-
+  features = [
+      { 
+        title: 'Easy Appointment Booking', 
+        desc: 'Schedule appointments with just a few clicks' 
+      },
+      { 
+        title: 'Verified Professionals', 
+        desc: 'All doctors are certified and verified' 
+      },
+      { 
+        title: 'Secure & Private', 
+        desc: 'Your health information is safe with us' 
+      }
+  ];
   // Mock state for demonstration
   email = signal('');
   password = signal('');

@@ -1,5 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
-import { LucideAngularModule, Mail, Lock, User, Phone, ArrowRight, Shield, CheckCircle2, FileText, Award } from 'lucide-angular';
+import { LucideAngularModule, Mail, Lock, User, Phone,Upload,MapPin, ArrowRight, Shield, CheckCircle2, FileText, Award } from 'lucide-angular';
 import { mockPatient } from '@assets/mockData';
 import { InputComponent } from "@ui/input";
 import { LabelComponent } from "@shared/components/ui/label";
@@ -35,7 +35,8 @@ export class Register {
   readonly CheckCircle2 = CheckCircle2;
   readonly FileText = FileText;
   readonly Award = Award;
-
+  readonly Upload = Upload
+  readonly MapPin = MapPin
   // --- Password Strength Computations (Preserved) ---
   passwordStrengthText = computed(() => {
     const strength = this.passwordStrength();

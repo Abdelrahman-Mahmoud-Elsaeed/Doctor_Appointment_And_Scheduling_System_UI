@@ -1,167 +1,193 @@
 <div class="min-h-screen bg-gray-50">
-  <div class="container mx-auto px-4 py-8">
-    <!-- Header -->
-    <div class="mb-8">
-      <h1 class="text-gray-900 mb-2">Dashboard</h1>
+  <main class="container mx-auto px-4 py-8">
+    
+    <header class="mb-8">
+      <h1 class="text-gray-900 mb-2 text-3xl font-bold">Dashboard</h1>
       <p class="text-gray-600">Welcome back, Dr. Sarah Johnson</p>
-    </div>
+    </header>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <app-stats-card *ngFor="let stat of mockDashboardStats" [label]="stat.label" [value]="stat.value" [icon]="stat.icon" ></app-stats-card>
-    </div>
+    <section aria-label="Key Metrics" class="mb-8">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <li *ngFor="let stat of mockDashboardStats">
+          <app-stats-card [label]="stat.label" [value]="stat.value" [icon]="stat.icon"></app-stats-card>
+        </li>
+      </ul>
+    </section>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Main Content - Today's Schedule -->
-      <div class="lg:col-span-2">
-        <!-- Today's Appointments -->
-        <app-card customClasses="p-6">
-          <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-2">
-              <lucide-icon  aria-hidden="true" [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
-              <h2 class="text-gray-900">Today's Appointments</h2>
+      
+      <div class="lg:col-span-2 space-y-6">
+        
+        <section aria-labelledby="today-heading">
+          <app-card customClasses="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center gap-2">
+                <lucide-icon aria-hidden="true" [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+                <h2 id="today-heading" class="text-gray-900 text-xl font-semibold">Today's Appointments</h2>
+              </div>
+              <app-button variant="ghost" (click)="viewPage('doctor-appointments')">
+                View All
+                <lucide-icon aria-hidden="true" [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
+              </app-button>
             </div>
-            <app-button variant="ghost" (click)="viewPage('doctor-appointments')">
-              View All
-              <lucide-icon  aria-hidden="true" [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
-            </app-button>
-          </div>
 
-          <div class="space-y-4">
-            <ng-container *ngIf="todaysAppointments.length > 0; else noTodayAppointments">
-              <div
-                *ngFor="let appointment of todaysAppointments"
-                class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                <img
-                  [src]="appointment.doctor.image"
-                  alt="Patient"
-                  class="w-12 h-12 rounded-full object-cover"
-                />
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-start justify-between gap-2 mb-2">
+            <div class="space-y-4">
+              <ng-container *ngIf="todaysAppointments.length > 0; else noTodayAppointments">
+                <ul class="space-y-4">
+                  <li *ngFor="let appointment of todaysAppointments">
+                    <article class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                      <img
+                        [src]="appointment.doctor.image"
+                        alt="" 
+                        class="w-12 h-12 rounded-full object-cover"
+                        aria-hidden="true"
+                      />
+                      <div class="flex-1 min-w-0">
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                          <div>
+                            <h3 class="text-gray-900 font-medium">Patient Name</h3>
+                            <p class="text-sm text-gray-600">First visit</p>
+                          </div>
+                          <app-badge customClasses="bg-green-100 text-green-700" variant="outline">
+                            {{ appointment.status }}
+                          </app-badge>
+                        </div>
+                        <div class="flex items-center gap-4 text-sm text-gray-600">
+                          <div class="flex items-center gap-1">
+                            <lucide-icon aria-hidden="true" [img]="Clock" class="w-4 h-4"></lucide-icon>
+                            <span>{{ appointment.time }}</span>
+                          </div>
+                          <span aria-hidden="true">•</span>
+                          <span>{{ appointment.notes || 'General checkup' }}</span>
+                        </div>
+                      </div>
+                      <app-button size="sm" variant="outline" aria-label="View details for Patient Name">View Details</app-button>
+                    </article>
+                  </li>
+                </ul>
+              </ng-container>
+              <ng-template #noTodayAppointments>
+                <p class="text-center py-8 text-gray-500">
+                  No appointments scheduled for today
+                </p>
+              </ng-template>
+            </div>
+          </app-card>
+        </section>
+
+        <section aria-labelledby="upcoming-heading">
+          <app-card customClasses="p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h2 id="upcoming-heading" class="text-gray-900 text-xl font-semibold">Upcoming This Week</h2>
+              <app-button variant="ghost" size="sm" (click)="viewPage('doctor-appointments')">
+                View Calendar
+              </app-button>
+            </div>
+
+            <ul class="space-y-3">
+              <li *ngFor="let appointment of upcomingAppointments">
+                <button
+                  class="w-full flex items-center justify-between p-3 border rounded-lg hover:border-[#007bff] transition-colors cursor-pointer text-left focus:ring-2 focus:ring-[#007bff] focus:outline-none"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center" aria-hidden="true">
+                      <lucide-icon [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+                    </div>
                     <div>
-                      <h3 class="text-gray-900">Patient Name</h3>
-                      <p class="text-sm text-gray-600">First visit</p>
+                      <p class="text-sm text-gray-900 font-medium">Patient Appointment</p>
+                      <p class="text-xs text-gray-500">
+                        {{ formatDate(appointment.date) }} at {{ appointment.time }}
+                      </p>
                     </div>
-                    <app-badge customClasses="bg-green-100 text-green-700" variant="outline">
-                      {{ appointment.status }}
-                    </app-badge>
                   </div>
-                  <div class="flex items-center gap-4 text-sm text-gray-600">
-                    <div class="flex items-center gap-1">
-                      <lucide-icon  aria-hidden="true" [img]="Clock" class="w-4 h-4"></lucide-icon>
-                      <span>{{ appointment.time }}</span>
-                    </div>
-                    <span>•</span>
-                    <span>{{ appointment.notes || 'General checkup' }}</span>
-                  </div>
-                </div>
-                <app-button size="sm" variant="outline">View Details</app-button>
-              </div>
-            </ng-container>
-            <ng-template #noTodayAppointments>
-              <div class="text-center py-8 text-gray-500">
-                No appointments scheduled for today
-              </div>
-            </ng-template>
-          </div>
-        </app-card>
-
-        <!-- Upcoming This Week -->
-        <app-card customClasses="p-6 mt-6">
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="text-gray-900">Upcoming This Week</h2>
-            <app-button variant="ghost" size="sm" (click)="viewPage('doctor-appointments')">
-              View Calendar
-            </app-button>
-          </div>
-
-          <div class="space-y-3">
-            <div
-              *ngFor="let appointment of upcomingAppointments"
-              class="flex items-center justify-between p-3 border rounded-lg hover:border-[#007bff] transition-colors cursor-pointer"
-            >
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center">
-                  <lucide-icon  aria-hidden="true" [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-900">Patient Appointment</p>
-                  <p class="text-xs text-gray-500">
-                    {{ formatDate(appointment.date) }} at {{ appointment.time }}
-                  </p>
-                </div>
-              </div>
-              <app-badge variant="outline">{{ appointment.status }}</app-badge>
-            </div>
-          </div>
-        </app-card>
+                  <app-badge variant="outline">{{ appointment.status }}</app-badge>
+                </button>
+              </li>
+            </ul>
+          </app-card>
+        </section>
       </div>
 
-      <!-- Sidebar -->
-      <div class="lg:col-span-1 space-y-6">
-        <!-- Quick Actions -->
-        <app-card customClasses="p-6">
-          <h3 class="text-gray-900 mb-4">Quick Actions</h3>
-          <div >
-            <app-button variant="outline" customClasses="w-full justify-start" (click)="viewPage('work-schedule')">
-              <lucide-icon  aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2"></lucide-icon>
-              Manage Schedule
-            </app-button>
-            <app-button variant="outline" customClasses="w-full justify-start mt-3" (click)="viewPage('doctor-appointments')">
-              <lucide-icon  aria-hidden="true" [img]="Calendar" class="w-4 h-4 mr-2"></lucide-icon>
-              View All Appointments
-            </app-button>
-            <app-button variant="outline" customClasses="w-full justify-start mt-3" (click)="viewPage('doctor-profile')">
-              <lucide-icon  aria-hidden="true" [img]="User" class="w-4 h-4 mr-2"></lucide-icon>
-              Update Profile
-            </app-button>
-          </div>
-        </app-card>
+      <aside class="lg:col-span-1 space-y-6">
+        
+        <nav aria-labelledby="actions-heading">
+          <app-card customClasses="p-6">
+            <h3 id="actions-heading" class="text-gray-900 mb-4 font-semibold">Quick Actions</h3>
+            <ul class="space-y-3">
+              <li>
+                <app-button variant="outline" customClasses="w-full justify-start" (click)="viewPage('work-schedule')">
+                  <lucide-icon aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2"></lucide-icon>
+                  Manage Schedule
+                </app-button>
+              </li>
+              <li>
+                <app-button variant="outline" customClasses="w-full justify-start" (click)="viewPage('doctor-appointments')">
+                  <lucide-icon aria-hidden="true" [img]="Calendar" class="w-4 h-4 mr-2"></lucide-icon>
+                  View All Appointments
+                </app-button>
+              </li>
+              <li>
+                <app-button variant="outline" customClasses="w-full justify-start" (click)="viewPage('doctor-profile')">
+                  <lucide-icon aria-hidden="true" [img]="User" class="w-4 h-4 mr-2"></lucide-icon>
+                  Update Profile
+                </app-button>
+              </li>
+            </ul>
+          </app-card>
+        </nav>
 
-        <!-- Performance Summary -->
-        <app-card customClasses="p-6">
-          <h3 class="text-gray-900 mb-4">This Month</h3>
-          <div class="space-y-4">
-            <div *ngFor="let stat of [
-              { label: 'Appointments', value: 24, color: 'bg-[#007bff]', width: '75%' },
-              { label: 'New Patients', value: 8, color: 'bg-green-500', width: '40%' },
-              { label: 'Completion Rate', value: '95%', color: 'bg-purple-500', width: '95%' }
-            ]">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-sm text-gray-600">{{ stat.label }}</span>
-                <span class="text-gray-900">{{ stat.value }}</span>
-              </div>
-              <div class="w-full bg-gray-200 rounded-full h-2">
-                <div [ngClass]="stat.color" class="h-2 rounded-full" [style.width]="stat.width"></div>
-              </div>
-            </div>
-          </div>
-        </app-card>
+        <section aria-labelledby="perf-heading">
+          <app-card customClasses="p-6">
+            <h3 id="perf-heading" class="text-gray-900 mb-4 font-semibold">This Month</h3>
+            <ul class="space-y-4">
+              <li *ngFor="let stat of [
+                { label: 'Appointments', value: 24, color: 'bg-[#007bff]', width: '75%', max: 32 },
+                { label: 'New Patients', value: 8, color: 'bg-green-500', width: '40%', max: 20 },
+                { label: 'Completion Rate', value: '95%', color: 'bg-purple-500', width: '95%', max: 100 }
+              ]">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm text-gray-600">{{ stat.label }}</span>
+                  <span class="text-gray-900 font-medium">{{ stat.value }}</span>
+                </div>
+                <div 
+                  class="w-full bg-gray-200 rounded-full h-2" 
+                  role="progressbar" 
+                  [attr.aria-label]="stat.label"
+                  [attr.aria-valuenow]="stat.value" 
+                  aria-valuemin="0" 
+                  [attr.aria-valuemax]="stat.max"
+                >
+                  <div [ngClass]="stat.color" class="h-2 rounded-full" [style.width]="stat.width"></div>
+                </div>
+              </li>
+            </ul>
+          </app-card>
+        </section>
 
-        <!-- Notifications -->
-        <app-card customClasses="p-6">
-          <h3 class="text-gray-900 mb-4">Recent Notifications</h3>
-          <div class="space-y-3">
-            <div class="p-3 bg-blue-50 rounded-lg">
-              <p class="text-sm text-gray-900 mb-1">New Appointment Request</p>
-              <p class="text-xs text-gray-600">Patient John Doe requested an appointment</p>
-              <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
-            </div>
-            <div class="p-3 bg-green-50 rounded-lg">
-              <p class="text-sm text-gray-900 mb-1">Appointment Confirmed</p>
-              <p class="text-xs text-gray-600">Your appointment with Jane Smith is confirmed</p>
-              <p class="text-xs text-gray-500 mt-1">5 hours ago</p>
-            </div>
-            <div class="p-3 bg-yellow-50 rounded-lg">
-              <p class="text-sm text-gray-900 mb-1">Schedule Update Needed</p>
-              <p class="text-xs text-gray-600">Please update your availability for next week</p>
-              <p class="text-xs text-gray-500 mt-1">1 day ago</p>
-            </div>
-          </div>
-        </app-card>
-      </div>
+        <section aria-labelledby="notif-heading">
+          <app-card customClasses="p-6">
+            <h3 id="notif-heading" class="text-gray-900 mb-4 font-semibold">Recent Notifications</h3>
+            <ul class="space-y-3">
+              <li class="p-3 bg-blue-50 rounded-lg">
+                <p class="text-sm text-gray-900 mb-1 font-medium">New Appointment Request</p>
+                <p class="text-xs text-gray-600">Patient John Doe requested an appointment</p>
+                <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
+              </li>
+              <li class="p-3 bg-green-50 rounded-lg">
+                <p class="text-sm text-gray-900 mb-1 font-medium">Appointment Confirmed</p>
+                <p class="text-xs text-gray-600">Your appointment with Jane Smith is confirmed</p>
+                <p class="text-xs text-gray-500 mt-1">5 hours ago</p>
+              </li>
+              <li class="p-3 bg-yellow-50 rounded-lg">
+                <p class="text-sm text-gray-900 mb-1 font-medium">Schedule Update Needed</p>
+                <p class="text-xs text-gray-600">Please update your availability for next week</p>
+                <p class="text-xs text-gray-500 mt-1">1 day ago</p>
+              </li>
+            </ul>
+          </app-card>
+        </section>
+
+      </aside>
     </div>
-  </div>
+  </main>
 </div>

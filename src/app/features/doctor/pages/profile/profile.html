@@ -1,116 +1,125 @@
-
-
-<div class="min-h-screen bg-gray-50">
+<main class="min-h-screen bg-gray-50">
   <div class="container mx-auto px-4 py-8">
-    <!-- Profile Header Card -->
-    <app-card customClasses="p-6 mb-6">
-      <div class="flex flex-col md:flex-row gap-6">
-        <!-- Profile Picture -->
-        <div class="flex-shrink-0">
-          <div class="relative inline-block">
-            <img
-              [src]="doctor.image"
-              [alt]="doctor.name"
-              class="w-32 h-32 rounded-lg object-cover"
-            />
-            <button class="absolute bottom-2 right-2 w-10 h-10 bg-[#007bff] rounded-full flex items-center justify-center text-white hover:bg-[#0056b3] transition-colors shadow-lg">
-              <lucide-icon [img]="Camera" class="w-5 h-5"></lucide-icon>
-            </button>
+    
+    <section aria-label="Doctor Profile Header">
+      <app-card customClasses="p-6 mb-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          
+          <div class="flex-shrink-0">
+            <div class="relative inline-block">
+              <img
+                [src]="doctor.image"
+                [alt]="'Profile picture of ' + doctor.name"
+                class="w-32 h-32 rounded-lg object-cover"
+              />
+              <button 
+                class="absolute bottom-2 right-2 w-10 h-10 bg-[#007bff] rounded-full flex items-center justify-center text-white hover:bg-[#0056b3] transition-colors shadow-lg"
+                aria-label="Update profile picture"
+              >
+                <lucide-icon [img]="Camera" class="w-5 h-5" aria-hidden="true"></lucide-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+              <div>
+                <h1 class="text-gray-900 mb-2 text-xl font-bold">{{ doctor.name }}</h1>
+                <ul class="flex flex-wrap items-center gap-3 mb-3 list-none p-0">
+                  <li><app-badge customClasses="bg-[#007bff]/10 text-[#007bff] border-none">{{ doctor.specialization }}</app-badge></li>
+                  <li><app-badge customClasses="bg-green-100 text-green-700 border-none">Active</app-badge></li>
+                </ul>
+                <div class="flex items-center gap-2 mb-3" aria-label="Rating">
+                  <lucide-icon [img]="Star" class="w-5 h-5 fill-yellow-400 text-yellow-400" aria-hidden="true"></lucide-icon>
+                  <span class="text-gray-900 font-medium" aria-label="Rating 4.8 out of 5">{{ doctor.rating }}</span>
+                  <span class="text-gray-500">({{ doctor.reviewCount }} reviews)</span>
+                </div>
+              </div>
+              <app-button variant="outline" size="sm">
+                View Public Profile
+              </app-button>
+            </div>
+
+            <ul class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 list-none p-0">
+              <li class="bg-gray-50 rounded-lg p-3">
+                <div class="flex items-center gap-2 mb-1">
+                  <lucide-icon [img]="Users" class="w-4 h-4 text-[#007bff]" aria-hidden="true"></lucide-icon>
+                  <span class="text-xs text-gray-600">Total Patients</span>
+                </div>
+                <p class="text-xl text-gray-900 font-bold">247</p>
+              </li>
+              <li class="bg-gray-50 rounded-lg p-3">
+                <div class="flex items-center gap-2 mb-1">
+                  <lucide-icon [img]="Calendar" class="w-4 h-4 text-[#007bff]" aria-hidden="true"></lucide-icon>
+                  <span class="text-xs text-gray-600">This Month</span>
+                </div>
+                <p class="text-xl text-gray-900 font-bold">45</p>
+              </li>
+              <li class="bg-gray-50 rounded-lg p-3">
+                <div class="flex items-center gap-2 mb-1">
+                  <lucide-icon [img]="TrendingUp" class="w-4 h-4 text-[#007bff]" aria-hidden="true"></lucide-icon>
+                  <span class="text-xs text-gray-600">Experience</span>
+                </div>
+                <p class="text-xl text-gray-900 font-bold">{{ doctor.experience }} yrs</p>
+              </li>
+              <li class="bg-gray-50 rounded-lg p-3">
+                <div class="flex items-center gap-2 mb-1">
+                  <lucide-icon [img]="Award" class="w-4 h-4 text-[#007bff]" aria-hidden="true"></lucide-icon>
+                  <span class="text-xs text-gray-600">Completeness</span>
+                </div>
+                <p class="text-xl text-gray-900 font-bold">95%</p>
+              </li>
+            </ul>
+
+            <ul class="flex flex-wrap gap-2 list-none p-0" aria-label="Verification statuses">
+              <li>
+                <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
+                  <span class="mr-1" aria-hidden="true">✓</span> Email Verified
+                </app-badge>
+              </li>
+              <li>
+                <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
+                  <span class="mr-1" aria-hidden="true">✓</span> Phone Verified
+                </app-badge>
+              </li>
+              <li>
+                <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
+                  <span class="mr-1" aria-hidden="true">✓</span> License Verified
+                </app-badge>
+              </li>
+              <li>
+                <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
+                  <span class="mr-1" aria-hidden="true">✓</span> Board Certified
+                </app-badge>
+              </li>
+            </ul>
           </div>
         </div>
+      </app-card>
+    </section>
 
-        <!-- Profile Info -->
-        <div class="flex-1">
-          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-            <div>
-              <h2 class="text-gray-900 mb-2 text-xl font-bold">{{ doctor.name }}</h2>
-              <div class="flex flex-wrap items-center gap-3 mb-3">
-                <app-badge customClasses="bg-[#007bff]/10 text-[#007bff] border-none">{{ doctor.specialization }}</app-badge>
-                <app-badge customClasses="bg-green-100 text-green-700 border-none">Active</app-badge>
-              </div>
-              <div class="flex items-center gap-2 mb-3">
-                <lucide-icon [img]="Star" class="w-5 h-5 fill-yellow-400 text-yellow-400"></lucide-icon>
-                <span class="text-gray-900 font-medium">{{ doctor.rating }}</span>
-                <span class="text-gray-500">({{ doctor.reviewCount }} reviews)</span>
-              </div>
-            </div>
-            <app-button variant="outline" size="sm">
-              View Public Profile
-            </app-button>
-          </div>
-
-          <!-- Stats Grid -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            <div class="bg-gray-50 rounded-lg p-3">
-              <div class="flex items-center gap-2 mb-1">
-                <lucide-icon [img]="Users" class="w-4 h-4 text-[#007bff]"></lucide-icon>
-                <span class="text-xs text-gray-600">Total Patients</span>
-              </div>
-              <p class="text-xl text-gray-900 font-bold">247</p>
-            </div>
-            <div class="bg-gray-50 rounded-lg p-3">
-              <div class="flex items-center gap-2 mb-1">
-                <lucide-icon [img]="Calendar" class="w-4 h-4 text-[#007bff]"></lucide-icon>
-                <span class="text-xs text-gray-600">This Month</span>
-              </div>
-              <p class="text-xl text-gray-900 font-bold">45</p>
-            </div>
-            <div class="bg-gray-50 rounded-lg p-3">
-              <div class="flex items-center gap-2 mb-1">
-                <lucide-icon [img]="TrendingUp" class="w-4 h-4 text-[#007bff]"></lucide-icon>
-                <span class="text-xs text-gray-600">Experience</span>
-              </div>
-              <p class="text-xl text-gray-900 font-bold">{{ doctor.experience }} yrs</p>
-            </div>
-            <div class="bg-gray-50 rounded-lg p-3">
-              <div class="flex items-center gap-2 mb-1">
-                <lucide-icon [img]="Award" class="w-4 h-4 text-[#007bff]"></lucide-icon>
-                <span class="text-xs text-gray-600">Completeness</span>
-              </div>
-              <p class="text-xl text-gray-900 font-bold">95%</p>
-            </div>
-          </div>
-
-          <!-- Verification Status -->
-          <div class="flex flex-wrap gap-2">
-            <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
-              <span class="mr-1">✓</span> Email Verified
-            </app-badge>
-            <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
-              <span class="mr-1">✓</span> Phone Verified
-            </app-badge>
-            <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
-              <span class="mr-1">✓</span> License Verified
-            </app-badge>
-            <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
-              <span class="mr-1">✓</span> Board Certified
-            </app-badge>
-          </div>
-        </div>
-      </div>
-    </app-card>
-
-    <!-- Profile Details Tabs -->
     <app-card customClasses="p-6">
       <app-tabs [(value)]="activeTab">
-        <app-tabs-list customClasses="mb-6">
+        <app-tabs-list customClasses="mb-6" aria-label="Profile Settings Sections">
           <app-tabs-trigger value="personal">Personal Info</app-tabs-trigger>
           <app-tabs-trigger value="professional">Professional</app-tabs-trigger>
           <app-tabs-trigger value="practice">Practice Details</app-tabs-trigger>
           <app-tabs-trigger value="security">Security</app-tabs-trigger>
         </app-tabs-list>
 
-        <!-- Personal Info Tab -->
         <app-tabs-content value="personal" customClasses="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form class="grid grid-cols-1 md:grid-cols-2 gap-6" aria-labelledby="personal-info-heading">
+            <h2 id="personal-info-heading" class="sr-only">Personal Information</h2>
+            
             <div>
               <app-label for="firstName">First Name</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="User" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                <lucide-icon [img]="User" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
                   [id]="'firstName'"
                   value="Sarah"
                   customClasses="pl-10"
+                  autocomplete="given-name"
                 ></app-input>
               </div>
             </div>
@@ -118,11 +127,12 @@
             <div>
               <app-label for="lastName">Last Name</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="User" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                <lucide-icon [img]="User" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
                   [id]="'lastName'"
                   value="Johnson"
                   customClasses="pl-10"
+                  autocomplete="family-name"
                 ></app-input>
               </div>
             </div>
@@ -130,12 +140,13 @@
             <div>
               <app-label for="email">Email</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="Mail" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                <lucide-icon [img]="Mail" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
                   [id]="'email'"
                   type="email"
                   value="dr.sarah.johnson@healthcare.com"
                   customClasses="pl-10"
+                  autocomplete="email"
                 ></app-input>
               </div>
             </div>
@@ -143,12 +154,13 @@
             <div>
               <app-label for="phone">Phone</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="Phone" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                <lucide-icon [img]="Phone" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
                   [id]="'phone'"
                   type="tel"
                   value="+1 (555) 123-4567"
                   customClasses="pl-10"
+                  autocomplete="tel"
                 ></app-input>
               </div>
             </div>
@@ -156,11 +168,12 @@
             <div class="md:col-span-2">
               <app-label for="address">Address</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="MapPin" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                <lucide-icon [img]="MapPin" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
                   [id]="'address'"
                   [value]="doctor.location"
                   customClasses="pl-10"
+                  autocomplete="street-address"
                 ></app-input>
               </div>
             </div>
@@ -172,9 +185,11 @@
                 placeholder="e.g., English, Spanish, French"
                 value="English, Spanish"
                 customClasses="mt-2"
+                aria-describedby="languages-hint"
               ></app-input>
+              <span id="languages-hint" class="sr-only">Separate multiple languages with commas</span>
             </div>
-          </div>
+          </form>
 
           <div class="flex justify-end gap-4 pt-4 border-t">
             <app-button variant="outline">Cancel</app-button>
@@ -184,13 +199,14 @@
           </div>
         </app-tabs-content>
 
-        <!-- Professional Info Tab -->
         <app-tabs-content value="professional" customClasses="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form class="grid grid-cols-1 md:grid-cols-2 gap-6" aria-labelledby="professional-info-heading">
+            <h2 id="professional-info-heading" class="sr-only">Professional Information</h2>
+            
             <div>
               <app-label for="specialization">Specialization</app-label>
               <app-select [value]="doctor.specialization">
-                <app-select-trigger id="specialization" customClasses="mt-2">
+                <app-select-trigger id="specialization" customClasses="mt-2" aria-label="Select Specialization">
                   <app-select-value>{{doctor.specialization}}</app-select-value>
                 </app-select-trigger>
                 <app-select-content>
@@ -206,7 +222,7 @@
             <div>
               <app-label for="experience">Years of Experience</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="Briefcase" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                <lucide-icon [img]="Briefcase" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
                   [id]="'experience'"
                   type="number"
@@ -219,7 +235,7 @@
             <div>
               <app-label for="education">Education</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="GraduationCap" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                <lucide-icon [img]="GraduationCap" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
                   [id]="'education'"
                   value="Harvard Medical School"
@@ -231,7 +247,7 @@
             <div>
               <app-label for="license">Medical License Number</app-label>
               <div class="relative mt-2">
-                <lucide-icon [img]="Award" class="ab w-4 h-4 text-gray-400"></lucide-icon>
+                <lucide-icon [img]="Award" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
                   [id]="'license'"
                   value="MD-123456"
@@ -247,24 +263,27 @@
                 [rows]="4"
                 [value]="doctor.about"
                 customClasses="mt-2"
+                aria-describedby="about-desc"
               ></app-textarea>
-              <p class="text-xs text-gray-500 mt-1">
+              <p id="about-desc" class="text-xs text-gray-500 mt-1">
                 Tell patients about yourself and your expertise
               </p>
             </div>
 
             <div class="md:col-span-2">
-              <app-label customClasses="mb-3 block">Board Certifications</app-label>
-              <div class="flex flex-wrap gap-2">
-                <app-badge variant="secondary">Internal Medicine</app-badge>
-                <app-badge variant="secondary">Family Medicine</app-badge>
-                <app-badge variant="secondary">Preventive Medicine</app-badge>
-                <app-button variant="outline" size="sm" customClasses="h-7">
-                  + Add Certification
-                </app-button>
-              </div>
+              <h3 class="mb-3 block text-sm font-medium text-gray-700">Board Certifications</h3>
+              <ul class="flex flex-wrap gap-2 list-none p-0">
+                <li><app-badge variant="secondary">Internal Medicine</app-badge></li>
+                <li><app-badge variant="secondary">Family Medicine</app-badge></li>
+                <li><app-badge variant="secondary">Preventive Medicine</app-badge></li>
+                <li>
+                  <app-button variant="outline" size="sm" customClasses="h-7" aria-label="Add new board certification">
+                    + Add Certification
+                  </app-button>
+                </li>
+              </ul>
             </div>
-          </div>
+          </form>
 
           <div class="flex justify-end gap-4 pt-4 border-t">
             <app-button variant="outline">Cancel</app-button>
@@ -274,9 +293,8 @@
           </div>
         </app-tabs-content>
 
-        <!-- Practice Details Tab -->
         <app-tabs-content value="practice" customClasses="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <app-label for="consultationFee">Consultation Fee ($)</app-label>
               <app-input
@@ -303,30 +321,34 @@
             </div>
 
             <div class="md:col-span-2">
-              <app-label customClasses="mb-3 block">Available Days</app-label>
-              <div class="flex flex-wrap gap-2">
+              <h3 class="mb-3 block text-sm font-medium text-gray-700">Available Days</h3>
+              <ul class="flex flex-wrap gap-2 list-none p-0">
                 @for (day of doctor.availability; track day) {
-                  <app-badge customClasses="bg-green-100 text-green-700">
-                    {{ day }}
-                  </app-badge>
+                  <li>
+                    <app-badge customClasses="bg-green-100 text-green-700">
+                      {{ day }}
+                    </app-badge>
+                  </li>
                 }
-                <app-button
-                  variant="outline"
-                  size="sm"
-                  customClasses="h-7"
-                  routerLink="/doctor/schedule"
-                >
-                  Edit Schedule
-                </app-button>
-              </div>
+                <li>
+                  <app-button
+                    variant="outline"
+                    size="sm"
+                    customClasses="h-7"
+                    routerLink="/doctor/schedule"
+                  >
+                    Edit Schedule
+                  </app-button>
+                </li>
+              </ul>
             </div>
 
             <div class="md:col-span-2">
-              <app-label customClasses="mb-3 block">Working Hours</app-label>
+              <h3 class="mb-3 block text-sm font-medium text-gray-700">Working Hours</h3>
               <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2 text-gray-600">
-                  <lucide-icon [img]="Clock" class="w-4 h-4 text-gray-400"></lucide-icon>
-                  <span>9:00 AM - 5:00 PM</span>
+                  <lucide-icon [img]="Clock" class="w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
+                  <span aria-label="From 9 AM to 5 PM">9:00 AM - 5:00 PM</span>
                 </div>
                 <app-button
                   variant="outline"
@@ -339,31 +361,35 @@
             </div>
 
             <div class="md:col-span-2">
-              <app-label customClasses="mb-3 block">Services Offered</app-label>
-              <div class="flex flex-wrap gap-2">
-                <app-badge variant="secondary">General Consultation</app-badge>
-                <app-badge variant="secondary">Follow-up Visits</app-badge>
-                <app-badge variant="secondary">Health Screenings</app-badge>
-                <app-badge variant="secondary">Treatment Planning</app-badge>
-                <app-button variant="outline" size="sm" customClasses="h-7">
-                  + Add Service
-                </app-button>
-              </div>
+              <h3 class="mb-3 block text-sm font-medium text-gray-700">Services Offered</h3>
+              <ul class="flex flex-wrap gap-2 list-none p-0">
+                <li><app-badge variant="secondary">General Consultation</app-badge></li>
+                <li><app-badge variant="secondary">Follow-up Visits</app-badge></li>
+                <li><app-badge variant="secondary">Health Screenings</app-badge></li>
+                <li><app-badge variant="secondary">Treatment Planning</app-badge></li>
+                <li>
+                  <app-button variant="outline" size="sm" customClasses="h-7" aria-label="Add new service">
+                    + Add Service
+                  </app-button>
+                </li>
+              </ul>
             </div>
 
             <div class="md:col-span-2">
-              <app-label customClasses="mb-3 block">Insurance Accepted</app-label>
-              <div class="flex flex-wrap gap-2">
-                <app-badge variant="secondary">Blue Cross Blue Shield</app-badge>
-                <app-badge variant="secondary">Aetna</app-badge>
-                <app-badge variant="secondary">United Healthcare</app-badge>
-                <app-badge variant="secondary">Cigna</app-badge>
-                <app-button variant="outline" size="sm" customClasses="h-7">
-                  + Add Insurance
-                </app-button>
-              </div>
+              <h3 class="mb-3 block text-sm font-medium text-gray-700">Insurance Accepted</h3>
+              <ul class="flex flex-wrap gap-2 list-none p-0">
+                <li><app-badge variant="secondary">Blue Cross Blue Shield</app-badge></li>
+                <li><app-badge variant="secondary">Aetna</app-badge></li>
+                <li><app-badge variant="secondary">United Healthcare</app-badge></li>
+                <li><app-badge variant="secondary">Cigna</app-badge></li>
+                <li>
+                  <app-button variant="outline" size="sm" customClasses="h-7" aria-label="Add new insurance provider">
+                    + Add Insurance
+                  </app-button>
+                </li>
+              </ul>
             </div>
-          </div>
+          </form>
 
           <div class="flex justify-end gap-4 pt-4 border-t">
             <app-button variant="outline">Cancel</app-button>
@@ -373,17 +399,17 @@
           </div>
         </app-tabs-content>
 
-        <!-- Security Tab -->
         <app-tabs-content value="security" customClasses="space-y-6">
-          <div>
-            <h3 class="text-gray-900 mb-4 font-bold">Change Password</h3>
-            <div class="space-y-4 max-w-md">
+          <section aria-labelledby="password-heading">
+            <h3 id="password-heading" class="text-gray-900 mb-4 font-bold">Change Password</h3>
+            <form class="space-y-4 max-w-md">
               <div>
                 <app-label for="currentPassword">Current Password</app-label>
                 <app-input
                   [id]="'currentPassword'"
                   type="password"
                   customClasses="mt-2"
+                  autocomplete="current-password"
                 ></app-input>
               </div>
 
@@ -393,6 +419,7 @@
                   [id]="'newPassword'"
                   type="password"
                   customClasses="mt-2"
+                  autocomplete="new-password"
                 ></app-input>
               </div>
 
@@ -402,13 +429,14 @@
                   [id]="'confirmPassword'"
                   type="password"
                   customClasses="mt-2"
+                  autocomplete="new-password"
                 ></app-input>
               </div>
-            </div>
-          </div>
+            </form>
+          </section>
 
-          <div class="pt-6 border-t">
-            <h3 class="text-gray-900 mb-4 font-bold">Two-Factor Authentication</h3>
+          <section class="pt-6 border-t" aria-labelledby="2fa-heading">
+            <h3 id="2fa-heading" class="text-gray-900 mb-4 font-bold">Two-Factor Authentication</h3>
             <div class="flex items-center justify-between max-w-md">
               <div>
                 <p class="text-gray-900">Enable 2FA</p>
@@ -416,27 +444,27 @@
               </div>
               <app-badge customClasses="bg-green-100 text-green-700">Enabled</app-badge>
             </div>
-          </div>
+          </section>
 
-          <div class="pt-6 border-t">
-            <h3 class="text-gray-900 mb-4 font-bold">Login Activity</h3>
-            <div class="space-y-3 max-w-md">
-              <div class="flex items-center justify-between py-3 border-b">
+          <section class="pt-6 border-t" aria-labelledby="activity-heading">
+            <h3 id="activity-heading" class="text-gray-900 mb-4 font-bold">Login Activity</h3>
+            <ul class="space-y-3 max-w-md list-none p-0">
+              <li class="flex items-center justify-between py-3 border-b">
                 <div>
                   <p class="text-sm text-gray-900">Last login</p>
                   <p class="text-xs text-gray-500">Chrome on Windows • New York, NY</p>
                 </div>
                 <span class="text-xs text-gray-500">2 hours ago</span>
-              </div>
-              <div class="flex items-center justify-between py-3 border-b">
+              </li>
+              <li class="flex items-center justify-between py-3 border-b">
                 <div>
                   <p class="text-sm text-gray-900">Previous login</p>
                   <p class="text-xs text-gray-500">Safari on iPhone • New York, NY</p>
                 </div>
                 <span class="text-xs text-gray-500">Yesterday</span>
-              </div>
-            </div>
-          </div>
+              </li>
+            </ul>
+          </section>
 
           <div class="flex justify-end gap-4 pt-4 border-t">
             <app-button variant="outline">Cancel</app-button>
@@ -448,4 +476,4 @@
       </app-tabs>
     </app-card>
   </div>
-</div>
+</main>

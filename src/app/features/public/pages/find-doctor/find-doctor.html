@@ -1,270 +1,230 @@
 <div class="min-h-screen bg-gray-50">
   <a
-    href="#search-and-filters"
-    class="sr-only focus:not-sr-only"
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-blue-600"
   >
-    Skip to search and filters
+    Skip to content
   </a>
-  <main class="container mx-auto px-4 py-8">
-    <section aria-labelledby="search-and-filters">
+
+  <main id="main-content" class="container mx-auto px-4 py-8">
+    <section aria-labelledby="page-heading">
       <div class="mb-8">
-        <h1 id="search-and-filters" class="text-gray-900 mb-2">Find a Doctor</h1>
+        <h1 id="page-heading" class="text-gray-900 mb-2 text-3xl font-bold">Find a Doctor</h1>
         <p class="text-gray-600">Search and filter to find the perfect healthcare professional for you</p>
       </div>
   
-      <!-- Search & Filters -->
       <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
         <div class="flex flex-col md:flex-row gap-4">
           <div class="flex-1 relative">
-            <form role="search">
-              <lucide-icon  aria-hidden="true" [img]="Search" class="search w-5 h-5 text-gray-400" />
-              <app-input [type]="'text'"  aria-label="Search for doctors by name or specialization"  placeholder="Search doctors, specializations..." customClasses="pl-10" ></app-input>
+            <form role="search" (submit)="$event.preventDefault()">
+              <lucide-icon aria-hidden="true" [img]="Search" class="search w-5 h-5 text-gray-400" />
+              <app-input 
+                [type]="'text'" 
+                aria-label="Search for doctors by name or specialization" 
+                placeholder="Search doctors, specializations..." 
+                customClasses="pl-10">
+              </app-input>
             </form>
           </div>
+
           <div>
-            <app-select  aria-label="Select filters for doctors"  [value]="selected()" (valueChange)="selected.set($event)">
+            <app-select aria-label="Sort doctors by" [value]="selected()" (valueChange)="onSortChange($event)">
               <app-select-trigger customClasses="w-full md:w-48">
-                <app-select-value aria-selected placeholder="Sort by...">Sort by...</app-select-value>
+                <app-select-value placeholder="Sort by...">Sort by...</app-select-value>
               </app-select-trigger>
               <app-select-content>
                 @for (option of sortOptions; track $index) {
-                  <app-select-item  [value]="option.value">{{option.label}}</app-select-item>
+                  <app-select-item [value]="option.value">{{option.label}}</app-select-item>
                 }
               </app-select-content>
             </app-select>
           </div>
-          <app-button variant="outline"  [attr.aria-expanded]="mobileFilterOpen()"  aria-controls="mobile-filters" class="md:hidden flex items-center gap-2"
+
+          <app-button 
+            variant="outline" 
+            [attr.aria-expanded]="mobileFilterOpen()" 
+            aria-controls="mobile-filters-dialog" 
+            class="md:hidden flex items-center gap-2"
             (click)="mobileFilterOpen.set(!mobileFilterOpen())">
-            <lucide-icon  aria-hidden="true" [img]="SlidersHorizontal"  class=" w-4 h-4" /> Filters
+            <lucide-icon aria-hidden="true" [img]="SlidersHorizontal" class="w-4 h-4" /> 
+            Filters
           </app-button>
         </div>
       </div>
     </section>
-    <!-- Header -->
 
     <div class="flex gap-6">
-      <!-- Sidebar -->
-      @if (!mobileFilterOpen()) {
-        <ng-container *ngTemplateOutlet="sideBarDeskTop"></ng-container>
-      }
+      <aside class="hidden md:block w-80 shrink-0" aria-label="Filters">
+        <div class="bg-white rounded-lg shadow-sm mb-3 p-6 sticky top-20">
+          <div class="flex items-center gap-2 mb-6">
+            <lucide-icon aria-hidden="true" [img]="Filter" class="w-5 h-5 text-gray-600" />
+            <h2 class="text-gray-900 font-semibold">Filters</h2>
+          </div>
+          <ng-container *ngTemplateOutlet="filterContent; context: { suffix: 'desktop' }"></ng-container>
+        </div>
+      </aside>
 
-      <!-- Doctor Grid -->
-      <section class="flex-1"  aria-labelledby="doctor-results-heading" >
-        <h2 id="doctor-results-heading" class="sr-only">
-          Doctor search results
-        </h2>
+      <section class="flex-1" aria-labelledby="results-heading">
+        <h2 id="results-heading" class="sr-only">Doctor search results</h2>
 
-        <div class="mb-4 text-sm text-gray-600">Showing {{ mockDoctors.length }} doctors</div>
+        <div class="mb-4 text-sm text-gray-600" role="status" aria-live="polite">
+          Showing {{ mockDoctors.length }} doctors
+        </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           @for (doctor of mockDoctors; track doctor.id) {
-            <app-doctor-card [doctor]="doctor"
-              (bookNow)="onNavigate('doctor-details', doctor.id)"
+            <app-doctor-card 
+              [doctor]="doctor"
+              (bookNow)="onNavigate('appointment-booking', doctor.id)"
               (viewProfile)="onNavigate('doctor-details', doctor.id)" />
           }
         </div>
 
-        <!-- Pagination -->
-        <div class="mt-8 flex justify-center gap-2">
-          <app-button variant="outline" [disabled]="true">Previous</app-button>
-          <app-button variant="outline" aria-current="page" customClasses="bg-[#00bfa6] text-white hover:bg-[#00a890]" >1</app-button>
+        <nav aria-label="Pagination" class="mt-8 flex justify-center gap-2">
+          <app-button variant="outline" [disabled]="true" aria-label="Previous page">Previous</app-button>
+          
+          <app-button 
+            variant="outline" 
+            aria-current="page" 
+            customClasses="bg-[#00bfa6] text-white hover:bg-[#00a890]">
+            1
+          </app-button>
+          
           <app-button variant="outline">2</app-button>
           <app-button variant="outline">3</app-button>
-          <app-button variant="outline">Next</app-button>
-        </div>
+          <app-button variant="outline" aria-label="Next page">Next</app-button>
+        </nav>
       </section>
     </div>
   </main>
 </div>
 
-<!-- Mobile Filter Sheet -->
 @if (mobileFilterOpen()) {
   <div 
-    class="fixed inset-0 bg-black/50 z-51 flex"
+    id="mobile-filters-dialog"
+    class="fixed inset-0 bg-black/50 z-50 flex"
     role="dialog"
     aria-modal="true"
     aria-labelledby="mobile-filters-title">
-    <div class="bg-white w-80  h-full overflow-y-auto p-6">
+    
+    <div class="bg-white w-80 h-full overflow-y-auto p-6 shadow-xl">
       <div class="flex items-center justify-between mb-6">
-        <h2  id="mobile-filters-title" class="text-lg font-semibold">Filters</h2>
-        <button class="z-55" aria-label="Close filters"  (click)="mobileFilterOpen.set(false)">✕</button>
+        <h2 id="mobile-filters-title" class="text-lg font-semibold flex items-center gap-2">
+          <lucide-icon aria-hidden="true" [img]="Filter" class="w-5 h-5" /> Filters
+        </h2>
+        <button 
+          class="p-2 hover:bg-gray-100 rounded-full" 
+          aria-label="Close filters" 
+          (click)="mobileFilterOpen.set(false)">
+          ✕
+        </button>
       </div>
-      <div class="mt-2 flex flex-col items-center">
-        <ng-container *ngTemplateOutlet="sideBarMobile"></ng-container>
+      
+      <div class="mt-2 flex flex-col">
+        <ng-container *ngTemplateOutlet="filterContent; context: { suffix: 'mobile' }"></ng-container>
       </div>
     </div>
   </div>
 }
 
-
-  <ng-template #sideBarDeskTop >
-    <aside   aria-labelledby="filters-heading" class="hidden md:block w-80 shrink-0">
-      <div class="bg-white rounded-lg shadow-sm mb-3 p-6 sticky top-20">
-        <div class="flex items-center gap-2 mb-6">
-          <lucide-icon  aria-hidden="true" [img]="Filter" class="w-5 h-5 text-gray-600" />
-          <h2 id="filters-heading" class="text-gray-900">Filters</h2>
-        </div>
-
-        <!-- Filter Sidebar -->
-        <div class="space-y-6">
-          <!-- Search -->
-          <div>
-            <app-label for="search" >Search</app-label>
-            <div class="relative mt-2">
-              <lucide-icon  aria-hidden="true" [img]="Search"
-                class="search w-4 h-4 text-gray-400"
-                />
-              <app-input [id]="'search'" placeholder="Doctor name..." customClasses="pl-10" />
-            </div>
-          </div>
-
-          <!-- Specializations -->
-          <div>
-            <app-label customClasses="mb-3 block">Specialization</app-label>
-            <div class="space-y-3 max-h-64 overflow-y-auto">
-              @for (spec of specializations; track spec) {
-                <div class="flex items-center space-x-2">
-                  <app-checkbox [id]="spec" customClasses="mr-2 ml-1" />
-                  <app-label [for]="spec" customClasses="text-sm text-gray-700 cursor-pointer">{{ spec }}</app-label>
-                </div>
-              }
-            </div>
-          </div>
-
-          <!-- Gender -->
-          <div>
-            <app-label customClasses="mb-3 block ">Gender</app-label>
-            <div class="space-y-3">
-              <div class="flex items-center space-x-2">
-                <app-checkbox [id]="'male'"  customClasses="mr-2 ml-1" /> <app-label for="male" class="text-sm text-gray-700 cursor-pointer">Male</app-label>
-              </div>
-              <div class="flex items-center space-x-2">
-                <app-checkbox [id]="'female'"  customClasses="mr-2 ml-1" /> <app-label for="female" class="text-sm text-gray-700 cursor-pointer">Female</app-label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Price Range -->
-          <div>
-            <app-label customClasses="mb-3 block">
-              Price Range: ${{ priceRange()[0] }} - ${{ priceRange()[1] }}
-            </app-label>
-            <app-slider [value]="priceRange()" (valueChange)="onPriceChange($event)" [min]="0" [max]="300"  class="mt-4"/>
-          </div>
-
-          <!-- Location -->
-          <div>
-            <app-label for="location" customClasses="mb-3 block">Location</app-label>
-            <app-input [id]="'location'" placeholder="City or ZIP code" class="mt-2" />
-          </div>
-
-          <!-- Days -->
-          <div>
-            <app-label customClasses="mb-3 block">Available Days</app-label>
-            <div class="space-y-2">
-              @for (day of ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']; track day) {
-                <div class="flex items-center space-x-2">
-                  <app-checkbox [id]="day"  customClasses="mr-2 ml-1"/> <app-label [for]="day"
-                    class="text-sm text-gray-700 cursor-pointer">{{ day }}</app-label>
-                </div>
-              }
-            </div>
-          </div>
-
-          <!-- Reset -->
-          <app-button variant="outline" class="w-full mt-6" (click)="resetFilters()">Reset Filters</app-button>
-        </div>
-      </div>
-    </aside>
-  </ng-template >
-
-
-<ng-template #sideBarMobile >
-  <aside
-    id="mobile-filters"
-    class="fixed w-80 inset-0 z-50 flex justify-center bg-white p-4"
-  >
-    <div class="bg-white rounded-lg  w-full max-w-sm p-4 overflow-y-auto">
-      <!-- Header -->
-      <div class="flex items-center gap-2 mb-4 justify-center">
-        <lucide-icon  aria-hidden="true" [img]="Filter" class="w-5 h-5 text-gray-600" />
-        <h2 class="text-gray-900">Filters</h2>
-      </div>
-
-      <!-- Filter Sidebar -->
-      <div class="space-y-4">
-        <!-- Search -->
-        <div>
-          <app-label>Search</app-label>
-          <div class="relative mt-2">
-            <lucide-icon  aria-hidden="true" [img]="Search" class="search w-4 h-4 text-gray-400" />
-            <app-input placeholder="Doctor name..." customClasses="pl-10" />
-          </div>
-        </div>
-
-        <!-- Specializations -->
-        <div>
-          <app-label customClasses="mb-2 block">Specialization</app-label>
-          <div class="space-y-2 max-h-48 overflow-y-auto">
-            @for (spec of specializations; track spec) {
-              <div class="flex items-center space-x-2">
-                <app-checkbox [id]="spec" customClasses="mr-2 ml-1" />
-                <app-label [for]="spec" class="text-sm text-gray-700 cursor-pointer">{{ spec }}</app-label>
-              </div>
-            }
-          </div>
-        </div>
-
-        <!-- Gender -->
-        <div>
-          <app-label customClasses="mb-2 block">Gender</app-label>
-          <div class="space-y-2">
-            <div class="flex items-center space-x-2">
-              <app-checkbox [id]="'male'" customClasses="mr-2 ml-1" />
-              <app-label for="male" class="text-sm text-gray-700 cursor-pointer">Male</app-label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <app-checkbox [id]="'female'" customClasses="mr-2 ml-1" />
-              <app-label for="female" class="text-sm text-gray-700 cursor-pointer">Female</app-label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Price Range -->
-        <div>
-          <app-label customClasses="mb-2 block">
-            Price Range: ${{ priceRange()[0] }} - ${{ priceRange()[1] }}
-          </app-label>
-          <app-slider [value]="priceRange()" [min]="0" [max]="300" class="mt-2" />
-        </div>
-
-        <!-- Location -->
-        <div>
-          <app-label customClasses="mb-2 block">Location</app-label>
-          <app-input placeholder="City or ZIP code" class="mt-1" />
-        </div>
-
-        <!-- Days -->
-        <div>
-          <app-label customClasses="mb-2 block">Available Days</app-label>
-          <div class="space-y-1">
-            @for (day of ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']; track day) {
-              <div class="flex items-center space-x-2">
-                <app-checkbox [id]="day" customClasses="mr-2 ml-1" />
-                <app-label [for]="day" class="text-sm text-gray-700 cursor-pointer">{{ day }}</app-label>
-              </div>
-            }
-          </div>
-        </div>
-
-        <!-- Reset -->
-        <div class="flex gap-4">
-          <app-button variant="outline" class="w-full mt-4" (click)="resetFilters()">Reset Filters</app-button>
-          <app-button variant="outline" class="w-full mt-4" (click)="mobileFilterOpen.set(false)">
-            Apply Filters
-          </app-button>
-        </div>
+<ng-template #filterContent let-suffix="suffix">
+  <div class="space-y-6">
+    
+    <div>
+      <app-label [for]="'search-' + suffix">Search Name</app-label>
+      <div class="relative mt-2">
+        <lucide-icon aria-hidden="true" [img]="Search" class="search w-4 h-4 text-gray-400" />
+        <app-input     
+          [id]="'search-' + suffix"
+          [value]="searchTerm()"
+          placeholder="Doctor name..."
+          customClasses="pl-10"
+          (commitChange)="onSearchChange($event)" />
       </div>
     </div>
-  </aside>
+
+    <fieldset>
+      <legend class="text-sm font-medium text-gray-900 mb-3">Specialization</legend>
+      <div class="space-y-3 max-h-64 overflow-y-auto">
+        @for (spec of specializations; track spec) {
+          <div class="flex items-center space-x-2">
+            <app-checkbox 
+              [id]="spec + '-' + suffix" 
+              [checked]="selectedSpecs().includes(spec)" 
+              (checkedChange)="onSpecChecked($event, spec)" 
+              customClasses="mr-2 ml-1" />
+            <app-label [for]="spec + '-' + suffix" customClasses="text-sm text-gray-700 cursor-pointer">
+              {{ spec }}
+            </app-label>
+          </div>
+        }
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend class="text-sm font-medium text-gray-900 mb-3">Gender</legend>
+      <div class="space-y-3">
+        <div class="flex items-center space-x-2">
+          <app-checkbox 
+            [id]="'male-' + suffix" 
+            [checked]="selectedGender().includes('male')" 
+            (checkedChange)="onGenderChecked($event, 'male')" 
+            customClasses="mr-2 ml-1" /> 
+          <app-label [for]="'male-' + suffix" class="text-sm text-gray-700 cursor-pointer">Male</app-label>
+        </div>
+        <div class="flex items-center space-x-2">
+          <app-checkbox 
+            [id]="'female-' + suffix" 
+            [checked]="selectedGender().includes('female')" 
+            (checkedChange)="onGenderChecked($event, 'female')" 
+            customClasses="mr-2 ml-1" /> 
+          <app-label [for]="'female-' + suffix" class="text-sm text-gray-700 cursor-pointer">Female</app-label>
+        </div>
+      </div>
+    </fieldset>
+
+    <div>
+      <app-label [id]="'price-label-' + suffix" customClasses="mb-3 block">
+        Price Range: ${{ priceRange()[0] }} - ${{ priceRange()[1] }}
+      </app-label>
+      <app-slider 
+        [attr.aria-labelledby]="'price-label-' + suffix"
+        [value]="priceRange()" 
+        (valueChange)="onPriceChange($event)" 
+        [min]="0" 
+        [max]="300" 
+        class="mt-4"/>
+    </div>
+
+    <div>
+      <app-label [for]="'location-' + suffix" customClasses="mb-3 block">Location</app-label>
+      <app-input 
+        [id]="'location-' + suffix" 
+        [value]="location()" 
+        (valueChange)="onLocationInput($event)" 
+        (commitChange)="onLocationBlur($event)" 
+        placeholder="City or ZIP code" 
+        class="mt-2" />
+    </div>
+
+    <fieldset>
+      <legend class="text-sm font-medium text-gray-900 mb-3">Available Days</legend>
+      <div class="space-y-2">
+        @for (day of ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']; track day) {
+          <div class="flex items-center space-x-2">
+            <app-checkbox 
+              [id]="day + '-' + suffix" 
+              [checked]="selectedDays().includes(day)" 
+              (checkedChange)="onDayChecked($event, day)" 
+              customClasses="mr-2 ml-1"/> 
+            <app-label [for]="day + '-' + suffix" class="text-sm text-gray-700 cursor-pointer">
+              {{ day }}
+            </app-label>
+          </div>
+        }
+      </div>
+    </fieldset>
+
+    <app-button variant="outline" class="w-full mt-6" (click)="resetFilters()">Reset Filters</app-button>
+  </div>
 </ng-template>

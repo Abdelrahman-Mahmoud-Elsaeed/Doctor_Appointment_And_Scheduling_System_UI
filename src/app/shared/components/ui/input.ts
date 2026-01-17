@@ -1,4 +1,4 @@
-import { Component, computed, input, ViewEncapsulation } from '@angular/core';
+import { Component, computed, effect, ElementRef, input, output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '@utils/cn.util';
 
@@ -10,6 +10,7 @@ import { cn } from '@utils/cn.util';
   imports: [CommonModule],
   template: `
     <input
+      #input
       [type]="type()"
       [attr.data-slot]="'input'"
       [disabled]="disabled()"
@@ -18,6 +19,8 @@ import { cn } from '@utils/cn.util';
       [name]="name()"
       [id]="id()"
       [class]="hostClasses()"
+      (input)="onInput($event)"
+      (blur)="onBlur($event)"
     />
   `,
   styles: [
@@ -34,7 +37,8 @@ import { cn } from '@utils/cn.util';
 })
 export class InputComponent {
   // --- Inputs ---
-
+  @ViewChild('input', { static: true })
+  private inputRef!: ElementRef<HTMLInputElement>;
   /**
    * The type of the input (e.g., 'text', 'password', 'email', 'file').
    * Maps directly to the HTML 'type' attribute.
@@ -54,7 +58,9 @@ export class InputComponent {
   value = input<string | number | null >('');
   name = input<string | undefined>();
   id = input<string | undefined>('');
-
+  
+  valueChange = output<string>();
+  commitChange = output<string>();
   // --- Computed Classes ---
 
   protected hostClasses = computed(() =>
@@ -72,4 +78,13 @@ export class InputComponent {
       this.customClasses(),
     ),
   );
+  protected onInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.valueChange.emit(target.value);
+  }
+  
+  protected onBlur(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.commitChange.emit(target.value);
+  }
 }
