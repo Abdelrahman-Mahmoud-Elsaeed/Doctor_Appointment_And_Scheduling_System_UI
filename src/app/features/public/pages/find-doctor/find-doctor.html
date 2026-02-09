@@ -68,11 +68,18 @@
         <h2 id="results-heading" class="sr-only">Doctor search results</h2>
 
         <div class="mb-4 text-sm text-gray-600" role="status" aria-live="polite">
-          Showing {{ mockDoctors.length }} doctors
+          Showing {{ allDoctors.length }} doctors
         </div>
 
+        @if (page() > totalPages().length) {
+          <div class="p-4 mb-4 text-red-700 bg-red-100 border-l-4 border-red-500">
+            <p>This page does not exist. Total pages available: {{ totalPages().length }}</p>
+            <button [routerLink]="[]"  [queryParams]="{ page: 1 }" class="underline font-bold cursor-pointer">Return to first page</button>
+          </div>
+        }
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          @for (doctor of mockDoctors; track doctor.id) {
+          @for (doctor of displayedDoctors(); track doctor.id) {
             <app-doctor-card 
               [doctor]="doctor"
               (bookNow)="onNavigate('appointment-booking', doctor.id)"
@@ -80,20 +87,43 @@
           }
         </div>
 
-        <nav aria-label="Pagination" class="mt-8 flex justify-center gap-2">
-          <app-button variant="outline" [disabled]="true" aria-label="Previous page">Previous</app-button>
-          
-          <app-button 
-            variant="outline" 
-            aria-current="page" 
-            customClasses="bg-[#00bfa6] text-white hover:bg-[#00a890]">
-            1
-          </app-button>
-          
-          <app-button variant="outline">2</app-button>
-          <app-button variant="outline">3</app-button>
-          <app-button variant="outline" aria-label="Next page">Next</app-button>
-        </nav>
+        @if (totalPages().length > 1) {
+          <nav aria-label="Pagination" class="mt-8 flex justify-center gap-2">
+            
+            <app-button 
+              variant="outline" 
+              [disabled]="page() === 1" 
+              aria-label="Previous page" 
+              (click)="changePage(page() - 1)">
+              Previous
+            </app-button>
+
+            @for (p of totalPages(); track $index) {
+              <app-button
+                variant="outline"
+                [routerLink]="[]"
+                [queryParams]="{ page: p }"
+                queryParamsHandling="merge"
+                [customClasses]="page() === p ? 'bg-[#00bfa6] text-white hover:bg-[#00a890]' : ''"
+                [attr.aria-current]="page() === p ? 'page' : null">
+                {{ p }}
+              </app-button>
+            }
+
+            <app-button 
+              variant="outline" 
+              [disabled]="page() === totalPages().length" 
+              (click)="changePage(page() + 1)" 
+              aria-label="Next page">
+              Next
+            </app-button>
+
+          </nav>
+        } @else if (filteredDoctors().length === 0) {
+            <div class="text-center py-10 text-gray-500">
+                No doctors found matching your criteria.
+            </div>
+        }
       </section>
     </div>
   </main>
