@@ -28,7 +28,7 @@
           </div>
 
           <div>
-            <app-select aria-label="Sort doctors by" [value]="selected()" (valueChange)="onSortChange($event)">
+            <app-select aria-label="Sort doctors by" [value]="selectedSort()" (valueChange)="onSortChange($event)">
               <app-select-trigger customClasses="w-full md:w-48">
                 <app-select-value placeholder="Sort by...">Sort by...</app-select-value>
               </app-select-trigger>
@@ -55,7 +55,7 @@
 
     <div class="flex gap-6">
       <aside class="hidden md:block w-80 shrink-0" aria-label="Filters">
-        <div class="bg-white rounded-lg shadow-sm mb-3 p-6 sticky top-20">
+          <div class="bg-white rounded-lg shadow-sm mb-3 p-6 sticky top-20">
           <div class="flex items-center gap-2 mb-6">
             <lucide-icon aria-hidden="true" [img]="Filter" class="w-5 h-5 text-gray-600" />
             <h2 class="text-gray-900 font-semibold">Filters</h2>
@@ -68,18 +68,18 @@
         <h2 id="results-heading" class="sr-only">Doctor search results</h2>
 
         <div class="mb-4 text-sm text-gray-600" role="status" aria-live="polite">
-          Showing {{ allDoctors.length }} doctors
+          Showing {{ store.filteredDoctors().length }} doctors
         </div>
 
-        @if (page() > totalPages().length) {
+        @if (store.page() > store.totalPages().length) {
           <div class="p-4 mb-4 text-red-700 bg-red-100 border-l-4 border-red-500">
-            <p>This page does not exist. Total pages available: {{ totalPages().length }}</p>
+            <p>This page does not exist. Total pages available: {{ store.totalPages().length }}</p>
             <button [routerLink]="[]"  [queryParams]="{ page: 1 }" class="underline font-bold cursor-pointer">Return to first page</button>
           </div>
         }
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          @for (doctor of displayedDoctors(); track doctor.id) {
+          @for (doctor of store.displayedDoctors(); track doctor.id) {
             <app-doctor-card 
               [doctor]="doctor"
               (bookNow)="onNavigate('appointment-booking', doctor.id)"
@@ -87,39 +87,39 @@
           }
         </div>
 
-        @if (totalPages().length > 1) {
+        @if (store.totalPages().length > 1) {
           <nav aria-label="Pagination" class="mt-8 flex justify-center gap-2">
             
             <app-button 
               variant="outline" 
-              [disabled]="page() === 1" 
+              [disabled]="store.page() === 1" 
               aria-label="Previous page" 
-              (click)="changePage(page() - 1)">
+              (click)="changePage(store.page() - 1)">
               Previous
             </app-button>
 
-            @for (p of totalPages(); track $index) {
+            @for (p of store.totalPages(); track $index) {
               <app-button
                 variant="outline"
                 [routerLink]="[]"
                 [queryParams]="{ page: p }"
                 queryParamsHandling="merge"
-                [customClasses]="page() === p ? 'bg-[#00bfa6] text-white hover:bg-[#00a890]' : ''"
-                [attr.aria-current]="page() === p ? 'page' : null">
+                [customClasses]="store.page() === p ? 'bg-[#00bfa6] text-white hover:bg-[#00a890]' : ''"
+                [attr.aria-current]="store.page() === p ? 'page' : null">
                 {{ p }}
               </app-button>
             }
 
             <app-button 
               variant="outline" 
-              [disabled]="page() === totalPages().length" 
-              (click)="changePage(page() + 1)" 
+              [disabled]="store.page() === store.totalPages().length" 
+              (click)="changePage(store.page() + 1)" 
               aria-label="Next page">
               Next
             </app-button>
 
           </nav>
-        } @else if (filteredDoctors().length === 0) {
+        } @else if (store.filteredDoctors().length === 0) {
             <div class="text-center py-10 text-gray-500">
                 No doctors found matching your criteria.
             </div>
@@ -166,7 +166,7 @@
         <lucide-icon aria-hidden="true" [img]="Search" class="search w-4 h-4 text-gray-400" />
         <app-input     
           [id]="'search-' + suffix"
-          [value]="searchTerm()"
+          [value]="store.searchTerm()"
           placeholder="Doctor name..."
           customClasses="pl-10"
           (commitChange)="onSearchChange($event)" />
@@ -180,7 +180,7 @@
           <div class="flex items-center space-x-2">
             <app-checkbox 
               [id]="spec + '-' + suffix" 
-              [checked]="selectedSpecs().includes(spec)" 
+              [checked]="store.selectedSpecs().includes(spec)" 
               (checkedChange)="onSpecChecked($event, spec)" 
               customClasses="mr-2 ml-1" />
             <app-label [for]="spec + '-' + suffix" customClasses="text-sm text-gray-700 cursor-pointer">
@@ -197,7 +197,7 @@
         <div class="flex items-center space-x-2">
           <app-checkbox 
             [id]="'male-' + suffix" 
-            [checked]="selectedGender().includes('male')" 
+            [checked]="store.selectedGender().includes('male')" 
             (checkedChange)="onGenderChecked($event, 'male')" 
             customClasses="mr-2 ml-1" /> 
           <app-label [for]="'male-' + suffix" class="text-sm text-gray-700 cursor-pointer">Male</app-label>
@@ -205,7 +205,7 @@
         <div class="flex items-center space-x-2">
           <app-checkbox 
             [id]="'female-' + suffix" 
-            [checked]="selectedGender().includes('female')" 
+            [checked]="store.selectedGender().includes('female')" 
             (checkedChange)="onGenderChecked($event, 'female')" 
             customClasses="mr-2 ml-1" /> 
           <app-label [for]="'female-' + suffix" class="text-sm text-gray-700 cursor-pointer">Female</app-label>
@@ -215,14 +215,14 @@
 
     <div>
       <app-label [id]="'price-label-' + suffix" customClasses="mb-3 block">
-        Price Range: ${{ priceRange()[0] }} - ${{ priceRange()[1] }}
+        Price Range: ${{ store.priceRange()[0] }} - ${{ store.priceRange()[1] }}
       </app-label>
       <app-slider 
         [attr.aria-labelledby]="'price-label-' + suffix"
-        [value]="priceRange()" 
+        [value]="store.priceRange()" 
         (valueChange)="onPriceChange($event)" 
-        [min]="0" 
-        [max]="300" 
+        [min]="minLabel" 
+        [max]="maxLabel" 
         class="mt-4"/>
     </div>
 
@@ -230,7 +230,7 @@
       <app-label [for]="'location-' + suffix" customClasses="mb-3 block">Location</app-label>
       <app-input 
         [id]="'location-' + suffix" 
-        [value]="location()" 
+        [value]="store.location()" 
         (valueChange)="onLocationInput($event)" 
         (commitChange)="onLocationBlur($event)" 
         placeholder="City or ZIP code" 
@@ -244,7 +244,7 @@
           <div class="flex items-center space-x-2">
             <app-checkbox 
               [id]="day + '-' + suffix" 
-              [checked]="selectedDays().includes(day)" 
+              [checked]="store.selectedDays().includes(day)" 
               (checkedChange)="onDayChecked($event, day)" 
               customClasses="mr-2 ml-1"/> 
             <app-label [for]="day + '-' + suffix" class="text-sm text-gray-700 cursor-pointer">

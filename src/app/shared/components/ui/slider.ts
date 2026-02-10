@@ -74,7 +74,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy {
   value = input<number | number[]>();
   defaultValue = input<number | number[]>();
   min = input(0);
-  max = input(100);
+  max = input(500);
   step = input(1);
   styles = input<string | undefined>();
   orientation = input<'horizontal' | 'vertical'>('horizontal');
@@ -100,10 +100,8 @@ export class SliderComponent implements AfterViewInit, OnDestroy {
     const initial = Array.isArray(init) ? init : [init];
     this.internalValues.set(initial);
 
-    // Sync with external controlled value
     effect(() => {
-      const external = this.value();
-      
+      const external = this.value();      
       if (external !== undefined) {
         this.internalValues.set(Array.isArray(external) ? external : [external]);
       }
@@ -216,7 +214,11 @@ export class SliderComponent implements AfterViewInit, OnDestroy {
   mapPercentToValue(percent: number): number {
     const min = this.min();
     const max = this.max();
-    const stepped = Math.round((percent * (max - min) + min) / this.step()) * this.step();
+    
+    const rawValue = percent * (max - min) + min;
+
+    const stepped = Math.round((rawValue - min) / this.step()) * this.step() + min;
+
     return this.clampValue(stepped);
   }
 

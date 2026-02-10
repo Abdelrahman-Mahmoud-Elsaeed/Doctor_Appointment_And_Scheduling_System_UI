@@ -17,6 +17,7 @@
     "baseUrl": "src",
     "paths": {
       "@core/*": ["./app/core/*"],
+      "@services/*": ["./app/core/services/*"],
       "@features/*": ["./app/features/*"],
       "@shared/*": ["./app/shared/*"],
       "@layouts/*": ["./app/layouts/*"],
