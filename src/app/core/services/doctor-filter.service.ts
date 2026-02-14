@@ -22,6 +22,7 @@ export class DoctorFilterService {
     { value: 'experience', label: 'Most Experienced' },
   ]
   readonly searchTerm = computed(() => this.queryParams()?.get('search') ?? '');
+  readonly searchDrName = computed(() => this.queryParams()?.get('drname') ?? '');
   readonly selectedSpecs = computed(() => this.queryParams()?.getAll('spec') ?? []);
   readonly selectedGender = computed(() => this.queryParams()?.getAll('gender') ?? []);
   readonly selectedDays = computed(() => this.queryParams()?.getAll('day') ?? []);
@@ -60,17 +61,23 @@ readonly priceRange = computed(() => {
   readonly filteredDoctors = computed(() => {
     let doctors = this.allDoctors;
     const term = this.searchTerm().toLowerCase();
+    const name = this.searchDrName().toLowerCase();
     const specs = this.selectedSpecs();
     const genders = this.selectedGender();
     const days = this.selectedDays();
     const loc = this.location().toLowerCase();
     const [min, max] = this.priceRange();
 
-    // Clean Filter Logic
-    if (term) doctors = doctors.filter(d => d.name.toLowerCase().includes(term));
+    if (name) doctors = doctors.filter(d => d.name.toLowerCase().includes(name));
+    if (term) {
+      doctors = doctors.filter(d => 
+        d.name.toLowerCase().includes(term) || 
+        d.specialization.toLowerCase().includes(term)
+      );
+    }
     if (loc) doctors = doctors.filter(d => d.location.toLowerCase().includes(loc));
     if (specs.length) doctors = doctors.filter(d => specs.includes(d.specialization));
-    if (genders.length) doctors = doctors.filter(d => genders.includes(d.gender));
+    if (genders.length) doctors = doctors.filter(d => genders.includes(d.gender.toLowerCase()));
     if (days.length) doctors = doctors.filter(d => d.availability.some(day => days.includes(day)));
     if (min > this.true_min || max < this.true_max) { 
       doctors = doctors.filter(d => d.price >= min && d.price <= max);

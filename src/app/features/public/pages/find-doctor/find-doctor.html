@@ -22,6 +22,9 @@
                 [type]="'text'" 
                 aria-label="Search for doctors by name or specialization" 
                 placeholder="Search doctors, specializations..." 
+                [value]="store.searchTerm()"
+
+                (valueChange)="onSearch($event)" 
                 customClasses="pl-10">
               </app-input>
             </form>
@@ -166,10 +169,10 @@
         <lucide-icon aria-hidden="true" [img]="Search" class="search w-4 h-4 text-gray-400" />
         <app-input     
           [id]="'search-' + suffix"
-          [value]="store.searchTerm()"
+          [value]="store.searchDrName()"
           placeholder="Doctor name..."
           customClasses="pl-10"
-          (commitChange)="onSearchChange($event)" />
+          (valueChange)="onSearchName($event)" />
       </div>
     </div>
 

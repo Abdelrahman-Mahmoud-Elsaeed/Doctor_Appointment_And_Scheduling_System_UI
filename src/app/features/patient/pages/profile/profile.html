@@ -76,9 +76,9 @@
                     <div>
                       <app-label for="firstName">First Name</app-label>
                       <div class="relative mt-2">
-                        <lucide-icon aria-hidden="true" [img]="User" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></lucide-icon>
+                        <lucide-icon aria-hidden="true" [img]="User" class="ab w-4 h-4 text-gray-400"></lucide-icon>
                         <app-input 
-                          id="firstName" 
+                          [id]="'firstName'" 
                           [value]="'John'" 
                           customClasses="pl-10" 
                           autocomplete="given-name">
@@ -89,9 +89,9 @@
                     <div>
                       <app-label for="lastName">Last Name</app-label>
                       <div class="relative mt-2">
-                        <lucide-icon aria-hidden="true" [img]="User" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></lucide-icon>
+                        <lucide-icon aria-hidden="true" [img]="User" class="ab w-4 h-4 text-gray-400"></lucide-icon>
                         <app-input 
-                          id="lastName" 
+                          [id]="'lastName'" 
                           [value]="'Smith'" 
                           customClasses="pl-10" 
                           autocomplete="family-name">
@@ -102,9 +102,9 @@
                     <div>
                       <app-label for="email">Email</app-label>
                       <div class="relative mt-2">
-                        <lucide-icon aria-hidden="true" [img]="Mail" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></lucide-icon>
+                        <lucide-icon aria-hidden="true" [img]="Mail" class="ab w-4 h-4 text-gray-400"></lucide-icon>
                         <app-input 
-                          id="email" 
+                          [id]="'email'" 
                           type="email" 
                           [value]="mockPatient.email" 
                           customClasses="pl-10" 
@@ -116,9 +116,9 @@
                     <div>
                       <app-label for="phone">Phone</app-label>
                       <div class="relative mt-2">
-                        <lucide-icon aria-hidden="true" [img]="Phone" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></lucide-icon>
+                        <lucide-icon aria-hidden="true" [img]="Phone" class="ab w-4 h-4 text-gray-400"></lucide-icon>
                         <app-input 
-                          id="phone" 
+                          [id]="'phone'" 
                           type="tel" 
                           [value]="mockPatient.phone" 
                           customClasses="pl-10" 
@@ -130,9 +130,9 @@
                     <div>
                       <app-label for="dob">Date of Birth</app-label>
                       <div class="relative mt-2">
-                        <lucide-icon aria-hidden="true" [img]="Calendar" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></lucide-icon>
+                        <lucide-icon aria-hidden="true" [img]="Calendar" class="ab w-4 h-4 text-gray-400"></lucide-icon>
                         <app-input 
-                          id="dob" 
+                          [id]="'dob'" 
                           type="date" 
                           [value]="'1990-05-15'" 
                           customClasses="pl-10" 
@@ -144,7 +144,7 @@
                     <div>
                       <app-label for="gender">Gender</app-label>
                       <app-select [value]="selctedGender()" (valueChange)="selctedGender.set($event)">
-                        <app-select-trigger id="gender" customClasses="mt-2">
+                        <app-select-trigger [id]="'gender'" customClasses="mt-2">
                           <app-select-value>{{mockPatient.gender}}</app-select-value>
                         </app-select-trigger>
       
@@ -159,9 +159,9 @@
                     <div class="md:col-span-2">
                       <app-label for="address">Address</app-label>
                       <div class="relative mt-2">
-                        <lucide-icon aria-hidden="true" [img]="MapPin" class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"></lucide-icon>
+                        <lucide-icon aria-hidden="true" [img]="MapPin" class="ab w-4 h-4 text-gray-400"></lucide-icon>
                         <app-input 
-                          id="address" 
+                          [id]="'address'" 
                           [value]="'123 Main Street, New York, NY 10001'" 
                           customClasses="pl-10" 
                           autocomplete="street-address">
@@ -187,7 +187,7 @@
                     <div>
                       <app-label for="bloodType" customClasses="mb-3">Blood Type</app-label>
                       <app-select [value]="selectedBloodType()" (valueChange)="selectedBloodType.set($event)">
-                        <app-select-trigger id="bloodType" class="mt-2">
+                        <app-select-trigger [id]="'bloodType'" class="mt-2">
                           <app-select-value>O+</app-select-value>
                         </app-select-trigger>
                         <app-select-content>
@@ -199,27 +199,27 @@
     
                     <div>
                       <app-label for="height" customClasses="mb-3">Height (cm)</app-label>
-                      <app-input id="height" type="number" [value]="'175'" class="mt-2"></app-input>
+                      <app-input [id]="'height'" type="number" [value]="'175'" class="mt-2"></app-input>
                     </div>
     
                     <div>
                       <app-label for="weight" customClasses="mb-3">Weight (kg)</app-label>
-                      <app-input id="weight" type="number" [value]="'70'" class="mt-2"></app-input>
+                      <app-input [id]="'weight'" type="number" [value]="'70'" class="mt-2"></app-input>
                     </div>
     
                     <div>
                       <app-label for="emergencyContact" customClasses="mb-3">Emergency Contact</app-label>
-                      <app-input id="emergencyContact" type="tel" [value]="'+1 (555) 987-6543'" class="mt-2"></app-input>
+                      <app-input [id]="'emergencyContact'" type="tel" [value]="'+1 (555) 987-6543'" class="mt-2"></app-input>
                     </div>
     
                     <div class="md:col-span-2">
                       <app-label for="allergies" customClasses="mb-3">Allergies</app-label>
-                      <app-input id="allergies" placeholder="List any allergies (e.g., Penicillin, Peanuts)" class="mt-2"></app-input>
+                      <app-input [id]="'allergies'" placeholder="List any allergies (e.g., Penicillin, Peanuts)" class="mt-2"></app-input>
                     </div>
     
                     <div class="md:col-span-2">
                       <app-label for="conditions" customClasses="mb-3">Chronic Conditions</app-label>
-                      <app-input id="conditions" placeholder="List any chronic conditions" class="mt-2"></app-input>
+                      <app-input [id]="'conditions'" placeholder="List any chronic conditions" class="mt-2"></app-input>
                     </div>
                   </div>
                 </fieldset>
@@ -241,17 +241,17 @@
                     <div class="space-y-4 max-w-md">
                       <div>
                         <app-label for="currentPassword" customClasses="mb-3">Current Password</app-label>
-                        <app-input id="currentPassword" type="password" autocomplete="current-password"></app-input>
+                        <app-input [id]="'currentPassword'" type="password" autocomplete="current-password"></app-input>
                       </div>
       
                       <div>
                         <app-label for="newPassword" customClasses="mb-3">New Password</app-label>
-                        <app-input id="newPassword" type="password" class="mt-2" autocomplete="new-password"></app-input>
+                        <app-input [id]="'newPassword'" type="password" class="mt-2" autocomplete="new-password"></app-input>
                       </div>
       
                       <div>
                         <app-label for="confirmPassword" customClasses="mb-3">Confirm New Password</app-label>
-                        <app-input id="confirmPassword" type="password" class="mt-2" autocomplete="new-password"></app-input>
+                        <app-input [id]="'confirmPassword'" type="password" class="mt-2" autocomplete="new-password"></app-input>
                       </div>
                     </div>
                   </div>

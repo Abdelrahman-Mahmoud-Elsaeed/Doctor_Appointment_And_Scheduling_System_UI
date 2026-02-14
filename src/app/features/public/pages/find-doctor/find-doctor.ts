@@ -10,7 +10,7 @@ import { DoctorCardComponent } from '@components/cards/doctor-card/doctor-card';
 import { LucideAngularModule, Search, Filter, SlidersHorizontal} from 'lucide-angular';
 import {  FormsModule } from '@angular/forms';
 import { SelectComponent, SelectTriggerComponent, SelectItemComponent, SelectValueComponent, SelectContentComponent } from "@ui/select";
-import { DoctorFilterService } from '@services/doctor-filter-service';
+import { DoctorFilterService } from '@core/services/doctor-filter.service';
 
 
 @Component({
@@ -68,9 +68,14 @@ export class FindDoctor {
     this.lastValue = value;
   }
 
-  onSearchChange(value: string) {
+  onSearch(value: string) {
     this.store.updateFilter({ search: value || null });
   }
+
+  onSearchName(value: string) {
+    this.store.updateFilter({ drname: value || null });
+  }
+
 
   onPriceChange(values: number[]) {
     this.store.updateFilter({ min: values[0], max: values[1] });
