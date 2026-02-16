@@ -6,11 +6,12 @@ import { AppointmentCardComponent } from "@shared/components/cards/appointment-c
 import { FormsModule } from '@angular/forms';
 import { SelectComponent, SelectTriggerComponent, SelectContentComponent, SelectItemComponent, SelectValueComponent } from "@ui/select";
 import { PatientAppointments } from '@core/services/patient-appointments.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-appointments',
   standalone:true,
-  imports: [CommonModule, AppTabsComponent, AppTabsContentComponent, AppTabsListComponent, AppTabsTriggerComponent, LucideAngularModule, FormsModule, AppointmentCardComponent, SelectComponent, SelectTriggerComponent, SelectContentComponent, SelectItemComponent, SelectValueComponent],
+  imports: [CommonModule, AppTabsComponent, AppTabsContentComponent, AppTabsListComponent, AppTabsTriggerComponent, LucideAngularModule, FormsModule, AppointmentCardComponent, SelectComponent, SelectTriggerComponent, SelectContentComponent, SelectItemComponent, SelectValueComponent, RouterLink],
   templateUrl: './appointments.html',
   styleUrl: './appointments.scss',
   providers:[

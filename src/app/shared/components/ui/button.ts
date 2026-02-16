@@ -66,18 +66,12 @@ export function buttonVariants(props: ButtonVariantProps): string {
   `,
   styles: [
     `
-      /*
-       This ensures that the <app-button> component itself
-       doesn't add an extra element to the DOM, and the <button>
-       from the template is rendered directly in its place.
-      */
       :host {
         display: contents;
       }
     `,
   ],
-  // Use ViewEncapsulation.None to allow Tailwind's [&>svg]
-  // and has-[>svg] selectors to pierce the <ng-content> boundary.
+
   encapsulation:ViewEncapsulation.None
 })
 export class ButtonComponent {

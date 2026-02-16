@@ -4,6 +4,7 @@ import { Routes } from '@angular/router';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Appointments } from './pages/appointments/appointments';
 import { Profile } from './pages/profile/profile';
+import { Reschedule } from './pages/reschedule/reschedule';
 
 
 export const PATIENT_ROUTES: Routes = [
@@ -11,4 +12,5 @@ export const PATIENT_ROUTES: Routes = [
   { path: 'dashboard', component: Dashboard, title: 'Patient Dashboard' },
   { path: 'appointments', component: Appointments, title: 'My Appointments' },
   { path: 'profile', component: Profile, title: 'Patient Profile' },
+  { path: 'reschedule/:id', component: Reschedule, title: 'Reschedule Appointment' },
 ];

@@ -45,10 +45,6 @@ export class LabelComponent {
    */
   htmlFor = input<string >('', { alias: 'for' });
 
-  /**
-   * Optional custom classes to merge with the label styles.
-   * Replaces the \`className\` prop from React.
-   */
   customClasses = input<string | undefined>();
 
   // --- Computed Classes ---

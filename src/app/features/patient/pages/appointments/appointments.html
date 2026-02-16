@@ -103,7 +103,7 @@
                 <app-appointment-card
                   [appointment]="appointment"
                   (cancel)="onCancel(appointment.id)"
-                  (reschedule)="onReschedule(appointment.id)">
+                  [routerLink]="['/patient/reschedule',appointment.id]">
                 </app-appointment-card>
               </li>
             </ul>
