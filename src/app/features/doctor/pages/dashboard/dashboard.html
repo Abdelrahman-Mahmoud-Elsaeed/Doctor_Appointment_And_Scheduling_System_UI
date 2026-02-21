@@ -8,9 +8,11 @@
 
     <section aria-label="Key Metrics" class="mb-8">
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <li *ngFor="let stat of mockDashboardStats">
-          <app-stats-card [label]="stat.label" [value]="stat.value" [icon]="stat.icon"></app-stats-card>
-        </li>
+        @for (stat of mockDashboardStats; track stat.label) {
+          <li>
+            <app-stats-card [label]="stat.label" [value]="stat.value" [icon]="stat.icon"></app-stats-card>
+          </li>
+        }
       </ul>
     </section>
 
@@ -32,12 +34,12 @@
             </div>
 
             <div class="space-y-4">
-              <ng-container *ngIf="todaysAppointments.length > 0; else noTodayAppointments">
-                <ul class="space-y-4">
-                  <li *ngFor="let appointment of todaysAppointments">
+              <ul class="space-y-4">
+                @for (appointment of todaysAppointments; track appointment.id || $index) {
+                  <li>
                     <article class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                       <img
-                        [src]="appointment.doctor.image"
+                        [src]="appointment.doctor.image || 'assets/default-avatar.png'"
                         alt="" 
                         class="w-12 h-12 rounded-full object-cover"
                         aria-hidden="true"
@@ -64,13 +66,12 @@
                       <app-button size="sm" variant="outline" aria-label="View details for Patient Name">View Details</app-button>
                     </article>
                   </li>
-                </ul>
-              </ng-container>
-              <ng-template #noTodayAppointments>
-                <p class="text-center py-8 text-gray-500">
-                  No appointments scheduled for today
-                </p>
-              </ng-template>
+                } @empty {
+                  <p class="text-center py-8 text-gray-500">
+                    No appointments scheduled for today
+                  </p>
+                }
+              </ul>
             </div>
           </app-card>
         </section>
@@ -85,24 +86,26 @@
             </div>
 
             <ul class="space-y-3">
-              <li *ngFor="let appointment of upcomingAppointments">
-                <button
-                  class="w-full flex items-center justify-between p-3 border rounded-lg hover:border-[#007bff] transition-colors cursor-pointer text-left focus:ring-2 focus:ring-[#007bff] focus:outline-none"
-                >
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center" aria-hidden="true">
-                      <lucide-icon [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+              @for (appointment of upcomingAppointments; track appointment.id || $index) {
+                <li>
+                  <button
+                    class="w-full flex items-center justify-between p-3 border rounded-lg hover:border-[#007bff] transition-colors cursor-pointer text-left focus:ring-2 focus:ring-[#007bff] focus:outline-none"
+                  >
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center" aria-hidden="true">
+                        <lucide-icon [img]="Calendar" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+                      </div>
+                      <div>
+                        <p class="text-sm text-gray-900 font-medium">Patient Appointment</p>
+                        <p class="text-xs text-gray-500">
+                          {{ formatDate(appointment.date) }} at {{ appointment.time }}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p class="text-sm text-gray-900 font-medium">Patient Appointment</p>
-                      <p class="text-xs text-gray-500">
-                        {{ formatDate(appointment.date) }} at {{ appointment.time }}
-                      </p>
-                    </div>
-                  </div>
-                  <app-badge variant="outline">{{ appointment.status }}</app-badge>
-                </button>
-              </li>
+                    <app-badge variant="outline">{{ appointment.status }}</app-badge>
+                  </button>
+                </li>
+              }
             </ul>
           </app-card>
         </section>
@@ -115,19 +118,19 @@
             <h3 id="actions-heading" class="text-gray-900 mb-4 font-semibold">Quick Actions</h3>
             <ul class="space-y-3">
               <li>
-                <app-button variant="outline" customClasses="w-full justify-start" (click)="viewPage('work-schedule')">
+                <app-button variant="outline" customClasses="w-full justify-start" routerLink="/doctor/schedule">
                   <lucide-icon aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2"></lucide-icon>
                   Manage Schedule
                 </app-button>
               </li>
               <li>
-                <app-button variant="outline" customClasses="w-full justify-start" (click)="viewPage('doctor-appointments')">
+                <app-button variant="outline" customClasses="w-full justify-start" routerLink="/doctor/appointments">
                   <lucide-icon aria-hidden="true" [img]="Calendar" class="w-4 h-4 mr-2"></lucide-icon>
                   View All Appointments
                 </app-button>
               </li>
               <li>
-                <app-button variant="outline" customClasses="w-full justify-start" (click)="viewPage('doctor-profile')">
+                <app-button variant="outline" customClasses="w-full justify-start" routerLink="/doctor/profile">
                   <lucide-icon aria-hidden="true" [img]="User" class="w-4 h-4 mr-2"></lucide-icon>
                   Update Profile
                 </app-button>
@@ -140,26 +143,28 @@
           <app-card customClasses="p-6">
             <h3 id="perf-heading" class="text-gray-900 mb-4 font-semibold">This Month</h3>
             <ul class="space-y-4">
-              <li *ngFor="let stat of [
+              @for (stat of [
                 { label: 'Appointments', value: 24, color: 'bg-[#007bff]', width: '75%', max: 32 },
                 { label: 'New Patients', value: 8, color: 'bg-green-500', width: '40%', max: 20 },
                 { label: 'Completion Rate', value: '95%', color: 'bg-purple-500', width: '95%', max: 100 }
-              ]">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-sm text-gray-600">{{ stat.label }}</span>
-                  <span class="text-gray-900 font-medium">{{ stat.value }}</span>
-                </div>
-                <div 
-                  class="w-full bg-gray-200 rounded-full h-2" 
-                  role="progressbar" 
-                  [attr.aria-label]="stat.label"
-                  [attr.aria-valuenow]="stat.value" 
-                  aria-valuemin="0" 
-                  [attr.aria-valuemax]="stat.max"
-                >
-                  <div [ngClass]="stat.color" class="h-2 rounded-full" [style.width]="stat.width"></div>
-                </div>
-              </li>
+              ]; track stat.label) {
+                <li>
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm text-gray-600">{{ stat.label }}</span>
+                    <span class="text-gray-900 font-medium">{{ stat.value }}</span>
+                  </div>
+                  <div 
+                    class="w-full bg-gray-200 rounded-full h-2" 
+                    role="progressbar" 
+                    [attr.aria-label]="stat.label"
+                    [attr.aria-valuenow]="stat.value" 
+                    aria-valuemin="0" 
+                    [attr.aria-valuemax]="stat.max"
+                  >
+                    <div [ngClass]="stat.color" class="h-2 rounded-full" [style.width]="stat.width"></div>
+                  </div>
+                </li>
+              }
             </ul>
           </app-card>
         </section>

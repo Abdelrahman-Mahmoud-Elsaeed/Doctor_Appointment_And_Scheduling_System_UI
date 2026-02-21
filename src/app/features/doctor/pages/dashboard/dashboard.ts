@@ -6,10 +6,11 @@ import { ButtonComponent } from "@shared/components/ui/button";
 import { StatsCardComponent } from "@shared/components/cards/stats-card/stats-card";
 import { mockAppointments,mockDashboardStats } from '@assets/mockData';
 import { LucideAngularModule,ArrowRight,Clock,User,Calendar } from 'lucide-angular';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule,LucideAngularModule, CardComponent, BadgeComponent, ButtonComponent, StatsCardComponent],
+  imports: [CommonModule, LucideAngularModule, CardComponent, BadgeComponent, ButtonComponent, StatsCardComponent, RouterLink],
   standalone:true,
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',

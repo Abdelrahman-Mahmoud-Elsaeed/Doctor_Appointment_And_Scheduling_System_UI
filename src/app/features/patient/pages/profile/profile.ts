@@ -7,9 +7,9 @@ import { InputComponent } from '@ui/input';
 import { LabelComponent } from '@ui/label';
 import { CardComponent } from '@ui/card';
 import {
-  AppTabsComponent, AppTabsListComponent,
-  AppTabsTriggerComponent,
-  AppTabsContentComponent
+  tabsComponent, tabsListComponent,
+  tabsTriggerComponent,
+  tabsContentComponent
 } from '@ui/taps';
 import {
   SelectComponent, SelectTriggerComponent,
@@ -30,10 +30,10 @@ import { LucideAngularModule, Camera, Mail, Phone, User, Calendar, MapPin } from
     InputComponent,
     LabelComponent,
     CardComponent,
-    AppTabsComponent,
-    AppTabsListComponent,
-    AppTabsTriggerComponent,
-    AppTabsContentComponent,
+    tabsComponent,
+    tabsListComponent,
+    tabsTriggerComponent,
+    tabsContentComponent,
     SelectComponent,
     SelectTriggerComponent,
     SelectContentComponent,

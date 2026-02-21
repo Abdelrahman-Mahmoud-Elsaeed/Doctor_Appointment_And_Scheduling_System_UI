@@ -17,8 +17,8 @@ export class PublicLayout {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
-        const url = (event as NavigationEnd).urlAfterRedirects;
-        this.hideHeaderFooter = !['/login', '/register','/doctor-login'].includes(url);
+        const urlPath = (event as NavigationEnd).urlAfterRedirects.split('?')[0];
+        this.hideHeaderFooter = !['/login', '/register', '/doctor-login'].includes(urlPath);
       });
   }
 }

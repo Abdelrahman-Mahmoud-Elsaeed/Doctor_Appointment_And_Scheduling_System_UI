@@ -6,14 +6,14 @@ import { ButtonComponent } from '@shared/components/ui/button';
 import { CalendarComponent } from '@shared/components/ui/calendar';
 import { CardComponent } from '@shared/components/ui/card';
 import { LabelComponent } from '@shared/components/ui/label';
-import { AppTabsComponent, AppTabsContentComponent, AppTabsListComponent, AppTabsTriggerComponent } from '@shared/components/ui/taps';
+import { tabsComponent, tabsContentComponent, tabsListComponent, tabsTriggerComponent } from '@shared/components/ui/taps';
 import { TextareaComponent } from '@shared/components/ui/textarea';
-import { LucideAngularModule , Star, MapPin,Briefcase,GraduationCap,Award,Calendar,Clock } from 'lucide-angular';
+import { LucideAngularModule , Star, MapPin,Briefcase,GraduationCap,Award,Calendar,Clock,Video } from 'lucide-angular';
 import { ActivatedRoute, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-doctor-details',
-  imports: [CommonModule, LucideAngularModule, LabelComponent, ButtonComponent, CalendarComponent, CardComponent, BadgeComponent, AppTabsContentComponent, AppTabsTriggerComponent, AppTabsListComponent, AppTabsComponent, TextareaComponent, RouterLink],
+  imports: [CommonModule, LucideAngularModule, LabelComponent, ButtonComponent, CalendarComponent, CardComponent, BadgeComponent, tabsContentComponent, tabsTriggerComponent, tabsListComponent, tabsComponent, TextareaComponent, RouterLink],
   standalone:true,
   templateUrl: './doctor-details.html',
   styleUrl: './doctor-details.scss',
@@ -21,6 +21,8 @@ import { ActivatedRoute, RouterLink } from "@angular/router";
 export class DoctorDetails {
   doctorId:string;
   doctor: any ;
+  appointmentType:'in-person' | 'video' = 'in-person';
+  selectedTime: string | null = null;
   constructor(private route: ActivatedRoute) {
     this.doctorId = this.route.snapshot.paramMap.get('id')!;
     this.doctor = mockDoctors.find(d => d.id === this.doctorId) || mockDoctors[0];
@@ -33,6 +35,7 @@ export class DoctorDetails {
   readonly  Award =  Award
   readonly  Calendar =  Calendar
   readonly  Clock =  Clock
+  readonly  Video =  Video
   selectedDate = new Date();
 
   timeSlots = [

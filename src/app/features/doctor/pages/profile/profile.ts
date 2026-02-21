@@ -23,10 +23,10 @@ import { InputComponent } from '@shared/components/ui/input';
 import { LabelComponent } from '@shared/components/ui/label';
 import { CardComponent } from '@shared/components/ui/card';
 import {
-  AppTabsComponent,
-  AppTabsContentComponent,
-  AppTabsListComponent,
-  AppTabsTriggerComponent,
+  tabsComponent,
+  tabsContentComponent,
+  tabsListComponent,
+  tabsTriggerComponent,
 } from '@shared/components/ui/taps';
 import { BadgeComponent } from '@shared/components/ui/badge';
 import {
@@ -56,10 +56,10 @@ import { RouterLink } from "@angular/router";
     SelectValueComponent,
     CardComponent,
     BadgeComponent,
-    AppTabsContentComponent,
-    AppTabsTriggerComponent,
-    AppTabsListComponent,
-    AppTabsComponent,
+    tabsContentComponent,
+    tabsTriggerComponent,
+    tabsListComponent,
+    tabsComponent,
     TextareaComponent,
     RouterLink
 ],

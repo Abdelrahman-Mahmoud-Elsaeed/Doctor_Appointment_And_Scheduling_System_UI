@@ -61,7 +61,7 @@
             </app-select-trigger>
 
             <app-select-content>
-              @for (option of filterOptions; track $index) {
+              @for (option of filterOptions; track option.value) {
                 <app-select-item [value]="option.value">
                   {{ option.label }}
                 </app-select-item>
@@ -77,7 +77,7 @@
             </app-select-trigger>
   
             <app-select-content>
-              @for (option of sortOptions; track $index) {
+              @for (option of sortOptions; track option.value) {
                 <app-select-item [value]="option.value">
                   {{ option.label }}
                 </app-select-item>
@@ -97,54 +97,68 @@
         </app-tabs-list>
 
         <app-tabs-content value="upcoming">
-          <ng-container *ngIf="confirmedAppointments.length; else emptyState">
+          @if (confirmedAppointments.length) {
             <ul class="space-y-4" aria-label="Upcoming appointments list">
-              <li *ngFor="let appointment of confirmedAppointments">
-                <app-appointment-card
-                  [appointment]="appointment"
-                  (cancel)="onCancel(appointment.id)"
-                  [routerLink]="['/patient/reschedule',appointment.id]">
-                </app-appointment-card>
-              </li>
+              @for (appointment of confirmedAppointments; track appointment.id) {
+                <li>
+                  <app-appointment-card
+                    [appointment]="appointment"
+                    (cancel)="onCancel(appointment.id)"
+                    [routerLink]="['/patient/reschedule', appointment.id]">
+                  </app-appointment-card>
+                </li>
+              }
             </ul>
-          </ng-container>
+          } @else {
+            <div class="text-center py-12" role="status">
+              <lucide-icon aria-hidden="true" [img]="Calendar" class="w-16 h-16 text-gray-300 mx-auto mb-4"></lucide-icon>
+              <p class="text-gray-500 font-medium">No appointments found</p>
+            </div>
+          }
         </app-tabs-content>
 
         <app-tabs-content value="pending">
-          <ng-container *ngIf="pendingAppointments.length; else emptyState">
+          @if (pendingAppointments.length) {
             <ul class="space-y-4" aria-label="Pending appointments list">
-              <li *ngFor="let appointment of pendingAppointments">
-                <app-appointment-card
-                  [appointment]="appointment"
-                  (cancel)="onCancel(appointment.id)"
-                  (reschedule)="onReschedule(appointment.id)">
-                </app-appointment-card>
-              </li>
+              @for (appointment of pendingAppointments; track appointment.id) {
+                <li>
+                  <app-appointment-card
+                    [appointment]="appointment"
+                    (cancel)="onCancel(appointment.id)"
+                    (reschedule)="onReschedule(appointment.id)">
+                  </app-appointment-card>
+                </li>
+              }
             </ul>
-          </ng-container>
+          } @else {
+            <div class="text-center py-12" role="status">
+              <lucide-icon aria-hidden="true" [img]="Calendar" class="w-16 h-16 text-gray-300 mx-auto mb-4"></lucide-icon>
+              <p class="text-gray-500 font-medium">No appointments found</p>
+            </div>
+          }
         </app-tabs-content>
 
         <app-tabs-content value="completed">
-          <ng-container *ngIf="completedAppointments.length; else emptyState">
+          @if (completedAppointments.length) {
             <ul class="space-y-4" aria-label="Completed appointments list">
-              <li *ngFor="let appointment of completedAppointments">
-                <app-appointment-card
-                  [appointment]="appointment"
-                  (cancel)="onCancel(appointment.id)"
-                  (reschedule)="onReschedule(appointment.id)">
-                </app-appointment-card>
-              </li>
+              @for (appointment of completedAppointments; track appointment.id) {
+                <li>
+                  <app-appointment-card
+                    [appointment]="appointment"
+                    (cancel)="onCancel(appointment.id)"
+                    (reschedule)="onReschedule(appointment.id)">
+                  </app-appointment-card>
+                </li>
+              }
             </ul>
-          </ng-container>
+          } @else {
+            <div class="text-center py-12" role="status">
+              <lucide-icon aria-hidden="true" [img]="Calendar" class="w-16 h-16 text-gray-300 mx-auto mb-4"></lucide-icon>
+              <p class="text-gray-500 font-medium">No appointments found</p>
+            </div>
+          }
         </app-tabs-content>
       </app-tabs>
-
-      <ng-template #emptyState>
-        <div class="text-center py-12" role="status">
-          <lucide-icon aria-hidden="true" [img]="Calendar" class="w-16 h-16 text-gray-300 mx-auto mb-4"></lucide-icon>
-          <p class="text-gray-500 font-medium">No appointments found</p>
-        </div>
-      </ng-template>
     </div>
   </main>
 </div>

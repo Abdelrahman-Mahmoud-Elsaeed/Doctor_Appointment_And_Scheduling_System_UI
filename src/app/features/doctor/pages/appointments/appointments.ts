@@ -3,15 +3,33 @@ import { BadgeComponent } from "@shared/components/ui/badge";
 import { CardComponent } from "@shared/components/ui/card";
 import { CalendarComponent } from "@shared/components/ui/calendar";
 import { ButtonComponent } from "@shared/components/ui/button";
-import { AppTabsContentComponent, AppTabsTriggerComponent, AppTabsListComponent, AppTabsComponent } from "@shared/components/ui/taps";
+import { tabsContentComponent, tabsTriggerComponent, tabsListComponent, tabsComponent } from "@shared/components/ui/taps";
 import { SelectItemComponent, SelectContentComponent, SelectTriggerComponent, SelectValueComponent, SelectComponent } from "@shared/components/ui/select";
 import { LucideAngularModule, Calendar, List, Clock, Filter } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
 import { mockAppointments } from '@assets/mockData';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-appointments',
-  imports: [CommonModule,LucideAngularModule,BadgeComponent, CardComponent, CalendarComponent, ButtonComponent, AppTabsContentComponent, AppTabsTriggerComponent, AppTabsListComponent, AppTabsComponent, SelectItemComponent, SelectContentComponent, SelectTriggerComponent, SelectValueComponent, SelectComponent],
+  imports: [
+    CommonModule,
+    LucideAngularModule,
+    BadgeComponent,
+    CardComponent,
+    CalendarComponent,
+    ButtonComponent,
+    tabsContentComponent,
+    tabsTriggerComponent,
+    tabsListComponent,
+    tabsComponent,
+    SelectItemComponent,
+    SelectContentComponent,
+    SelectTriggerComponent,
+    SelectValueComponent,
+    SelectComponent,
+    RouterLink
+],
   standalone:true,
   templateUrl: './appointments.html',
   styleUrl: './appointments.scss',

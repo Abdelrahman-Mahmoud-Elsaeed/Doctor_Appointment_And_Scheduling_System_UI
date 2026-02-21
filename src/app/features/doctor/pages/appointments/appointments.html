@@ -120,7 +120,7 @@
       </div>
     </section>
 
-    @if(view === 'list'){
+    @if (view === 'list') {
       <section aria-labelledby="list-view-heading">
         <h2 id="list-view-heading" class="sr-only">Appointment List</h2>
         
@@ -176,7 +176,7 @@
                           </div>
 
                           <div class="flex gap-2">
-                            <app-button size="sm" variant="outline">View Details</app-button>
+                            <app-button size="sm" variant="outline" routerLink="/doctor/appointment-details">View Details</app-button>
                             @if (appointment.status === 'confirmed') {
                               <app-button size="sm" customClasses="bg-[#007bff] hover:bg-[#0056b3]">Mark as Completed</app-button>
                               <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Cancel</app-button>
@@ -190,6 +190,8 @@
                       </div>
                     </article>
                   </li>
+                } @empty {
+                  <p class="text-center py-8 text-gray-500">No upcoming appointments.</p>
                 }
               </ul>
             </app-tabs-content>
@@ -231,7 +233,7 @@
                             </div>
                           </div>
                           <div class="flex gap-2">
-                            <app-button size="sm" variant="outline">View Details</app-button>
+                            <app-button size="sm" variant="outline" routerLink="/doctor/appointment-details">View Details</app-button>
                             <app-button size="sm" customClasses="bg-green-600 hover:bg-green-700">Confirm</app-button>
                             <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Decline</app-button>
                           </div>
@@ -239,6 +241,8 @@
                       </div>
                     </article>
                   </li>
+                } @empty {
+                  <p class="text-center py-8 text-gray-500">No pending appointments.</p>
                 }
               </ul>
             </app-tabs-content>
@@ -269,12 +273,14 @@
                             </div>
                           </div>
                           <div class="flex gap-2">
-                            <app-button size="sm" variant="outline">View Details</app-button>
+                            <app-button size="sm" variant="outline" routerLink="/doctor/appointment-details">View Details</app-button>
                           </div>
                         </div>
                       </div>
                     </article>
                   </li>
+                } @empty {
+                  <p class="text-center py-8 text-gray-500">No completed appointments.</p>
                 }
               </ul>
             </app-tabs-content>
@@ -282,7 +288,6 @@
         </app-card>
       </section>
     } @else {
-
       <section aria-labelledby="calendar-view-heading" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <h2 id="calendar-view-heading" class="sr-only">Calendar View</h2>
         
@@ -300,7 +305,7 @@
             {{ date ? (date | date:'MMMM d') : 'Select a date' }}
           </h3>
           <ul class="space-y-3">
-            <ng-container *ngFor="let appointment of mockAppointments.slice(0,3)">
+            @for (appointment of mockAppointments.slice(0,3); track $index) {
               <li>
                 <button class="w-full text-left p-3 border rounded-lg hover:border-[#007bff] focus:ring-2 focus:ring-[#007bff] focus:outline-none transition-colors cursor-pointer bg-white">
                   <div class="flex items-center justify-between mb-2">
@@ -311,7 +316,9 @@
                   <p class="text-xs text-gray-500 mt-1">{{ appointment.notes }}</p>
                 </button>
               </li>
-            </ng-container>
+            } @empty {
+              <li class="text-sm text-gray-500 py-4 text-center">No appointments on this date.</li>
+            }
           </ul>
         </app-card>
       </section>

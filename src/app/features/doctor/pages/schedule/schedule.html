@@ -78,7 +78,7 @@
           </div>
 
           <ul class="space-y-4">
-            <ng-container *ngFor="let day of weekDays">
+            @for (day of weekDays; track day.id) {
               <li>
                 <div class="border rounded-lg p-4">
                   <div class="flex items-center justify-between mb-4">
@@ -94,44 +94,50 @@
 
                   </div>
 
-                  <div *ngIf="day.id !== 'sunday'" class="space-y-3 ml-9">
+                  @if (day.id !== 'sunday') {
+                    <div class="space-y-3 ml-9">
 
-                    <div class="flex items-center gap-3">
-                      <app-select value="9:00 AM" placeholder="9:00 AM" customClasses="flex-1">
-                        <app-select-trigger [attr.aria-label]="'Start time for ' + day.label">
-                          <app-select-value />
-                        </app-select-trigger>
-                        <app-select-content>
-                          <app-select-item *ngFor="let time of timeSlots" [value]="time">
-                            {{ time }}
-                          </app-select-item>
-                        </app-select-content>
-                      </app-select>
+                      <div class="flex items-center gap-3">
+                        <app-select value="9:00 AM" placeholder="9:00 AM" customClasses="flex-1">
+                          <app-select-trigger [attr.aria-label]="'Start time for ' + day.label">
+                            <app-select-value />
+                          </app-select-trigger>
+                          <app-select-content>
+                            @for (time of timeSlots; track time) {
+                              <app-select-item [value]="time">
+                                {{ time }}
+                              </app-select-item>
+                            }
+                          </app-select-content>
+                        </app-select>
 
-                      <span class="text-gray-500" aria-hidden="true">to</span>
-                      <span class="sr-only">until</span>
+                        <span class="text-gray-500" aria-hidden="true">to</span>
+                        <span class="sr-only">until</span>
 
-                      <app-select value="5:00 PM" placeholder="5:00 PM" customClasses="flex-1">
-                        <app-select-trigger [attr.aria-label]="'End time for ' + day.label">
-                          <app-select-value />
-                        </app-select-trigger>
-                        <app-select-content>
-                          <app-select-item *ngFor="let time of timeSlots" [value]="time">
-                            {{ time }}
-                          </app-select-item>
-                        </app-select-content>
-                      </app-select>
+                        <app-select value="5:00 PM" placeholder="5:00 PM" customClasses="flex-1">
+                          <app-select-trigger [attr.aria-label]="'End time for ' + day.label">
+                            <app-select-value />
+                          </app-select-trigger>
+                          <app-select-content>
+                            @for (time of timeSlots; track time) {
+                              <app-select-item [value]="time">
+                                {{ time }}
+                              </app-select-item>
+                            }
+                          </app-select-content>
+                        </app-select>
 
-                      <app-button variant="ghost" size="sm" customClasses="shrink-0" [attr.aria-label]="'Remove ' + day.label + ' time slot'">
-                        <lucide-icon aria-hidden="true" [img]="Trash2" class="w-4 h-4 text-red-600" />
-                      </app-button>
+                        <app-button variant="ghost" size="sm" customClasses="shrink-0" [attr.aria-label]="'Remove ' + day.label + ' time slot'">
+                          <lucide-icon aria-hidden="true" [img]="Trash2" class="w-4 h-4 text-red-600" />
+                        </app-button>
+                      </div>
+
                     </div>
-
-                  </div>
+                  }
 
                 </div>
               </li>
-            </ng-container>
+            }
           </ul>
         </app-card>
 

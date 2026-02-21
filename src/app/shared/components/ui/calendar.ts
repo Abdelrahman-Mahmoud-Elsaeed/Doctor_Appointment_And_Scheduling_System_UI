@@ -22,6 +22,7 @@ interface CalendarDay {
                 <div class="flex justify-center pt-1 relative items-center w-full">
           <div class="flex items-center gap-1">
             <button
+              type="button"
               (click)="previousMonth()"
               [class]="cn(
                 'size-7 bg-transparent p-0 opacity-50 hover:opacity-100',
@@ -37,6 +38,7 @@ interface CalendarDay {
             </div>
 
             <button
+              type="button"
               (click)="nextMonth()"
               [class]="cn(
                 'size-7 bg-transparent p-0 opacity-50 hover:opacity-100',
@@ -71,6 +73,7 @@ interface CalendarDay {
                     )"
                   >
                     <button
+                      type="button"
                       (click)="onDayClick(day)"
                       [disabled]="day.isDisabled"
                       [class]="cn(

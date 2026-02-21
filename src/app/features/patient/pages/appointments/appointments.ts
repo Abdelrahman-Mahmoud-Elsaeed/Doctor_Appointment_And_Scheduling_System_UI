@@ -1,7 +1,7 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { LucideAngularModule, Calendar, Clock, Filter } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
-import { AppTabsComponent, AppTabsContentComponent, AppTabsListComponent, AppTabsTriggerComponent } from "@ui/taps";
+import { tabsComponent, tabsContentComponent, tabsListComponent, tabsTriggerComponent } from "@ui/taps";
 import { AppointmentCardComponent } from "@shared/components/cards/appointment-card/appointment-card";
 import { FormsModule } from '@angular/forms';
 import { SelectComponent, SelectTriggerComponent, SelectContentComponent, SelectItemComponent, SelectValueComponent } from "@ui/select";
@@ -11,7 +11,7 @@ import { RouterLink } from "@angular/router";
 @Component({
   selector: 'app-appointments',
   standalone:true,
-  imports: [CommonModule, AppTabsComponent, AppTabsContentComponent, AppTabsListComponent, AppTabsTriggerComponent, LucideAngularModule, FormsModule, AppointmentCardComponent, SelectComponent, SelectTriggerComponent, SelectContentComponent, SelectItemComponent, SelectValueComponent, RouterLink],
+  imports: [CommonModule, tabsComponent, tabsContentComponent, tabsListComponent, tabsTriggerComponent, LucideAngularModule, FormsModule, AppointmentCardComponent, SelectComponent, SelectTriggerComponent, SelectContentComponent, SelectItemComponent, SelectValueComponent, RouterLink],
   templateUrl: './appointments.html',
   styleUrl: './appointments.scss',
   providers:[

@@ -1,4 +1,4 @@
-import { Component, signal, computed, output, input } from '@angular/core';
+import { Component, signal, computed, output, input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Calendar, Clock, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-angular';
 
@@ -6,6 +6,7 @@ import { ButtonComponent } from '@ui/button';
 import { CardComponent } from '@ui/card';
 import { BadgeComponent } from '@ui/badge';
 import { RouterLink } from "@angular/router";
+import { RescheduleAppointment } from '@core/services/reschedule-appointment';
 
 @Component({
   selector: 'app-reschedule',
@@ -19,34 +20,22 @@ import { RouterLink } from "@angular/router";
 ],
   templateUrl: './reschedule.html',
   styleUrl: './reschedule.scss',
+  providers:[
+    RescheduleAppointment
+  ]
 })
 export class Reschedule {
   appointmentId = input<string>();
-  onNavigate = output<string>(); 
   selectedDate = signal<string>('');
   selectedTime = signal<string>('');
   showConfirmation = signal<boolean>(false);
+  rescheduleServeice = inject(RescheduleAppointment)
 
   // Constants & Mock Data
-  readonly timeSlots = {
-    morning: ['09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM'],
-    afternoon: ['02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM'],
-    evening: ['05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM']
-  };
+  readonly timeSlots = this.rescheduleServeice.timeSlots;
 
-  readonly currentAppointment = {
-    id: '1',
-    doctor: {
-      name: 'Dr. Sarah Johnson',
-      specialization: 'Cardiologist',
-      image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop'
-    },
-    date: 'Feb 20, 2026',
-    time: '10:00 AM',
-    type: 'In-Person Visit'
-  };
+  readonly currentAppointment = this.rescheduleServeice.currentAppointment;
 
-  // Icon Imports for Template
   readonly icons = { Calendar, Clock, ArrowLeft, CheckCircle, AlertCircle };
 
   readonly dates = Array.from({ length: 14 }, (_, i) => {
@@ -66,7 +55,5 @@ export class Reschedule {
     }
   }
 
-  handleNavigate(page: string) {
-    this.onNavigate.emit(page);
-  }
+
 }

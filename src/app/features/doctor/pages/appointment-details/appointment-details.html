@@ -1,0 +1,270 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="container mx-auto px-4">
+    
+    <app-button
+      variant="ghost"
+      customClasses="mb-6"
+      (click)="goBack()"
+    >
+      <lucide-icon [img]="ArrowLeftIcon" class="w-4 h-4 mr-2"></lucide-icon>
+      Back to Appointments
+    </app-button>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <div class="lg:col-span-2">
+        
+        <app-card customClasses="p-6">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <h1 class="text-gray-900 mb-2 text-2xl font-bold">Appointment Details</h1>
+              <p class="text-gray-600">Complete information about this appointment</p>
+            </div>
+            <app-badge
+              [customClasses]="getStatusBadgeClass(details().appointment.status)"
+              variant="outline"
+            >
+              {{ details().appointment.status }}
+            </app-badge>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+              <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center">
+                <lucide-icon [img]="CalendarIcon" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Date</p>
+                <p class="text-gray-900 font-medium">{{ details().appointment.date }}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+              <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center">
+                <lucide-icon [img]="ClockIcon" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Time</p>
+                <p class="text-gray-900 font-medium">{{ details().appointment.time }}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+              <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center">
+                @if (details().appointment.type === 'Video Consultation') {
+                  <lucide-icon [img]="VideoIcon" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+                } @else {
+                  <lucide-icon [img]="MapPinIcon" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+                }
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Type</p>
+                <p class="text-gray-900 font-medium">{{ details().appointment.type }}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+              <div class="w-10 h-10 bg-[#007bff]/10 rounded-lg flex items-center justify-center">
+                <lucide-icon [img]="ClockIcon" class="w-5 h-5 text-[#007bff]"></lucide-icon>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Duration</p>
+                <p class="text-gray-900 font-medium">{{ details().appointment.duration }}</p>
+              </div>
+            </div>
+          </div>
+
+          @if (details().appointment.type === 'In-Person Visit') {
+            <div class="mt-4 flex items-start gap-3 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <lucide-icon [img]="MapPinIcon" class="w-5 h-5 text-blue-600 mt-0.5"></lucide-icon>
+              <div>
+                <p class="text-sm text-blue-900 mb-1 font-medium">Location</p>
+                <p class="text-sm text-blue-700">{{ details().appointment.location }}</p>
+              </div>
+            </div>
+          }
+        </app-card>
+
+        <app-card customClasses="p-6 mt-6">
+          <h2 class="text-gray-900 mb-4 font-semibold text-xl">Reason for Visit</h2>
+          <p class="text-gray-700 mb-6">{{ details().reason }}</p>
+
+          <h2 class="text-gray-900 mb-4 font-semibold text-xl">Patient Notes</h2>
+          <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div class="flex items-start gap-2">
+              <lucide-icon [img]="FileTextIcon" class="w-5 h-5 text-yellow-600 mt-0.5"></lucide-icon>
+              <p class="text-gray-700">{{ details().notes }}</p>
+            </div>
+          </div>
+        </app-card>
+
+        <app-card customClasses="p-6 mt-6">
+          <app-tabs value="history">
+            <app-tabs-list>
+              <app-tabs-trigger value="history">Medical History</app-tabs-trigger>
+              <app-tabs-trigger value="visits">Previous Visits</app-tabs-trigger>
+            </app-tabs-list>
+
+            <app-tabs-content value="history" customClasses="space-y-4 mt-6">
+              @for (item of details().medicalHistory; track item.condition) {
+                <div class="p-4 border rounded-lg">
+                  <div class="flex items-start justify-between mb-2">
+                    <h3 class="text-gray-900 font-medium">{{ item.condition }}</h3>
+                    <app-badge variant="outline">{{ item.status }}</app-badge>
+                  </div>
+                  <p class="text-sm text-gray-600">Diagnosed: {{ item.diagnosedDate }}</p>
+                </div>
+              }
+            </app-tabs-content>
+
+            <app-tabs-content value="visits" class="space-y-4 mt-6">
+              @for (visit of details().previousVisits; track visit.date) {
+                <div class="p-4 border rounded-lg mt-4">
+                  <div class="flex items-center gap-2 mb-2">
+                    <lucide-icon [img]="CalendarIcon" class="w-4 h-4 text-[#007bff]"></lucide-icon>
+                    <span class="text-gray-900 font-medium">{{ visit.date }}</span>
+                  </div>
+                  <p class="text-sm text-gray-700 mb-1">{{ visit.reason }}</p>
+                  <p class="text-sm text-gray-600">{{ visit.notes }}</p>
+                </div>
+              }
+            </app-tabs-content>
+          </app-tabs>
+        </app-card>
+
+        <app-card customClasses="p-6 mt-6">
+          <h2 class="text-gray-900 mb-4 font-semibold text-xl">Actions</h2>
+          <div class="flex flex-wrap gap-3">
+            @if (details().appointment.status === 'pending') {
+              <app-button
+                customClasses="bg-green-600 hover:bg-green-700 text-white"
+                (click)="handleConfirm()"
+              >
+                <lucide-icon [img]="CheckCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
+                Confirm Appointment
+              </app-button>
+              <app-button
+                variant="outline"
+                customClasses="text-red-600 hover:text-red-700"
+                (click)="handleCancel()"
+              >
+                <lucide-icon [img]="XCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
+                Decline Appointment
+              </app-button>
+            }
+
+            @if (details().appointment.status === 'confirmed') {
+              <app-button
+                customClasses="bg-[#007bff] hover:bg-[#0056b3] text-white"
+                (click)="handleComplete()"
+              >
+                <lucide-icon [img]="CheckCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
+                Mark as Completed
+              </app-button>
+              <app-button
+                variant="outline"
+                customClasses="text-red-600 hover:text-red-700"
+                (click)="handleCancel()"
+              >
+                <lucide-icon [img]="XCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
+                Cancel Appointment
+              </app-button>
+            }
+
+            @if (details().appointment.status === 'completed') {
+              <app-badge customClasses="bg-blue-100 text-blue-700 border-blue-200 px-4 py-2">
+                <lucide-icon [img]="CheckCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
+                This appointment has been completed
+              </app-badge>
+            }
+          </div>
+        </app-card>
+      </div>
+
+      <div class="space-y-6">
+        <app-card customClasses="p-6">
+          <h2 class="text-gray-900 mb-4 font-semibold text-xl">Patient Information</h2>
+          
+          <div class="flex items-center gap-4 mb-6">
+            <img
+              [src]="details().patient.image"
+              [alt]="details().patient.name"
+              class="w-20 h-20 rounded-full object-cover"
+            />
+            <div>
+              <h3 class="text-gray-900 mb-1 font-semibold">{{ details().patient.name }}</h3>
+              <p class="text-sm text-gray-600">
+                {{ details().patient.age }} years • {{ details().patient.gender }}
+              </p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 text-sm">
+              <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                <lucide-icon [img]="PhoneIcon" class="w-4 h-4 text-gray-600"></lucide-icon>
+              </div>
+              <div>
+                <p class="text-gray-600 text-xs">Phone</p>
+                <p class="text-gray-900 font-medium">{{ details().patient.phone }}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 text-sm">
+              <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                <lucide-icon [img]="MailIcon" class="w-4 h-4 text-gray-600"></lucide-icon>
+              </div>
+              <div>
+                <p class="text-gray-600 text-xs">Email</p>
+                <p class="text-gray-900 font-medium">{{ details().patient.email }}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 text-sm">
+              <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                <lucide-icon [img]="UserIcon" class="w-4 h-4 text-gray-600"></lucide-icon>
+              </div>
+              <div>
+                <p class="text-gray-600 text-xs">Blood Type</p>
+                <p class="text-gray-900 font-medium">{{ details().patient.bloodType }}</p>
+              </div>
+            </div>
+          </div>
+        </app-card>
+
+        <app-card customClasses="p-6 bg-red-50 border-red-200 mt-6">
+          <h3 class="text-gray-900 mb-3 flex items-center gap-2 font-semibold">
+            <lucide-icon [img]="XCircleIcon" class="w-5 h-5 text-red-600"></lucide-icon>
+            Allergies
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            @for (allergy of details().patient.allergies; track allergy) {
+              <app-badge customClasses="bg-red-100 text-red-700 border-red-300">
+                {{ allergy }}
+              </app-badge>
+            }
+          </div>
+        </app-card>
+
+        <app-card customClasses="p-6 mt-6">
+          <h3 class="text-gray-900 mb-4 font-semibold text-xl">Quick Actions</h3>
+          <div >
+            <app-button variant="outline" customClasses="w-full justify-start mt-2">
+              <lucide-icon [img]="MailIcon" class="w-4 h-4 mr-2"></lucide-icon>
+              Send Message
+            </app-button>
+            <app-button variant="outline" customClasses="w-full justify-start mt-2">
+              <lucide-icon [img]="PhoneIcon" class="w-4 h-4 mr-2"></lucide-icon>
+              Call Patient
+            </app-button>
+            <app-button variant="outline" customClasses="w-full justify-start mt-2">
+              <lucide-icon [img]="FileTextIcon" class="w-4 h-4 mr-2"></lucide-icon>
+              View Full Medical Record
+            </app-button>
+          </div>
+        </app-card>
+      </div>
+      
+    </div>
+  </div>
+</div>

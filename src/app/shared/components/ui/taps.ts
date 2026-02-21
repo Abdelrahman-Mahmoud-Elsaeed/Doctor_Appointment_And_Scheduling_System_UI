@@ -22,10 +22,10 @@ import { cn } from "@utils/cn.util";
 
 /**
  * TabsService
- * - Provided by the root AppTabsComponent instance (scoped to that tabs tree).
+ * - Provided by the root tabsComponent instance (scoped to that tabs tree).
  * - Manages active value, trigger registration, keyboard navigation, and focus.
  */
-class TabsService {
+class tabsService {
   // internal registry of triggers in registration order
   private triggers: { value: string; el: HTMLElement }[] = [];
 
@@ -103,7 +103,7 @@ class TabsService {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                  AppTabs                                   */
+/*                                  tabs                                   */
 /*  Root component. Usage:
     <app-tabs [value]="..." (valueChange)="..." [defaultValue]="'tab1'">
       <app-tabs-list> ... </app-tabs-list>
@@ -116,17 +116,17 @@ class TabsService {
   standalone: true,
   imports: [CommonModule],
   providers: [
-    // provide a unique TabsService per AppTabsComponent instance
+    // provide a unique TabsService per tabsComponent instance
     {
-      provide: TabsService,
-      useFactory: () => new TabsService(),
+      provide: tabsService,
+      useFactory: () => new tabsService(),
     } as Provider,
   ],
   template: `<ng-content></ng-content>`,
   // keep empty styles — Tailwind classes are used in templates
 })
-export class AppTabsComponent implements OnInit, OnChanges, OnDestroy {
-  private tabsService = inject(TabsService);
+export class tabsComponent implements OnInit, OnChanges, OnDestroy {
+  private tabsService = inject(tabsService);
   private destroyRef = inject(DestroyRef);
 
   /** Controlled value input. If provided, the component acts controlled. */
@@ -191,7 +191,7 @@ export class AppTabsComponent implements OnInit, OnChanges, OnDestroy {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                 AppTabsList                                */
+/*                                 tabsList                                */
 /*  Usage: <app-tabs-list [customClasses]>'children triggers here'</app-tabs-list>
 /* -------------------------------------------------------------------------- */
 @Component({
@@ -209,7 +209,7 @@ export class AppTabsComponent implements OnInit, OnChanges, OnDestroy {
     </div>
   `,
 })
-export class AppTabsListComponent {
+export class tabsListComponent {
   @Input() customClasses?: string;
   @Input() orientation: "horizontal" | "vertical" = "horizontal";
 
@@ -223,7 +223,7 @@ export class AppTabsListComponent {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                AppTabsTrigger                               */
+/*                                tabsTrigger                               */
 /*  Usage: <app-tabs-trigger [value] customClasses>Label</app-tabs-trigger>
 /*  - Registers itself to TabsService on init and unregister on destroy
 /*  - When clicked, calls TabsService.setActive(value)
@@ -254,8 +254,8 @@ export class AppTabsListComponent {
     </button>
   `,
 })
-export class AppTabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy {
-  private tabsService = inject(TabsService);
+export class tabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy {
+  private tabsService = inject(tabsService);
   private elRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   @Input() value!: string;
@@ -355,7 +355,7 @@ export class AppTabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                AppTabsContent                               */
+/*                                tabsContent                               */
 /*  Usage: <app-tabs-content [value] [customClasses]>content...</app-tabs-content>
 /*  - Renders content only if active value === value input
 /*  - Adds data-slot and classes preserved
@@ -365,8 +365,8 @@ export class AppTabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy
   standalone: true,
   imports: [CommonModule],
   template: `
+  @if(isActive()){
     <div
-      *ngIf="isActive()"
       data-slot="tabs-content"
       role="tabpanel"
       [attr.aria-labelledby]="labelledById"
@@ -376,10 +376,11 @@ export class AppTabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy
     >
       <ng-content></ng-content>
     </div>
+  }
   `,
 })
-export class AppTabsContentComponent implements OnInit {
-  private tabsService = inject(TabsService);
+export class tabsContentComponent implements OnInit {
+  private tabsService = inject(tabsService);
 
   /** value that maps this content to a trigger */
   @Input() value!: string;

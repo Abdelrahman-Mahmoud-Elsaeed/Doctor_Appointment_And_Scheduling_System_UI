@@ -12,7 +12,7 @@ import { cn } from '@utils/cn.util';
     <ng-template #content>
       <ng-content></ng-content>
     </ng-template>
-    <ng-container *ngIf="hasHtmlFor(); else spanOnly">
+    @if(hasHtmlFor()){
       <label
         [attr.for]="htmlFor()"
         [class]="hostClasses()"
@@ -20,13 +20,11 @@ import { cn } from '@utils/cn.util';
       >
         <ng-container *ngTemplateOutlet="content"></ng-container>
       </label>
-    </ng-container>
-
-    <ng-template #spanOnly>
+    } @else {
       <span [class]="hostClasses()" [attr.data-slot]="'label'">
         <ng-container *ngTemplateOutlet="content"></ng-container>
       </span>
-    </ng-template>
+    }
   `,
   styles: [
     `

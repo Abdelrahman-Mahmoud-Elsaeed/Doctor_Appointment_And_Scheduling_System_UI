@@ -8,11 +8,11 @@ import { CommonModule } from '@angular/common';
 import { SelectComponent, SelectItemComponent, SelectContentComponent, SelectTriggerComponent, SelectValueComponent } from "@shared/components/ui/select";
 import { CheckboxComponent } from "@shared/components/ui/checkbox";
 import { ButtonComponent } from '@shared/components/ui/button';
-import { AppTabsContentComponent, AppTabsComponent, AppTabsTriggerComponent, AppTabsListComponent } from "@shared/components/ui/taps";
+import { tabsContentComponent, tabsComponent, tabsTriggerComponent, tabsListComponent } from "@shared/components/ui/taps";
 import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, LucideAngularModule,RouterLink, InputComponent, ButtonComponent, LabelComponent, CardComponent, SelectComponent, SelectItemComponent, CheckboxComponent, AppTabsContentComponent, AppTabsComponent, AppTabsTriggerComponent, AppTabsListComponent, SelectContentComponent, SelectTriggerComponent, SelectValueComponent],
+  imports: [CommonModule, LucideAngularModule,RouterLink, InputComponent, ButtonComponent, LabelComponent, CardComponent, SelectComponent, SelectItemComponent, CheckboxComponent, tabsContentComponent, tabsComponent, tabsTriggerComponent, tabsListComponent, SelectContentComponent, SelectTriggerComponent, SelectValueComponent],
   standalone:true,
   templateUrl: './register.html',
   styleUrl: './register.scss',
