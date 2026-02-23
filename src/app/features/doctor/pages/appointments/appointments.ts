@@ -64,10 +64,6 @@ export class Appointments {
     });
   }
 
-  navigate(page: string) {
-    this.onNavigate?.(page);
-  }
-
   get confirmedAppointments() {
     return this.mockAppointments.filter(a => a.status === 'confirmed');
   }

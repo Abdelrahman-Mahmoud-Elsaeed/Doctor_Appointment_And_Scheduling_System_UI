@@ -176,7 +176,7 @@
                           </div>
 
                           <div class="flex gap-2">
-                            <app-button size="sm" variant="outline" routerLink="/doctor/appointment-details">View Details</app-button>
+                            <app-button size="sm" variant="outline" [routerLink]="['/doctor/appointment-details',appointment.id]">View Details</app-button>
                             @if (appointment.status === 'confirmed') {
                               <app-button size="sm" customClasses="bg-[#007bff] hover:bg-[#0056b3]">Mark as Completed</app-button>
                               <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Cancel</app-button>

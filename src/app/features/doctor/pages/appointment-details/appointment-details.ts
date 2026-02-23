@@ -5,6 +5,7 @@ import { CardComponent } from "@shared/components/ui/card";
 import { BadgeComponent } from "@shared/components/ui/badge";
 import { tabsComponent, tabsListComponent, tabsTriggerComponent, tabsContentComponent } from "@shared/components/ui/taps";
 import { ButtonComponent } from "@shared/components/ui/button";
+import { RouterLink } from "@angular/router";
 
 const MOCK_APPOINTMENT_DETAILS = {
   id: '1',
@@ -43,18 +44,15 @@ const MOCK_APPOINTMENT_DETAILS = {
 @Component({
   selector: 'app-appointment-details',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, CardComponent, BadgeComponent, tabsComponent, tabsListComponent, tabsTriggerComponent, tabsContentComponent, ButtonComponent],
+  imports: [CommonModule, LucideAngularModule, CardComponent, BadgeComponent, tabsComponent, tabsListComponent, tabsTriggerComponent, tabsContentComponent, ButtonComponent, RouterLink],
   templateUrl: './appointment-details.html'
 })
 export class AppointmentDetails {
-  // Modern Signal Inputs and Outputs
-  appointmentId = input<string>();
-  navigate = output<{page: string, id?: string}>();
 
-  // State
+  appointmentId = input<string>();
+
   details = signal(MOCK_APPOINTMENT_DETAILS);
 
-  // Icons
   ArrowLeftIcon = ArrowLeft;
   CalendarIcon = Calendar;
   ClockIcon = Clock;
@@ -67,9 +65,7 @@ export class AppointmentDetails {
   CheckCircleIcon = CheckCircle;
   XCircleIcon = XCircle;
 
-  goBack() {
-    this.navigate.emit({ page: 'doctor-appointments' });
-  }
+
 
   handleConfirm() {
     console.log('Appointment confirmed');

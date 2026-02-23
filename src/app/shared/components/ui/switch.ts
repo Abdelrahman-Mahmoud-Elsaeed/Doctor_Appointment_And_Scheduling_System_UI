@@ -1,4 +1,4 @@
-import { Component, Input, model } from '@angular/core';
+import { Component, input, Input, model } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '@utils/cn.util';
 
@@ -11,6 +11,7 @@ import { cn } from '@utils/cn.util';
     type="button"
     data-slot="switch"
     role="switch"
+    [id]="id()"
     [attr.aria-checked]="checked()"
     [attr.data-state]="checked() ? 'checked' : 'unchecked'"
     [disabled]="disabled"
@@ -33,7 +34,7 @@ import { cn } from '@utils/cn.util';
 export class SwitchComponent {
   @Input() className?: string;
   @Input() disabled = false;
-
+  id = input<string>('')
   /**
    * The controlled state of the switch.
    * Supports two-way binding: [(checked)]="mySignal"

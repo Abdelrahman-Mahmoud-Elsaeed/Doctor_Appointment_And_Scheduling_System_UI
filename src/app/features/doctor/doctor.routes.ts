@@ -10,7 +10,7 @@ import { AppointmentDetails } from './pages/appointment-details/appointment-deta
 export const DOCTOR_ROUTES: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: Dashboard, title: 'Doctor Dashboard' },
-  { path: 'appointment-details', component: AppointmentDetails, title: 'Doctor Profile' },
+  { path: 'appointment-details/:id', component: AppointmentDetails, title: 'Doctor Profile' },
   { path: 'appointments', component: Appointments, title: 'Manage Appointments' },
   { path: 'schedule', component: Schedule, title: 'Schedule Management' },
   { path: 'profile', component: Profile, title: 'Doctor Profile' },

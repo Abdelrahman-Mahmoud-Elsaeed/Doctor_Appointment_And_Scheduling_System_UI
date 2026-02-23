@@ -14,16 +14,17 @@
           <h2 class="text-gray-900 mb-6 text-xl font-semibold">General Settings</h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
+            
             <div>
-              <app-label for="sessionDuration" customClasses="mb-2">Session Duration</app-label>
-
-              <app-select value="30" placeholder="30 minutes">
-                <app-select-trigger id="sessionDuration" aria-label="Select session duration">
+              <app-label [for]="'sessionDuration'" customClasses="mb-2">Session Duration</app-label>
+              <app-select 
+                [value]="settings().sessionDuration.toString()" 
+                [placeholder]="settings().sessionDuration === 60 ? '1 hour' : settings().sessionDuration + ' minutes'"
+                (valueChange)="updateSetting('sessionDuration', $event)">
+                <app-select-trigger [id]="'sessionDuration'">
                   <lucide-icon aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2" />
                   <app-select-value />
                 </app-select-trigger>
-
                 <app-select-content>
                   <app-select-item value="15">15 minutes</app-select-item>
                   <app-select-item value="30">30 minutes</app-select-item>
@@ -34,22 +35,15 @@
             </div>
 
             <div>
-              <app-label for="sessionCost">Session Cost ($)</app-label>
-              <div class="relative mt-2">
-                <lucide-icon aria-hidden="true" [img]="DollarSign" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <app-input id="sessionCost" type="number" customClasses="pl-10" value="150" aria-label="Cost per session in dollars" />
-              </div>
-            </div>
-
-            <div>
-              <app-label for="bufferTime" customClasses="mb-2">Buffer Between Appointments</app-label>
-
-              <app-select value="10" placeholder="10 minutes">
-                <app-select-trigger id="bufferTime">
+              <app-label [for]="'bufferTime'" customClasses="mb-2">Buffer Between Appointments</app-label>
+              <app-select 
+                [value]="settings().bufferTime.toString()" 
+                [placeholder]="settings().bufferTime === 0 ? 'No buffer' : settings().bufferTime + ' minutes'"
+                (valueChange)="updateSetting('bufferTime', $event)">
+                <app-select-trigger [id]="'bufferTime'">
                   <lucide-icon aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2" />
                   <app-select-value />
                 </app-select-trigger>
-
                 <app-select-content>
                   <app-select-item value="0">No buffer</app-select-item>
                   <app-select-item value="5">5 minutes</app-select-item>
@@ -60,8 +54,33 @@
             </div>
 
             <div>
-              <app-label for="maxAppointments">Max Appointments/Day</app-label>
-              <app-input id="maxAppointments" type="number" customClasses="mt-2" value="12" />
+              <app-label [for]="'inPersonFee'">In-Person Visit Fee ($)</app-label>
+              <div class="relative mt-2">
+                <lucide-icon aria-hidden="true" [img]="DollarSign" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <app-input 
+                  [id]="'inPersonFee'" type="number" customClasses="pl-10" 
+                  [value]="settings().inPersonFee"
+                  (input)="updateSetting('inPersonFee', $event)" />
+              </div>
+            </div>
+
+            <div>
+              <app-label [for]="'videoFee'">Video Consultation Fee ($)</app-label>
+              <div class="relative mt-2">
+                <lucide-icon aria-hidden="true" [img]="DollarSign" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <app-input 
+                  [id]="'videoFee'" type="number" customClasses="pl-10" 
+                  [value]="settings().videoFee"
+                  (input)="updateSetting('videoFee', $event)" />
+              </div>
+            </div>
+
+            <div class="md:col-span-2"> 
+              <app-label [for]="'maxAppointments'">Max Appointments/Day</app-label>
+              <app-input 
+                [id]="'maxAppointments'" type="number" customClasses="mt-2" 
+                [value]="settings().maxAppointments"
+                (input)="updateSetting('maxAppointments', $event)" />
             </div>
 
           </div>
@@ -70,106 +89,94 @@
         <app-card customClasses="p-6 mt-6">
           <div class="flex items-center justify-between mb-6">
             <h2 class="text-gray-900 text-xl font-semibold">Weekly Schedule</h2>
-
-            <app-button variant="outline" size="sm">
+            <app-button variant="outline" size="sm" (click)="copyToAllDays()">
               <lucide-icon aria-hidden="true" [img]="Calendar" class="w-4 h-4 mr-2" />
               Copy to All Days
             </app-button>
           </div>
 
           <ul class="space-y-4">
-            @for (day of weekDays; track day.id) {
+            @for (day of weekSchedule(); track day.id) {
               <li>
-                <div class="border rounded-lg p-4">
-                  <div class="flex items-center justify-between mb-4">
+                <fieldset class="border rounded-lg p-4 block w-full">
+                  
+                  <legend class="sr-only">{{ day.label }} Schedule</legend>
 
+                  <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center gap-3">
-                      <app-switch [id]="day.id" [checked]="day.id !== 'sunday'" [attr.aria-label]="'Enable ' + day.label" />
+                      <app-switch 
+                        [id]="day.id"
+                        [checked]="day.enabled" 
+                        (checkedChange)="toggleDay(day.id, $event)" />
                       <app-label [for]="day.id" customClasses="cursor-pointer font-medium">{{ day.label }}</app-label>
                     </div>
 
-                    <app-button variant="ghost" size="sm" [attr.aria-label]="'Add split shift for ' + day.label">
+                    <app-button 
+                      variant="ghost" size="sm" 
+                      [disabled]="!day.enabled"
+                      (click)="addSplitShift(day.id)"
+                      [ariaLabel]="'Add split shift to ' + day.label">
                       <lucide-icon aria-hidden="true" [img]="Plus" class="w-4 h-4" />
                     </app-button>
-
                   </div>
 
-                  @if (day.id !== 'sunday') {
+                  @if (day.enabled) {
                     <div class="space-y-3 ml-9">
+                      @for (slot of day.slots; track $index; let i = $index) {
+                        
+                        <fieldset class="flex items-center gap-3 border-0 p-0 m-0">
+                          <legend class="sr-only">Shift {{ i + 1 }} for {{ day.label }}</legend>
+                          
+                          <app-select 
+                            [value]="slot.start" 
+                            [placeholder]="slot.start" 
+                            (valueChange)="updateTimeSlot(day.id, i, 'start', $event)" 
+                            customClasses="flex-1">
+                            <app-select-trigger [id]="'start-' + day.id + '-' + i" [ariaLabel]="'Start time for shift ' + (i + 1)">
+                              <app-select-value />
+                            </app-select-trigger>
+                            <app-select-content>
+                              @for (time of timeSlotsOptions; track time) {
+                                <app-select-item [value]="time">{{ time }}</app-select-item>
+                              }
+                            </app-select-content>
+                          </app-select>
 
-                      <div class="flex items-center gap-3">
-                        <app-select value="9:00 AM" placeholder="9:00 AM" customClasses="flex-1">
-                          <app-select-trigger [attr.aria-label]="'Start time for ' + day.label">
-                            <app-select-value />
-                          </app-select-trigger>
-                          <app-select-content>
-                            @for (time of timeSlots; track time) {
-                              <app-select-item [value]="time">
-                                {{ time }}
-                              </app-select-item>
-                            }
-                          </app-select-content>
-                        </app-select>
+                          <span class="text-gray-500" aria-hidden="true">to</span>
 
-                        <span class="text-gray-500" aria-hidden="true">to</span>
-                        <span class="sr-only">until</span>
+                          <app-select 
+                            [value]="slot.end" 
+                            [placeholder]="slot.end" 
+                            (valueChange)="updateTimeSlot(day.id, i, 'end', $event)" 
+                            customClasses="flex-1">
+                            <app-select-trigger [id]="'end-' + day.id + '-' + i" [ariaLabel]="'End time for shift ' + (i + 1)">
+                              <app-select-value />
+                            </app-select-trigger>
+                            <app-select-content>
+                              @for (time of timeSlotsOptions; track time) {
+                                <app-select-item [value]="time">{{ time }}</app-select-item>
+                              }
+                            </app-select-content>
+                          </app-select>
 
-                        <app-select value="5:00 PM" placeholder="5:00 PM" customClasses="flex-1">
-                          <app-select-trigger [attr.aria-label]="'End time for ' + day.label">
-                            <app-select-value />
-                          </app-select-trigger>
-                          <app-select-content>
-                            @for (time of timeSlots; track time) {
-                              <app-select-item [value]="time">
-                                {{ time }}
-                              </app-select-item>
-                            }
-                          </app-select-content>
-                        </app-select>
+                          <app-button 
+                            variant="ghost" 
+                            size="sm" 
+                            customClasses="shrink-0" 
+                            (click)="removeTimeSlot(day.id, i)"
+                            [ariaLabel]="'Remove shift ' + (i + 1) + ' from ' + day.label">
+                            <lucide-icon aria-hidden="true" [img]="Trash2" class="w-4 h-4 text-red-600" />
+                          </app-button>
 
-                        <app-button variant="ghost" size="sm" customClasses="shrink-0" [attr.aria-label]="'Remove ' + day.label + ' time slot'">
-                          <lucide-icon aria-hidden="true" [img]="Trash2" class="w-4 h-4 text-red-600" />
-                        </app-button>
-                      </div>
-
+                        </fieldset>
+                      }
                     </div>
                   }
-
-                </div>
+                </fieldset>
               </li>
             }
           </ul>
         </app-card>
-
-        <app-card customClasses="p-6 mt-6">
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="text-gray-900 text-xl font-semibold">Break Times</h2>
-            <app-button variant="outline" size="sm">
-              <lucide-icon aria-hidden="true" [img]="Plus" class="w-4 h-4 mr-2" />
-              Add Break
-            </app-button>
-          </div>
-
-          <ul class="space-y-3">
-            <li>
-              <div class="flex items-center gap-3 p-3 border rounded-lg">
-                <lucide-icon aria-hidden="true" [img]="Clock" class="w-5 h-5 text-gray-400" />
-                <div class="flex-1">
-                  <p class="text-sm text-gray-900 font-medium">Lunch Break</p>
-                  <p class="text-xs text-gray-500">12:00 PM - 1:00 PM</p>
-                </div>
-                <app-button variant="ghost" size="sm" aria-label="Remove Lunch Break">
-                  <lucide-icon aria-hidden="true" [img]="Trash2" class="w-4 h-4 text-red-600" />
-                </app-button>
-              </div>
-            </li>
-          </ul>
-        </app-card>
-
-        <div class="flex justify-end gap-4 mt-6">
-          <app-button variant="outline">Cancel</app-button>
-          <app-button customClasses="bg-[#007bff] hover:bg-[#0056b3]">Save Schedule</app-button>
-        </div>
 
       </section>
 
@@ -180,58 +187,20 @@
           <dl class="space-y-3">
             <div class="flex items-center justify-between text-sm">
               <dt class="text-gray-600">Working Days</dt>
-              <dd class="text-gray-900 font-medium">6 days/week</dd>
+              <dd class="text-gray-900 font-medium">{{ workingDaysCount() }} days/week</dd>
             </div>
             <div class="flex items-center justify-between text-sm">
-              <dt class="text-gray-600">Daily Hours</dt>
-              <dd class="text-gray-900 font-medium">8 hours</dd>
-            </div>
-            <div class="flex items-center justify-between text-sm">
-              <dt class="text-gray-600">Slots/Day</dt>
-              <dd class="text-gray-900 font-medium">16 slots</dd>
+              <dt class="text-gray-600">Slots/Day (Est.)</dt>
+              <dd class="text-gray-900 font-medium">{{ dailyCapacity() }} slots</dd>
             </div>
             <div class="flex items-center justify-between text-sm">
               <dt class="text-gray-600">Weekly Capacity</dt>
-              <dd class="text-gray-900 font-medium">96 appointments</dd>
+              <dd class="text-gray-900 font-medium">{{ weeklyCapacity() }} appointments</dd>
             </div>
           </dl>
         </app-card>
 
-        <app-card customClasses="p-6 mt-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-gray-900 font-semibold">Time Off</h3>
-            <app-button variant="outline" size="sm" aria-label="Add time off">
-              <lucide-icon aria-hidden="true" [img]="Plus" class="w-4 h-4" />
-            </app-button>
-          </div>
-
-          <ul class="space-y-3">
-            <li class="p-3 bg-gray-50 rounded-lg">
-              <p class="text-sm text-gray-900 mb-1 font-medium">Holiday Vacation</p>
-              <p class="text-xs text-gray-600">Dec 20 - Dec 31, 2025</p>
-            </li>
-
-            <li class="p-3 bg-gray-50 rounded-lg">
-              <p class="text-sm text-gray-900 mb-1 font-medium">Medical Conference</p>
-              <p class="text-xs text-gray-600">Nov 15 - Nov 17, 2025</p>
-            </li>
-          </ul>
-        </app-card>
-
-        <app-card customClasses="p-6 mt-6 bg-blue-50 border-blue-200">
-          <h3 class="text-gray-900 mb-3 font-semibold flex items-center gap-2">
-            <span aria-hidden="true">💡</span> Tips
-          </h3>
-          <ul class="text-sm text-gray-700 space-y-2 list-disc pl-4">
-            <li>Keep buffer time for emergency cases</li>
-            <li>Set realistic daily limits</li>
-            <li>Block time off in advance</li>
-            <li>Update schedule regularly</li>
-          </ul>
-        </app-card>
-
       </aside>
-
     </div>
   </main>
 </div>
