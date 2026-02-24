@@ -1,0 +1,25 @@
+<div class="fixed inset-0 bg-white z-[9999] flex items-center justify-center transition-opacity">
+      <div class="text-center">
+        
+        <div class="relative mb-6">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-20 h-20 bg-[#007bff]/10 rounded-full animate-ping"></div>
+          </div>
+          <div class="relative flex items-center justify-center">
+            <div class="w-20 h-20 bg-[#007bff] rounded-full flex items-center justify-center">
+              <lucide-icon [img]="StethoscopeIcon" class="w-10 h-10 text-white"></lucide-icon>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <lucide-icon [img]="Loader2Icon" class="w-6 h-6 text-[#007bff] animate-spin"></lucide-icon>
+          <p class="text-gray-900 text-lg">{{ message }}</p>
+        </div>
+
+        <div class="w-64 h-1 bg-gray-200 rounded-full overflow-hidden mx-auto">
+          <div class="h-full bg-gradient-to-r from-[#007bff] to-[#00bfa6] animate-progress"></div>
+        </div>
+        
+      </div>
+    </div>
