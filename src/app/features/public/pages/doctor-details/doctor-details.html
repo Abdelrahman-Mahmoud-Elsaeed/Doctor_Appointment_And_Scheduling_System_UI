@@ -226,11 +226,11 @@
               </fieldset>
 
               <div>
-                <app-label for="notes" customClasses="mb-2 block">
+                <app-label [for]="'notes'" customClasses="mb-2 block">
                   Additional Notes (Optional)
                 </app-label>
                 <app-textarea
-                  id="notes"
+                  [id]="'notes'"
                   placeholder="Describe your symptoms or reason for visit..."
                   rows="4"
                 ></app-textarea>

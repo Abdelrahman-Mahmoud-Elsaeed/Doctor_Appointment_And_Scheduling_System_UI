@@ -89,13 +89,6 @@ export class AppointmentBooking {
     }
   }
 
-  // Navigation Helper
-  navigate(page: string, id?: string) {
-    // Implement your router logic here. Example:
-    if (page === 'home') this.router.navigate(['/']);
-    if (page === 'appointments') this.router.navigate(['/appointments']);
-    if (page === 'doctor-profile') this.router.navigate(['/doctors', id]);
-  }
 
   // Date Formatting Helpers for Template
   getDateStr(date: Date): string {

@@ -18,6 +18,7 @@ import { cn } from '@utils/cn.util';
       [value]="value()"
       [name]="name()"
       [id]="id()"
+      [autocomplete]="autocomplete()"
       [class]="hostClasses()"
       (input)="onInput($event)"
       (blur)="onBlur($event)"
@@ -36,32 +37,21 @@ import { cn } from '@utils/cn.util';
   
 })
 export class InputComponent {
-  // --- Inputs ---
-  @ViewChild('input', { static: true })
-  private inputRef!: ElementRef<HTMLInputElement>;
-  /**
-   * The type of the input (e.g., 'text', 'password', 'email', 'file').
-   * Maps directly to the HTML 'type' attribute.
-   * @default 'text'
-   */
+
   type = input<'text' | 'email' | 'password' | 'file' | string>('text');
 
-  /**
-   * Optional custom classes to merge with the input styles.
-   * Replaces the \`className\` prop from React.
-   */
-  customClasses = input<string | undefined>();
 
-  // Standard input attributes bound for completeness
+  customClasses = input<string | undefined>('');
+
   placeholder = input<string | undefined>('');
   disabled = input<boolean | string>(false);
   value = input<string | number | null >('');
-  name = input<string | undefined>();
+  name = input<string | undefined>('');
   id = input<string | undefined>('');
+  autocomplete = input<string >('off');
   
   valueChange = output<string>();
   commitChange = output<string>();
-  // --- Computed Classes ---
 
   protected hostClasses = computed(() =>
     cn(

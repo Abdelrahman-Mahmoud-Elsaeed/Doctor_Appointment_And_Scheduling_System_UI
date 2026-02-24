@@ -204,9 +204,9 @@
             <h2 id="professional-info-heading" class="sr-only">Professional Information</h2>
             
             <div>
-              <app-label for="specialization">Specialization</app-label>
+              <app-label for="specialization" customClasses="w-fit">Specialization</app-label>
               <app-select [value]="doctor.specialization">
-                <app-select-trigger id="specialization" customClasses="mt-2" aria-label="Select Specialization">
+                <app-select-trigger [id]="'specialization'" customClasses="mt-2" aria-label="Select Specialization">
                   <app-select-value>{{doctor.specialization}}</app-select-value>
                 </app-select-trigger>
                 <app-select-content>
@@ -259,7 +259,7 @@
             <div class="md:col-span-2">
               <app-label for="about">About / Bio</app-label>
               <app-textarea
-                id="about"
+                [id]="'about'"
                 [rows]="4"
                 [value]="doctor.about"
                 customClasses="mt-2"
@@ -306,9 +306,9 @@
             </div>
 
             <div>
-              <app-label for="sessionDuration">Session Duration (min)</app-label>
+              <app-label for="sessionDuration" customClasses="w-fit">Session Duration (min)</app-label>
               <app-select value="30">
-                <app-select-trigger id="sessionDuration" customClasses="mt-2">
+                <app-select-trigger [id]="'sessionDuration'" customClasses="mt-2">
                   <app-select-value>30</app-select-value>
                 </app-select-trigger>
                 <app-select-content>

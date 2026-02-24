@@ -23,7 +23,7 @@
                 aria-label="Search for doctors by name or specialization" 
                 placeholder="Search doctors, specializations..." 
                 [value]="store.searchTerm()"
-
+                [name]="'search'"
                 (valueChange)="onSearch($event)" 
                 customClasses="pl-10">
               </app-input>

@@ -68,7 +68,7 @@
             </app-tabs-list>
   
             <app-tabs-content value="personal">
-              <form >
+              <form>
                 <fieldset class="space-y-6">
                   <legend class="sr-only">Personal information form</legend>
                   
@@ -81,7 +81,7 @@
                           [id]="'firstName'" 
                           [value]="'John'" 
                           customClasses="pl-10" 
-                          autocomplete="given-name">
+                          [autocomplete]="'given-name'">
                         </app-input>
                       </div>
                     </div>
@@ -94,7 +94,7 @@
                           [id]="'lastName'" 
                           [value]="'Smith'" 
                           customClasses="pl-10" 
-                          autocomplete="family-name">
+                          [autocomplete]="'family-name'">
                         </app-input>
                       </div>
                     </div>
@@ -108,7 +108,7 @@
                           type="email" 
                           [value]="mockPatient.email" 
                           customClasses="pl-10" 
-                          autocomplete="email">
+                          [autocomplete]="'email'">
                         </app-input>
                       </div>
                     </div>
@@ -122,7 +122,7 @@
                           type="tel" 
                           [value]="mockPatient.phone" 
                           customClasses="pl-10" 
-                          autocomplete="tel">
+                          [autocomplete]="'tel'">
                         </app-input>
                       </div>
                     </div>
@@ -136,7 +136,7 @@
                           type="date" 
                           [value]="'1990-05-15'" 
                           customClasses="pl-10" 
-                          autocomplete="bday">
+                          >
                         </app-input>
                       </div>
                     </div>
@@ -164,7 +164,7 @@
                           [id]="'address'" 
                           [value]="'123 Main Street, New York, NY 10001'" 
                           customClasses="pl-10" 
-                          autocomplete="street-address">
+                          [autocomplete]="'street-address'">
                         </app-input>
                       </div>
                     </div>
@@ -179,7 +179,7 @@
             </app-tabs-content>
 
             <app-tabs-content value="medical">
-              <form >
+              <form autocomplete="off">
                 <fieldset class="space-y-6">
                   <legend class="sr-only">Medical information form</legend>
                   
@@ -232,7 +232,16 @@
             </app-tabs-content>
   
             <app-tabs-content value="security">
-              <form >
+              <form>
+                <input 
+                  type="text" 
+                  name="username" 
+                  autocomplete="username" 
+                  [value]="mockPatient.email" 
+                  class="hidden" 
+                  aria-hidden="true" 
+                  tabindex="-1" />
+
                 <fieldset class="space-y-6">
                   <legend class="sr-only">Security settings form</legend>
                   
@@ -241,17 +250,17 @@
                     <div class="space-y-4 max-w-md">
                       <div>
                         <app-label for="currentPassword" customClasses="mb-3">Current Password</app-label>
-                        <app-input [id]="'currentPassword'" type="password" autocomplete="current-password"></app-input>
+                        <app-input [id]="'currentPassword'" type="password" [autocomplete]="'current-password'"></app-input>
                       </div>
       
                       <div>
                         <app-label for="newPassword" customClasses="mb-3">New Password</app-label>
-                        <app-input [id]="'newPassword'" type="password" class="mt-2" autocomplete="new-password"></app-input>
+                        <app-input [id]="'newPassword'" type="password" class="mt-2" [autocomplete]="'new-password'"></app-input>
                       </div>
       
                       <div>
                         <app-label for="confirmPassword" customClasses="mb-3">Confirm New Password</app-label>
-                        <app-input [id]="'confirmPassword'" type="password" class="mt-2" autocomplete="new-password"></app-input>
+                        <app-input [id]="'confirmPassword'" type="password" class="mt-2" [autocomplete]="'new-password'"></app-input>
                       </div>
                     </div>
                   </div>

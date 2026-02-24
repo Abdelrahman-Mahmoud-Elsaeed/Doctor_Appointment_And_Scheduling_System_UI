@@ -51,14 +51,14 @@
         <div class="flex gap-4 justify-center">
           <app-button 
             variant="outline"
-            (click)="navigate('appointments')"
+            routerLink="/patient/appointments"
             aria-label="View my appointments list"
           >
             View My Appointments
           </app-button>
           <app-button
             customClasses="bg-[#00bfa6] hover:bg-[#00a890]"
-            (click)="navigate('home')"
+            routerLink="/home"
           >
             Back to Home
           </app-button>
