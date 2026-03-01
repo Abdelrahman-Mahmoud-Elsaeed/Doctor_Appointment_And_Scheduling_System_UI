@@ -18,7 +18,7 @@ import { cn } from '@utils/cn.util';
     (click)="toggle()"
     [class]="cn(
       'peer data-[state=checked]:bg-primary data-[state=unchecked]:bg-switch-background focus-visible:border-ring focus-visible:ring-ring/50 dark:data-[state=unchecked]:bg-input/80 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
-      className
+      userClass()
     )"
   >
     <span
@@ -30,9 +30,17 @@ import { cn } from '@utils/cn.util';
     ></span>
     </button>
   `,
+    styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
 })
 export class SwitchComponent {
-  @Input() className?: string;
+  userClass = input<string>('', { alias: 'class' });
+
   @Input() disabled = false;
   id = input<string>('')
   /**

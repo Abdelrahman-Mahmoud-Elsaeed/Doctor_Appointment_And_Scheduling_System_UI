@@ -56,7 +56,7 @@
       </div>
     </section>
 
-    <app-card customClasses="p-8 w-full shadow-xl">
+    <app-card class="p-8 w-full shadow-xl">
       <div class="text-center mb-8 lg:hidden">
         <div class="flex items-center gap-2 justify-center mb-4">
           <div class="w-10 h-10 bg-[#007bff] rounded-lg flex items-center justify-center">
@@ -79,10 +79,10 @@
             <div class="relative mt-2">
               <lucide-icon aria-hidden="true" [img]="Mail" class="ab w-5 h-5 text-gray-400"></lucide-icon>
               <app-input 
-                [id]="'doctor-email'" 
+                id="doctor-email" 
                 type="email" 
                 placeholder="doctor@hospital.com" 
-                customClasses="pl-11"
+                class="pl-11"
                 autocomplete="email">
               </app-input>
             </div>
@@ -96,10 +96,10 @@
             <div class="relative mt-2">
               <lucide-icon aria-hidden="true" [img]="Lock" class="ab w-5 h-5 text-gray-400"></lucide-icon>
               <app-input 
-                [id]="'doctor-password'" 
+                id="doctor-password" 
                 type="password" 
                 placeholder="Enter your password" 
-                customClasses="pl-11"
+                class="pl-11"
                 autocomplete="current-password">
               </app-input>
             </div>
@@ -107,7 +107,7 @@
 
           <div class="space-y-3">
             <div class="flex items-center space-x-2">
-              <app-checkbox [id]="'doctor-remember'"></app-checkbox>
+              <app-checkbox id="doctor-remember"></app-checkbox>
               <label [for]="'doctor-remember'" class="text-sm text-gray-700 cursor-pointer ml-2">
                 Keep me signed in on this device
               </label>
@@ -120,7 +120,7 @@
 
           <app-button 
             type="submit" 
-            customClasses="w-full bg-[#007bff] hover:bg-[#0056b3]">
+            class="w-full bg-[#007bff] hover:bg-[#0056b3]">
             Sign In to Portal
             <lucide-icon aria-hidden="true" [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
           </app-button>
@@ -130,8 +130,8 @@
       <div class="pt-4 mt-6 border-t">
         <p class="text-sm text-gray-600 mb-3">Need help accessing your account?</p>
         <div class="flex flex-col sm:flex-row gap-2">
-          <app-button type="button" variant="outline" customClasses="flex-1 text-sm">Contact IT Support</app-button>
-          <app-button type="button" variant="outline" customClasses="flex-1 text-sm">Request Access</app-button>
+          <app-button type="button" variant="outline" class="flex-1 text-sm">Contact IT Support</app-button>
+          <app-button type="button" variant="outline" class="flex-1 text-sm">Request Access</app-button>
         </div>
       </div>
 
@@ -139,7 +139,7 @@
         <p class="text-sm text-gray-600 mb-3">Not a registered doctor yet?</p>
         <app-button
           variant="outline"
-          customClasses="w-full border-[#007bff] text-[#007bff] hover:bg-[#007bff]/5"
+          class="w-full border-[#007bff] text-[#007bff] hover:bg-[#007bff]/5"
           routerLink="/register"
         >
           Apply for Doctor Account

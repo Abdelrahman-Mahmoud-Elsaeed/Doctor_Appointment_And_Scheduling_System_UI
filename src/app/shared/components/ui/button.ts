@@ -1,4 +1,4 @@
-import { Component, computed, input, ViewEncapsulation } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { cn } from '@utils/cn.util';
 
 // --- CVA (Class Variance Authority) Helper ---
@@ -11,21 +11,13 @@ interface ButtonVariantProps {
   size?: ButtonSize;
 }
 
-/**
- * A local helper function to replicate the class-variance-authority (CVA)
- * behavior from the original React component.
- *
- * This is exported for consistency with the original module.
- */
 export function buttonVariants(props: ButtonVariantProps): string {
   const variant = props.variant ?? 'default';
   const size = props.size ?? 'default';
 
-  // Base classes applied to all variants
   const base =
     "inline-flex items-center cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive";
 
-  // Variant-specific classes
   const variants: Record<ButtonVariant, string> = {
     default: 'bg-primary text-primary-foreground hover:bg-primary/90',
     destructive:
@@ -37,7 +29,6 @@ export function buttonVariants(props: ButtonVariantProps): string {
     link: 'text-primary underline-offset-4 hover:underline',
   };
 
-  // Size-specific classes
   const sizes: Record<ButtonSize, string> = {
     default: 'h-9 px-4 py-2 has-[>svg]:px-3',
     sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
@@ -48,7 +39,6 @@ export function buttonVariants(props: ButtonVariantProps): string {
   return cn(base, variants[variant], sizes[size]);
 }
 
-// --- Angular Button Component ---
 
 @Component({
   selector: 'app-button',
@@ -64,58 +54,23 @@ export function buttonVariants(props: ButtonVariantProps): string {
       <ng-content></ng-content>
     </button>
   `,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
-
-  encapsulation:ViewEncapsulation.None
+  styles: [':host { display: contents; }'],
 })
 export class ButtonComponent {
-  // --- Inputs ---
+  variant = input<ButtonVariant>('default', { alias: 'variant' });
 
-  /**
-   * The visual style of the button.
-   * @default 'default'
-   */
-  variant = input<ButtonVariant>('default');
+  size = input<ButtonSize>('default', { alias: 'size' });
 
-  /**
-   * The size of the button.
-   * @default 'default'
-   */
-  size = input<ButtonSize>('default');
+  type = input<'button' | 'submit' | 'reset'>('button', { alias: 'type' });
 
-  /**
-   * The type of the button.
-   * @default 'button'
-   */
-  type = input<'button' | 'submit' | 'reset'>('button');
+  disabled = input<boolean>(false, { alias: 'disabled' });
 
-  /**
-   * Whether the button is disabled.
-   * @default false
-   */
-  disabled = input<boolean>(false);
+  userClass = input<string>('', { alias: 'class' });
 
-  /**
-   * Optional custom classes to merge with the button styles.
-   * Replaces the \`className\` prop from React.
-   */
-  customClasses = input<string | undefined>();
-
-  // --- Internal State ---
-
-  /**
-   * Computes the final class string for the button element.
-   */
   protected computedClasses = computed(() =>
     cn(
       buttonVariants({ variant: this.variant(), size: this.size() }),
-      this.customClasses(),
+      this.userClass(),
     ),
   );
 }

@@ -14,7 +14,7 @@
             <h3 class="text-xl font-semibold text-gray-900 mb-1">{{ appointment.doctor.name }}</h3>
             <p class="text-sm text-gray-600">{{ appointment.doctor.specialization }}</p>
           </div>
-          <app-badge role="status" aria-live="polite" [customClasses]="getStatusClasses(appointment.status)">
+          <app-badge role="status" aria-live="polite" [class]="getStatusClasses(appointment.status)">
             {{ appointment.status | titlecase }}
           </app-badge>
         </div>
@@ -48,7 +48,7 @@
         [attr.aria-label]="'Reschedule appointment with Dr. ' + appointment.doctor.name" 
         variant="outline"
         class="flex-1 "
-        customClasses="w-full"  
+        class="w-full"  
         (click)="rescheduleAppointment.emit()" >
         Reschedule
       </app-button>
@@ -56,7 +56,7 @@
         [attr.aria-label]="'Cancel appointment with Dr. ' + appointment.doctor.name"  
         variant="outline" 
         class="flex-1" 
-        customClasses="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
+        class="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
         (click)="cancelAppointment.emit()">
         Cancel
       </app-button>

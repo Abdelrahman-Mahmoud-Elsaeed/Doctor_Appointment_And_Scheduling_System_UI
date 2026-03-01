@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, HostListener, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from '@utils/cn.util';
 
@@ -33,28 +33,28 @@ import { cn } from '@utils/cn.util';
       }
     `,
   ],
+  host: {
+    '[attr.for]': 'null',
+  },
 })
 export class LabelComponent {
-  // --- Inputs ---
 
-  /**
-   * The ID of the form element this label is associated with.
-   * Maps to the HTML 'for' attribute.
-   */
   htmlFor = input<string >('', { alias: 'for' });
 
-  customClasses = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
 
   // --- Computed Classes ---
 
   protected hostClasses = computed(() =>
     cn(
       'flex items-center gap-2  text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
-      this.customClasses(),
+      this.userClass(),
     ),
   );
 
   protected hasHtmlFor() {
     return this.htmlFor().length > 0;
   }
+
+
 }

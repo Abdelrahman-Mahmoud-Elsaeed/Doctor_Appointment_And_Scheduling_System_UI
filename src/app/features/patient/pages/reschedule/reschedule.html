@@ -1,7 +1,7 @@
 @if (showConfirmation()) {
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="container mx-auto px-4">
-      <app-card customClasses="max-w-2xl mx-auto p-8 text-center block">
+      <app-card class="max-w-2xl mx-auto p-8 text-center block">
         <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <lucide-icon [img]="icons.CheckCircle" class="w-12 h-12 text-green-600"></lucide-icon>
         </div>
@@ -11,7 +11,7 @@
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           <div>
-            <app-card customClasses="bg-red-50 border-red-200 p-6 text-left block">
+            <app-card class="bg-red-50 border-red-200 p-6 text-left block">
               <div class="flex items-center gap-2 mb-4">
                 <lucide-icon [img]="icons.AlertCircle" class="w-5 h-5 text-red-600"></lucide-icon>
                 <h3 class="text-gray-900 font-medium">Previous Appointment</h3>
@@ -29,7 +29,7 @@
             </app-card>
           </div>
           <div>
-              <app-card customClasses="bg-green-50 border-green-200 p-6 text-left block">
+              <app-card class="bg-green-50 border-green-200 p-6 text-left block">
                 <div class="flex items-center gap-2 mb-4">
                   <lucide-icon [img]="icons.CheckCircle" class="w-5 h-5 text-green-600"></lucide-icon>
                   <h3 class="text-gray-900 font-medium">New Appointment</h3>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div>
-          <app-card customClasses="bg-gray-50 p-6 mb-8 text-left block">
+          <app-card class="bg-gray-50 p-6 mb-8 text-left block">
             <div class="flex items-start gap-4">
               <img 
                 [src]="currentAppointment.doctor.image" 
@@ -69,7 +69,7 @@
           <app-button variant="outline" routerLink="/patient/appointments">
             View My Appointments
           </app-button>
-          <app-button routerLink="/" customClasses="bg-[#00bfa6] hover:bg-[#00a890] text-white" >
+          <app-button routerLink="/" class="bg-[#00bfa6] hover:bg-[#00a890] text-white" >
             Back to Home
           </app-button>
         </div>
@@ -79,7 +79,7 @@
 } @else {
   <div class="min-h-screen bg-gray-50 py-8">
     <div class="container mx-auto px-4">
-      <app-button variant="ghost" customClasses="mb-6" routerLink="/patient/appointments">
+      <app-button variant="ghost" class="mb-6" routerLink="/patient/appointments">
         <lucide-icon [img]="icons.ArrowLeft" class="w-4 h-4 mr-2"></lucide-icon>
         Back to Appointments
       </app-button>
@@ -87,13 +87,13 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2 space-y-6">
           <div>
-            <app-card customClasses="p-6 block">
+            <app-card class="p-6 block">
               <h1 class="text-gray-900 mb-2 text-xl font-semibold">Reschedule Appointment</h1>
               <p class="text-gray-600">Select a new date and time for your appointment</p>
             </app-card>
           </div>
           <div>
-            <app-card customClasses="p-6 bg-orange-50 border-orange-200 block">
+            <app-card class="p-6 bg-orange-50 border-orange-200 block">
               <div class="flex items-start gap-3 mb-4">
                 <lucide-icon [img]="icons.AlertCircle" class="w-5 h-5 text-orange-600 mt-1"></lucide-icon>
                 <div>
@@ -126,12 +126,12 @@
             </app-card>
           </div>
           <div>
-            <app-card customClasses="p-6 block">
+            <app-card class="p-6 block">
               <h2 class="text-gray-900 mb-4 font-medium">Select New Date</h2>
               <div class="grid grid-cols-7 gap-2">
                 @for (date of dates; track date.fullDate) {
                   <app-card 
-                    [customClasses]="'p-3 cursor-pointer text-center transition-all block ' + 
+                    [class]="'p-3 cursor-pointer text-center transition-all block ' + 
                       (selectedDate() === date.fullDate 
                         ? 'border-2 border-teal-500 bg-teal-500 text-white' 
                         : 'border hover:border-teal-500/50')"
@@ -147,7 +147,7 @@
 
           @if (selectedDate()) {
             <div>
-              <app-card customClasses="p-6 block">
+              <app-card class="p-6 block">
                 <h2 class="text-gray-900 mb-4 font-medium">Select New Time Slot</h2>
                 
                 <div class="space-y-6">
@@ -157,7 +157,7 @@
                       @for (time of timeSlots.morning; track time) {
                         <app-button 
                           [variant]="selectedTime() === time ? 'default' : 'outline'"
-                          [customClasses]="selectedTime() === time ? 'bg-teal-500 hover:bg-teal-600 text-white' : ''"
+                          [class]="selectedTime() === time ? 'bg-teal-500 hover:bg-teal-600 text-white' : ''"
                           (click)="selectedTime.set(time)"
                         >
                           {{ time }}
@@ -172,7 +172,7 @@
                       @for (time of timeSlots.afternoon; track time) {
                         <app-button 
                           [variant]="selectedTime() === time ? 'default' : 'outline'"
-                          [customClasses]="selectedTime() === time ? 'bg-teal-500 hover:bg-teal-600 text-white' : ''"
+                          [class]="selectedTime() === time ? 'bg-teal-500 hover:bg-teal-600 text-white' : ''"
                           (click)="selectedTime.set(time)"
                         >
                           {{ time }}
@@ -187,7 +187,7 @@
                       @for (time of timeSlots.evening; track time) {
                          <app-button 
                           [variant]="selectedTime() === time ? 'default' : 'outline'"
-                          [customClasses]="selectedTime() === time ? 'bg-teal-500 hover:bg-teal-600 text-white' : ''"
+                          [class]="selectedTime() === time ? 'bg-teal-500 hover:bg-teal-600 text-white' : ''"
                           (click)="selectedTime.set(time)"
                         >
                           {{ time }}
@@ -203,7 +203,7 @@
 
         <div class="space-y-6">
           <div>
-            <app-card customClasses="p-6 bg-teal-500/5 border-teal-500 block">
+            <app-card class="p-6 bg-teal-500/5 border-teal-500 block">
               <h2 class="text-gray-900 mb-4 font-medium">Reschedule Summary</h2>
               
               <div class="space-y-4">
@@ -243,7 +243,7 @@
               </div>
   
               <app-button 
-                customClasses="w-full mt-6 bg-[#00bfa6] hover:bg-[#00a890] text-white"
+                class="w-full mt-6 bg-[#00bfa6] hover:bg-[#00a890] text-white"
                 [disabled]="!selectedDate() || !selectedTime()"
                 (click)="handleReschedule()"
               >
@@ -258,7 +258,7 @@
             </app-card>
           </div>
           <div>
-            <app-card customClasses="p-6 bg-yellow-50 border-yellow-200 block">
+            <app-card class="p-6 bg-yellow-50 border-yellow-200 block">
               <h3 class="text-gray-900 mb-2 flex items-center gap-2 font-medium">
                 <lucide-icon [img]="icons.AlertCircle" class="w-5 h-5 text-yellow-600"></lucide-icon>
                 Important

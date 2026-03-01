@@ -10,18 +10,18 @@
 
       <section class="lg:col-span-2" aria-label="Schedule Configuration">
 
-        <app-card customClasses="p-6">
+        <app-card class="p-6">
           <h2 class="text-gray-900 mb-6 text-xl font-semibold">General Settings</h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             <div>
-              <app-label [for]="'sessionDuration'" customClasses="mb-2">Session Duration</app-label>
+              <app-label [for]="'sessionDuration'" class="mb-2">Session Duration</app-label>
               <app-select 
                 [value]="settings().sessionDuration.toString()" 
                 [placeholder]="settings().sessionDuration === 60 ? '1 hour' : settings().sessionDuration + ' minutes'"
                 (valueChange)="updateSetting('sessionDuration', $event)">
-                <app-select-trigger [id]="'sessionDuration'">
+                <app-select-trigger id="sessionDuration">
                   <lucide-icon aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2" />
                   <app-select-value />
                 </app-select-trigger>
@@ -35,12 +35,12 @@
             </div>
 
             <div>
-              <app-label [for]="'bufferTime'" customClasses="mb-2">Buffer Between Appointments</app-label>
+              <app-label [for]="'bufferTime'" class="mb-2">Buffer Between Appointments</app-label>
               <app-select 
                 [value]="settings().bufferTime.toString()" 
                 [placeholder]="settings().bufferTime === 0 ? 'No buffer' : settings().bufferTime + ' minutes'"
                 (valueChange)="updateSetting('bufferTime', $event)">
-                <app-select-trigger [id]="'bufferTime'">
+                <app-select-trigger id="bufferTime">
                   <lucide-icon aria-hidden="true" [img]="Clock" class="w-4 h-4 mr-2" />
                   <app-select-value />
                 </app-select-trigger>
@@ -58,7 +58,7 @@
               <div class="relative mt-2">
                 <lucide-icon aria-hidden="true" [img]="DollarSign" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <app-input 
-                  [id]="'inPersonFee'" type="number" customClasses="pl-10" 
+                  id="inPersonFee" type="number" class="pl-10" 
                   [value]="settings().inPersonFee"
                   (input)="updateSetting('inPersonFee', $event)" />
               </div>
@@ -69,7 +69,7 @@
               <div class="relative mt-2">
                 <lucide-icon aria-hidden="true" [img]="DollarSign" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <app-input 
-                  [id]="'videoFee'" type="number" customClasses="pl-10" 
+                  id="videoFee" type="number" class="pl-10" 
                   [value]="settings().videoFee"
                   (input)="updateSetting('videoFee', $event)" />
               </div>
@@ -78,7 +78,7 @@
             <div class="md:col-span-2"> 
               <app-label [for]="'maxAppointments'">Max Appointments/Day</app-label>
               <app-input 
-                [id]="'maxAppointments'" type="number" customClasses="mt-2" 
+                id="maxAppointments" type="number" class="mt-2" 
                 [value]="settings().maxAppointments"
                 (input)="updateSetting('maxAppointments', $event)" />
             </div>
@@ -86,7 +86,7 @@
           </div>
         </app-card>
 
-        <app-card customClasses="p-6 mt-6">
+        <app-card class="p-6 mt-6">
           <div class="flex items-center justify-between mb-6">
             <h2 class="text-gray-900 text-xl font-semibold">Weekly Schedule</h2>
             <app-button variant="outline" size="sm" (click)="copyToAllDays()">
@@ -108,7 +108,7 @@
                         [id]="day.id"
                         [checked]="day.enabled" 
                         (checkedChange)="toggleDay(day.id, $event)" />
-                      <app-label [for]="day.id" customClasses="cursor-pointer font-medium">{{ day.label }}</app-label>
+                      <app-label [for]="day.id" class="cursor-pointer font-medium">{{ day.label }}</app-label>
                     </div>
 
                     <app-button 
@@ -131,7 +131,7 @@
                             [value]="slot.start" 
                             [placeholder]="slot.start" 
                             (valueChange)="updateTimeSlot(day.id, i, 'start', $event)" 
-                            customClasses="flex-1">
+                            class="flex-1">
                             <app-select-trigger [id]="'start-' + day.id + '-' + i" [ariaLabel]="'Start time for shift ' + (i + 1)">
                               <app-select-value />
                             </app-select-trigger>
@@ -148,7 +148,7 @@
                             [value]="slot.end" 
                             [placeholder]="slot.end" 
                             (valueChange)="updateTimeSlot(day.id, i, 'end', $event)" 
-                            customClasses="flex-1">
+                            class="flex-1">
                             <app-select-trigger [id]="'end-' + day.id + '-' + i" [ariaLabel]="'End time for shift ' + (i + 1)">
                               <app-select-value />
                             </app-select-trigger>
@@ -162,7 +162,7 @@
                           <app-button 
                             variant="ghost" 
                             size="sm" 
-                            customClasses="shrink-0" 
+                            class="shrink-0" 
                             (click)="removeTimeSlot(day.id, i)"
                             [ariaLabel]="'Remove shift ' + (i + 1) + ' from ' + day.label">
                             <lucide-icon aria-hidden="true" [img]="Trash2" class="w-4 h-4 text-red-600" />
@@ -182,7 +182,7 @@
 
       <aside class="lg:col-span-1" aria-label="Summary and Tips">
 
-        <app-card customClasses="p-6">
+        <app-card class="p-6">
           <h3 class="text-gray-900 mb-4 font-semibold">Current Availability</h3>
           <dl class="space-y-3">
             <div class="flex items-center justify-between text-sm">

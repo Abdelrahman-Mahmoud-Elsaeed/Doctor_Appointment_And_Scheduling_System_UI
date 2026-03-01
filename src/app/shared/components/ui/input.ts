@@ -26,28 +26,28 @@ import { cn } from '@utils/cn.util';
   `,
   styles: [
     `
-      /*
-        By default, Angular components are 'display: inline'.
-        We allow the native input to define its own display properties.
-      */
+      :host {
+        display: contents;
+      }
     `,
   ],
-  // Use ViewEncapsulation.None to ensure complex Tailwind selectors (like file:...)
-  // apply correctly to the native input element.
-  
+  host: {
+    '[attr.id]': 'null',
+  },
 })
 export class InputComponent {
 
   type = input<'text' | 'email' | 'password' | 'file' | string>('text');
 
 
-  customClasses = input<string | undefined>('');
+  userClass = input<string>('', { alias: 'class' });
+
 
   placeholder = input<string | undefined>('');
   disabled = input<boolean | string>(false);
   value = input<string | number | null >('');
   name = input<string | undefined>('');
-  id = input<string | undefined>('');
+  id = input<string>('', { alias: 'id' });
   autocomplete = input<string >('off');
   
   valueChange = output<string>();
@@ -65,7 +65,7 @@ export class InputComponent {
       'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
 
       // Custom classes passed by the consumer
-      this.customClasses(),
+      this.userClass(),
     ),
   );
   protected onInput(event: Event) {

@@ -76,7 +76,8 @@ export class SliderComponent implements AfterViewInit, OnDestroy {
   min = input(0);
   max = input(500);
   step = input(1);
-  styles = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
+
   orientation = input<'horizontal' | 'vertical'>('horizontal');
   disabled = input(false);
 
@@ -243,7 +244,7 @@ export class SliderComponent implements AfterViewInit, OnDestroy {
     cn(
       'relative flex w-full items-center select-none touch-none data-[disabled]:opacity-50',
       this.orientation() === 'vertical' && 'flex-col h-full min-h-44 w-auto',
-      this.styles()
+      this.userClass()
     )
   );
 

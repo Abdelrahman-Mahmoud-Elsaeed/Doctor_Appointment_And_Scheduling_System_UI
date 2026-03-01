@@ -3,7 +3,7 @@
     
     <app-button
       variant="ghost"
-      customClasses="mb-6"
+      class="mb-6"
       routerLink="/doctor/appointments"
     >
       <lucide-icon [img]="ArrowLeftIcon" class="w-4 h-4 mr-2"></lucide-icon>
@@ -14,14 +14,14 @@
       
       <div class="lg:col-span-2">
         
-        <app-card customClasses="p-6">
+        <app-card class="p-6">
           <div class="flex items-start justify-between mb-6">
             <div>
               <h1 class="text-gray-900 mb-2 text-2xl font-bold">Appointment Details</h1>
               <p class="text-gray-600">Complete information about this appointment</p>
             </div>
             <app-badge
-              [customClasses]="getStatusBadgeClass(details().appointment.status)"
+              [class]="getStatusBadgeClass(details().appointment.status)"
               variant="outline"
             >
               {{ details().appointment.status }}
@@ -85,7 +85,7 @@
           }
         </app-card>
 
-        <app-card customClasses="p-6 mt-6">
+        <app-card class="p-6 mt-6">
           <h2 class="text-gray-900 mb-4 font-semibold text-xl">Reason for Visit</h2>
           <p class="text-gray-700 mb-6">{{ details().reason }}</p>
 
@@ -98,14 +98,14 @@
           </div>
         </app-card>
 
-        <app-card customClasses="p-6 mt-6">
+        <app-card class="p-6 mt-6">
           <app-tabs value="history">
             <app-tabs-list>
               <app-tabs-trigger value="history">Medical History</app-tabs-trigger>
               <app-tabs-trigger value="visits">Previous Visits</app-tabs-trigger>
             </app-tabs-list>
 
-            <app-tabs-content value="history" customClasses="space-y-4 mt-6">
+            <app-tabs-content value="history" class="space-y-4 mt-6">
               @for (item of details().medicalHistory; track item.condition) {
                 <div class="p-4 border rounded-lg">
                   <div class="flex items-start justify-between mb-2">
@@ -132,12 +132,12 @@
           </app-tabs>
         </app-card>
 
-        <app-card customClasses="p-6 mt-6">
+        <app-card class="p-6 mt-6">
           <h2 class="text-gray-900 mb-4 font-semibold text-xl">Actions</h2>
           <div class="flex flex-wrap gap-3">
             @if (details().appointment.status === 'pending') {
               <app-button
-                customClasses="bg-green-600 hover:bg-green-700 text-white"
+                class="bg-green-600 hover:bg-green-700 text-white"
                 (click)="handleConfirm()"
               >
                 <lucide-icon [img]="CheckCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
@@ -145,7 +145,7 @@
               </app-button>
               <app-button
                 variant="outline"
-                customClasses="text-red-600 hover:text-red-700"
+                class="text-red-600 hover:text-red-700"
                 (click)="handleCancel()"
               >
                 <lucide-icon [img]="XCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
@@ -155,7 +155,7 @@
 
             @if (details().appointment.status === 'confirmed') {
               <app-button
-                customClasses="bg-[#007bff] hover:bg-[#0056b3] text-white"
+                class="bg-[#007bff] hover:bg-[#0056b3] text-white"
                 (click)="handleComplete()"
               >
                 <lucide-icon [img]="CheckCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
@@ -163,7 +163,7 @@
               </app-button>
               <app-button
                 variant="outline"
-                customClasses="text-red-600 hover:text-red-700"
+                class="text-red-600 hover:text-red-700"
                 (click)="handleCancel()"
               >
                 <lucide-icon [img]="XCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
@@ -172,7 +172,7 @@
             }
 
             @if (details().appointment.status === 'completed') {
-              <app-badge customClasses="bg-blue-100 text-blue-700 border-blue-200 px-4 py-2">
+              <app-badge class="bg-blue-100 text-blue-700 border-blue-200 px-4 py-2">
                 <lucide-icon [img]="CheckCircleIcon" class="w-4 h-4 mr-2"></lucide-icon>
                 This appointment has been completed
               </app-badge>
@@ -182,7 +182,7 @@
       </div>
 
       <div class="space-y-6">
-        <app-card customClasses="p-6">
+        <app-card class="p-6">
           <h2 class="text-gray-900 mb-4 font-semibold text-xl">Patient Information</h2>
           
           <div class="flex items-center gap-4 mb-6">
@@ -232,32 +232,32 @@
           </div>
         </app-card>
 
-        <app-card customClasses="p-6 bg-red-50 border-red-200 mt-6">
+        <app-card class="p-6 bg-red-50 border-red-200 mt-6">
           <h3 class="text-gray-900 mb-3 flex items-center gap-2 font-semibold">
             <lucide-icon [img]="XCircleIcon" class="w-5 h-5 text-red-600"></lucide-icon>
             Allergies
           </h3>
           <div class="flex flex-wrap gap-2">
             @for (allergy of details().patient.allergies; track allergy) {
-              <app-badge customClasses="bg-red-100 text-red-700 border-red-300">
+              <app-badge class="bg-red-100 text-red-700 border-red-300">
                 {{ allergy }}
               </app-badge>
             }
           </div>
         </app-card>
 
-        <app-card customClasses="p-6 mt-6">
+        <app-card class="p-6 mt-6">
           <h3 class="text-gray-900 mb-4 font-semibold text-xl">Quick Actions</h3>
           <div >
-            <app-button variant="outline" customClasses="w-full justify-start mt-2">
+            <app-button variant="outline" class="w-full justify-start mt-2">
               <lucide-icon [img]="MailIcon" class="w-4 h-4 mr-2"></lucide-icon>
               Send Message
             </app-button>
-            <app-button variant="outline" customClasses="w-full justify-start mt-2">
+            <app-button variant="outline" class="w-full justify-start mt-2">
               <lucide-icon [img]="PhoneIcon" class="w-4 h-4 mr-2"></lucide-icon>
               Call Patient
             </app-button>
-            <app-button variant="outline" customClasses="w-full justify-start mt-2">
+            <app-button variant="outline" class="w-full justify-start mt-2">
               <lucide-icon [img]="FileTextIcon" class="w-4 h-4 mr-2"></lucide-icon>
               View Full Medical Record
             </app-button>

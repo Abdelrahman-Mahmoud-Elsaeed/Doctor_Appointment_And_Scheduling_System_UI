@@ -48,7 +48,6 @@ import { LucideAngularModule, Camera, Mail, Phone, User, Calendar, MapPin } from
 export class Profile {
   @Input() onNavigate?: (page: string) => void;
 
-  // icons as read-only fields so template can use <lucide-icon [img]="Camera">
   protected readonly Camera = Camera;
   protected readonly Mail = Mail;
   protected readonly Phone = Phone;

@@ -10,7 +10,7 @@
       <h2 id="stats-heading" class="sr-only">Appointment Statistics</h2>
       <ul class="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <li>
-          <app-card customClasses="p-4">
+          <app-card class="p-4">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-600">Today</p>
@@ -24,7 +24,7 @@
         </li>
 
         <li>
-          <app-card customClasses="p-4">
+          <app-card class="p-4">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-600">Pending</p>
@@ -38,7 +38,7 @@
         </li>
 
         <li>
-          <app-card customClasses="p-4">
+          <app-card class="p-4">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-600">This Week</p>
@@ -52,7 +52,7 @@
         </li>
 
         <li>
-          <app-card customClasses="p-4">
+          <app-card class="p-4">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-600">This Month</p>
@@ -74,7 +74,7 @@
           <app-button
             [variant]="view === 'list' ? 'default' : 'outline'"
             (click)="setView('list')"
-            [customClasses]="view === 'list' ? 'bg-[#007bff]' : ''"
+            [class]="view === 'list' ? 'bg-[#007bff]' : ''"
             [attr.aria-pressed]="view === 'list'"
           >
             <lucide-icon aria-hidden="true" [img]="List" class="w-4 h-4 mr-2"></lucide-icon>
@@ -84,7 +84,7 @@
           <app-button
             [variant]="view === 'calendar' ? 'default' : 'outline'"
             (click)="setView('calendar')"
-            [customClasses]="view === 'calendar' ? 'bg-[#007bff]' : ''"
+            [class]="view === 'calendar' ? 'bg-[#007bff]' : ''"
             [attr.aria-pressed]="view === 'calendar'"
           >
             <lucide-icon aria-hidden="true" [img]="Calendar" class="w-4 h-4 mr-2"></lucide-icon>
@@ -94,7 +94,7 @@
 
         <div class="flex gap-2 w-full sm:w-auto">
           <app-select placeholder="All Status" value="all" aria-label="Filter by Status">
-            <app-select-trigger customClasses="w-full sm:w-40">
+            <app-select-trigger class="w-full sm:w-40">
               <lucide-icon aria-hidden="true" [img]="Filter" class="w-4 h-4 mr-2"></lucide-icon>
               <app-select-value></app-select-value>
             </app-select-trigger>
@@ -107,7 +107,7 @@
           </app-select>
 
           <app-select placeholder="Newest First" value="date-desc" aria-label="Sort by">
-            <app-select-trigger customClasses="w-full sm:w-40">
+            <app-select-trigger class="w-full sm:w-40">
               <app-select-value></app-select-value>
             </app-select-trigger>
             <app-select-content>
@@ -124,15 +124,15 @@
       <section aria-labelledby="list-view-heading">
         <h2 id="list-view-heading" class="sr-only">Appointment List</h2>
         
-        <app-card customClasses="p-6">
+        <app-card class="p-6">
           <app-tabs>
-            <app-tabs-list customClasses="mb-6" aria-label="Appointment Categories">
+            <app-tabs-list class="mb-6" aria-label="Appointment Categories">
               <app-tabs-trigger value="upcoming">Upcoming</app-tabs-trigger>
               <app-tabs-trigger value="pending">Pending Approval</app-tabs-trigger>
               <app-tabs-trigger value="completed">Completed</app-tabs-trigger>
             </app-tabs-list>
 
-            <app-tabs-content value="upcoming" customClasses="space-y-4">
+            <app-tabs-content value="upcoming" class="space-y-4">
               <ul class="space-y-4">
                 @for (appointment of confirmedAppointments; track $index) {
                   <li>
@@ -151,7 +151,7 @@
                               <p class="text-sm text-gray-600">{{ appointment.notes || 'General consultation' }}</p>
                             </div>
                             <app-badge
-                              [customClasses]="
+                              [class]="
                                 appointment.status === 'confirmed'
                                   ? 'bg-green-100 text-green-700'
                                   : appointment.status === 'pending'
@@ -178,12 +178,12 @@
                           <div class="flex gap-2">
                             <app-button size="sm" variant="outline" [routerLink]="['/doctor/appointment-details',appointment.id]">View Details</app-button>
                             @if (appointment.status === 'confirmed') {
-                              <app-button size="sm" customClasses="bg-[#007bff] hover:bg-[#0056b3]">Mark as Completed</app-button>
-                              <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Cancel</app-button>
+                              <app-button size="sm" class="bg-[#007bff] hover:bg-[#0056b3]">Mark as Completed</app-button>
+                              <app-button size="sm" variant="outline" class="text-red-600 hover:text-red-700">Cancel</app-button>
                             }
                             @if (appointment.status === 'pending') {
-                              <app-button size="sm" customClasses="bg-green-600 hover:bg-green-700">Confirm</app-button>
-                              <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Decline</app-button>
+                              <app-button size="sm" class="bg-green-600 hover:bg-green-700">Confirm</app-button>
+                              <app-button size="sm" variant="outline" class="text-red-600 hover:text-red-700">Decline</app-button>
                             }
                           </div>
                         </div>
@@ -196,7 +196,7 @@
               </ul>
             </app-tabs-content>
 
-            <app-tabs-content value="pending" customClasses="space-y-4">
+            <app-tabs-content value="pending" class="space-y-4">
                <ul class="space-y-4">
                 @for (appointment of pendingAppointments; track $index) {
                   <li>
@@ -210,7 +210,7 @@
                               <p class="text-sm text-gray-600">{{ appointment.notes || 'General consultation' }}</p>
                             </div>
                             <app-badge
-                              [customClasses]="
+                              [class]="
                                 appointment.status === 'confirmed'
                                   ? 'bg-green-100 text-green-700'
                                   : appointment.status === 'pending'
@@ -234,8 +234,8 @@
                           </div>
                           <div class="flex gap-2">
                             <app-button size="sm" variant="outline" routerLink="/doctor/appointment-details">View Details</app-button>
-                            <app-button size="sm" customClasses="bg-green-600 hover:bg-green-700">Confirm</app-button>
-                            <app-button size="sm" variant="outline" customClasses="text-red-600 hover:text-red-700">Decline</app-button>
+                            <app-button size="sm" class="bg-green-600 hover:bg-green-700">Confirm</app-button>
+                            <app-button size="sm" variant="outline" class="text-red-600 hover:text-red-700">Decline</app-button>
                           </div>
                         </div>
                       </div>
@@ -247,7 +247,7 @@
               </ul>
             </app-tabs-content>
 
-            <app-tabs-content value="completed" customClasses="space-y-4">
+            <app-tabs-content value="completed" class="space-y-4">
               <ul class="space-y-4">
                 @for (appointment of completedAppointments; track $index) {
                   <li>
@@ -260,7 +260,7 @@
                               <h3 class="text-gray-900 mb-1 font-semibold">Patient Name</h3>
                               <p class="text-sm text-gray-600">{{ appointment.notes || 'General consultation' }}</p>
                             </div>
-                            <app-badge variant="outline" customClasses="bg-blue-100 text-blue-700">{{ appointment.status }}</app-badge>
+                            <app-badge variant="outline" class="bg-blue-100 text-blue-700">{{ appointment.status }}</app-badge>
                           </div>
                           <div class="flex items-center gap-4 text-sm text-gray-600 mb-3">
                             <div class="flex items-center gap-1">
@@ -291,16 +291,16 @@
       <section aria-labelledby="calendar-view-heading" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <h2 id="calendar-view-heading" class="sr-only">Calendar View</h2>
         
-        <app-card customClasses="lg:col-span-2 p-6">
+        <app-card class="lg:col-span-2 p-6">
           <app-calendar
             mode="single"
             [selected]="date"
             (select)="setDate($event)"
-            customClasses="rounded-md border-0 max-w-63" 
+            class="rounded-md border-0 max-w-63" 
           ></app-calendar>
         </app-card>
 
-        <app-card customClasses="p-6">
+        <app-card class="p-6">
           <h3 class="text-gray-900 mb-4 font-bold text-lg">
             {{ date ? (date | date:'MMMM d') : 'Select a date' }}
           </h3>
@@ -310,7 +310,7 @@
                 <button class="w-full text-left p-3 border rounded-lg hover:border-[#007bff] focus:ring-2 focus:ring-[#007bff] focus:outline-none transition-colors cursor-pointer bg-white">
                   <div class="flex items-center justify-between mb-2">
                     <span class="text-sm text-gray-900 font-medium">{{ appointment.time }}</span>
-                    <app-badge variant="outline" customClasses="text-xs">{{ appointment.status }}</app-badge>
+                    <app-badge variant="outline" class="text-xs">{{ appointment.status }}</app-badge>
                   </div>
                   <p class="text-sm text-gray-600 font-medium">Patient Name</p>
                   <p class="text-xs text-gray-500 mt-1">{{ appointment.notes }}</p>

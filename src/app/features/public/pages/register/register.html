@@ -13,14 +13,14 @@
       <p class="text-gray-600">Join our healthcare community today</p>
     </div>
 
-    <app-card customClasses="p-8 shadow-xl">
+    <app-card class="p-8 shadow-xl">
       <app-tabs [(value)]="selectedTab">
-        <app-tabs-list customClasses="grid w-full grid-cols-2 mb-8">
-          <app-tabs-trigger value="patient" customClasses="gap-2 w-full">
+        <app-tabs-list class="grid w-full grid-cols-2 mb-8">
+          <app-tabs-trigger value="patient" class="gap-2 w-full">
             <lucide-icon aria-hidden="true" [img]="User" class="w-4 h-4"></lucide-icon>
             Patient Account
           </app-tabs-trigger>
-          <app-tabs-trigger value="doctor" customClasses="gap-2 w-full">
+          <app-tabs-trigger value="doctor" class="gap-2 w-full">
             <lucide-icon aria-hidden="true" [img]="Shield" class="w-4 h-4"></lucide-icon>
             Doctor Account
           </app-tabs-trigger>
@@ -51,10 +51,10 @@
                     class="ab w-5 h-5 text-gray-400"
                   ></lucide-icon>
                   <app-input
-                    [id]="'firstName'"
+                    id="firstName"
                     type="text"
                     placeholder="John"
-                    customClasses="pl-11"
+                    class="pl-11"
                   ></app-input>
                 </div>
               </div>
@@ -67,10 +67,10 @@
                     class="ab w-5 h-5 text-gray-400"
                   ></lucide-icon>
                   <app-input
-                    [id]="'lastName'"
+                    id="lastName"
                     type="text"
                     placeholder="Smith"
-                    customClasses="pl-11"
+                    class="pl-11"
                   ></app-input>
                 </div>
               </div>
@@ -79,12 +79,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <app-label for="dateOfBirth">Date of Birth *</app-label>
-                <app-input [id]="'dateOfBirth'" type="date" customClasses="mt-2"></app-input>
+                <app-input id="dateOfBirth" type="date" class="mt-2"></app-input>
               </div>
               <div>
-                <app-label for="gender" customClasses="mb-2">Gender *</app-label>
+                <app-label for="gender" class="mb-2">Gender *</app-label>
                 <app-select placeholder="Select gender">
-                  <app-select-trigger [id]="'gender'">
+                  <app-select-trigger id="gender">
                     <app-select-value></app-select-value>
                   </app-select-trigger>
                   <app-select-content>
@@ -106,10 +106,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'address'"
+                  id="address"
                   type="text"
                   placeholder="123 Main St"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
             </div>
@@ -118,28 +118,28 @@
               <div>
                 <app-label for="city">City *</app-label>
                 <app-input
-                  [id]="'city'"
+                  id="city"
                   type="text"
                   placeholder="New York"
-                  customClasses="mt-2"
+                  class="mt-2"
                 ></app-input>
               </div>
               <div>
                 <app-label for="state">State *</app-label>
                 <app-input
-                  [id]="'state'"
+                  id="state"
                   type="text"
                   placeholder="NY"
-                  customClasses="mt-2"
+                  class="mt-2"
                 ></app-input>
               </div>
               <div>
                 <app-label for="zipCode">Zip Code *</app-label>
                 <app-input
-                  [id]="'zipCode'"
+                  id="zipCode"
                   type="text"
                   placeholder="10001"
-                  customClasses="mt-2"
+                  class="mt-2"
                 ></app-input>
               </div>
             </div>
@@ -152,10 +152,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'email'"
+                  id="email"
                   type="email"
                   placeholder="john.smith@example.com"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
               <p class="text-xs text-gray-500 mt-1">
@@ -172,10 +172,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'phone'"
+                  id="phone"
                   type="tel"
                   placeholder="+1 (555) 123-4567"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
             </div>
@@ -189,10 +189,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'password'"
+                  id="password"
                   type="password"
                   placeholder="Create a strong password"
-                  customClasses="pl-11"
+                  class="pl-11"
                   [value]="password()"
                   (input)="onPasswordChange($event)"
                 ></app-input>
@@ -259,19 +259,19 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'confirmPassword'"
+                  id="confirmPassword"
                   type="password"
                   placeholder="Confirm your password"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
             </div>
 
             <div class="flex items-start space-x-2">
-              <app-checkbox [id]="'terms'" customClasses="mt-1 "></app-checkbox>
+              <app-checkbox id="terms" class="mt-1 "></app-checkbox>
               <app-label
                 for="terms"
-                customClasses="text-sm text-gray-700 cursor-pointer leading-relaxed ml-2 mt-px"
+                class="text-sm text-gray-700 cursor-pointer leading-relaxed ml-2 mt-px"
               >
                 I agree to the
                 <a href="#" class="text-[#00bfa6] hover:underline">Terms of Service</a> and
@@ -280,16 +280,16 @@
             </div>
 
             <div class="flex items-start space-x-2">
-              <app-checkbox [id]="'marketing'" customClasses="mt-1"></app-checkbox>
+              <app-checkbox id="marketing" class="mt-1"></app-checkbox>
               <app-label
                 for="marketing"
-                customClasses="text-sm text-gray-600 cursor-pointer leading-relaxed ml-2 mt-px"
+                class="text-sm text-gray-600 cursor-pointer leading-relaxed ml-2 mt-px"
               >
                 Send me health tips, appointment reminders, and promotional emails
               </app-label>
             </div>
 
-            <app-button customClasses="w-full bg-[#00bfa6] hover:bg-[#00a890]" routerLink="#">
+            <app-button class="w-full bg-[#00bfa6] hover:bg-[#00a890]" routerLink="#">
               Create Patient Account
               <lucide-icon aria-hidden="true" [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
             </app-button>
@@ -304,7 +304,7 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-              <app-button variant="outline" customClasses="w-full">
+              <app-button variant="outline" class="w-full">
                 <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
@@ -325,7 +325,7 @@
                 </svg>
                 Google
               </app-button>
-              <app-button variant="outline" customClasses="w-full">
+              <app-button variant="outline" class="w-full">
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                   <path
                     d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
@@ -367,10 +367,10 @@
                     class="ab w-5 h-5 text-gray-400"
                   ></lucide-icon>
                   <app-input
-                    [id]="'docFirstName'"
+                    id="docFirstName"
                     type="text"
                     placeholder="Dr. Sarah"
-                    customClasses="pl-11"
+                    class="pl-11"
                   ></app-input>
                 </div>
               </div>
@@ -383,10 +383,10 @@
                     class="ab w-5 h-5 text-gray-400"
                   ></lucide-icon>
                   <app-input
-                    [id]="'docLastName'"
+                    id="docLastName"
                     type="text"
                     placeholder="Johnson"
-                    customClasses="pl-11"
+                    class="pl-11"
                   ></app-input>
                 </div>
               </div>
@@ -394,9 +394,9 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <app-label customClasses="mb-2" for="specialization">Specialization *</app-label>
+                <app-label class="mb-2" for="specialization">Specialization *</app-label>
                 <app-select placeholder="Select specialization">
-                  <app-select-trigger [id]="'specialization'">
+                  <app-select-trigger id="specialization">
                     <app-select-value></app-select-value>
                   </app-select-trigger>
                   <app-select-content>
@@ -411,9 +411,9 @@
                 </app-select>
               </div>
               <div>
-                <app-label customClasses="mb-2" for="experience">Years of Experience *</app-label>
+                <app-label class="mb-2" for="experience">Years of Experience *</app-label>
                 <app-select placeholder="Select years of experience">
-                  <app-select-trigger [id]="'experience'">
+                  <app-select-trigger id="experience">
                     <app-select-value></app-select-value>
                   </app-select-trigger>
                   <app-select-content>
@@ -436,10 +436,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'docEmail'"
+                  id="docEmail"
                   type="email"
                   placeholder="doctor@hospital.com"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
               <p class="text-xs text-gray-500 mt-1">
@@ -456,10 +456,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'docPhone'"
+                  id="docPhone"
                   type="tel"
                   placeholder="+1 (555) 123-4567"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
             </div>
@@ -473,10 +473,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'license'"
+                  id="license"
                   type="text"
                   placeholder="Enter your license number"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
               <p class="text-xs text-gray-500 mt-1">This will be verified with the medical board</p>
@@ -501,7 +501,7 @@
                       class="relative cursor-pointer rounded-md bg-white font-semibold text-[#007bff] focus-within:outline-hidden hover:text-[#0056b3]"
                     >
                       <span>Upload a file</span>
-                      <input [id]="'file-upload'" name="file-upload" type="file" class="sr-only" />
+                      <input id="file-upload" name="file-upload" type="file" class="sr-only" />
                     </label>
                     <p class="pl-1">or drag and drop</p>
                   </div>
@@ -519,10 +519,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'npi'"
+                  id="npi"
                   type="text"
                   placeholder="10-digit NPI number"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
             </div>
@@ -530,10 +530,10 @@
             <div>
               <app-label for="hospital">Hospital/Clinic Affiliation *</app-label>
               <app-input
-                [id]="'hospital'"
+                id="hospital"
                 type="text"
                 placeholder="Name of your primary practice location"
-                customClasses="mt-2"
+                class="mt-2"
               ></app-input>
             </div>
 
@@ -546,10 +546,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'docPassword'"
+                  id="docPassword"
                   type="password"
                   placeholder="Create a strong password"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
               <p class="text-xs text-gray-500 mt-1">
@@ -566,10 +566,10 @@
                   class="ab w-5 h-5 text-gray-400"
                 ></lucide-icon>
                 <app-input
-                  [id]="'docConfirmPassword'"
+                  id="docConfirmPassword"
                   type="password"
                   placeholder="Confirm your password"
-                  customClasses="pl-11"
+                  class="pl-11"
                 ></app-input>
               </div>
             </div>
@@ -585,10 +585,10 @@
             </div>
 
             <div class="flex items-start space-x-2">
-              <app-checkbox [id]="'docTerms'" customClasses="mt-1"></app-checkbox>
+              <app-checkbox id="docTerms" class="mt-1"></app-checkbox>
               <app-label
                 for="docTerms"
-                customClasses="text-sm text-gray-700 cursor-pointer leading-relaxed ml-2 mt-px"
+                class="text-sm text-gray-700 cursor-pointer leading-relaxed ml-2 mt-px"
               >
                 I agree to the
                 <a href="#" class="text-[#007bff] hover:underline">Doctor Terms of Service</a>
@@ -597,17 +597,17 @@
             </div>
 
             <div class="flex items-start space-x-2">
-              <app-checkbox [id]="'hipaa'" customClasses="mt-1"></app-checkbox>
+              <app-checkbox id="hipaa" class="mt-1"></app-checkbox>
               <app-label
                 for="hipaa"
-                customClasses="text-sm text-gray-700 cursor-pointer leading-relaxed ml-2 mt-px"
+                class="text-sm text-gray-700 cursor-pointer leading-relaxed ml-2 mt-px"
               >
                 I acknowledge and agree to comply with HIPAA regulations and patient privacy
                 standards
               </app-label>
             </div>
 
-            <app-button customClasses="w-full bg-[#007bff] hover:bg-[#0056b3]">
+            <app-button class="w-full bg-[#007bff] hover:bg-[#0056b3]">
               Submit Application for Review
               <lucide-icon aria-hidden="true" [img]="ArrowRight" class="w-4 h-4 ml-2"></lucide-icon>
             </app-button>

@@ -1,4 +1,4 @@
-<app-card customClasses="overflow-hidden hover:shadow-lg transition-shadow">
+<app-card class="overflow-hidden hover:shadow-lg transition-shadow">
   <article class="p-6">
     <div class="flex gap-4">
       <!-- Doctor Image -->
@@ -61,7 +61,7 @@
       <ul class="flex flex-wrap gap-2 mb-4">
         @for (day of doctor.availability; track day) {
           <li>
-            <app-badge variant="outline" customClasses="text-xs">
+            <app-badge variant="outline" class="text-xs">
               {{ day }}
             </app-badge>
           </li>
@@ -74,15 +74,13 @@
       <app-button   
         [attr.aria-label]="'View Profile Of '+ doctor.name"
         variant="outline"  
-        class="flex-1" 
-        customClasses="w-full " 
+        class="flex-1 w-full " 
         (click)="viewProfile.emit()">
         View Profile
       </app-button>
       <app-button 
-        class="flex-1"
+        class="flex-1 w-full  bg-[#00bfa6] hover:bg-[#00a890]" 
         [attr.aria-label]="'Book Appointment With ' + doctor.name"
-        customClasses="w-full  bg-[#00bfa6] hover:bg-[#00a890]" 
         (click)="bookNow.emit()">
         Book Now
       </app-button>

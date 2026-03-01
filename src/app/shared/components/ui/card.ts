@@ -21,16 +21,15 @@ import { cn } from '@utils/cn.util';
   ],
 })
 export class CardComponent {
-  customClasses = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
   protected hostClasses = computed(() =>
     cn(
       'bg-card text-card-foreground flex flex-col gap-6 rounded-xl border',
-      this.customClasses(),
+      this.userClass(),
     ),
   );
 }
 
-// --- Card Header ---
 
 @Component({
   selector: 'app-card-header',
@@ -50,11 +49,11 @@ export class CardComponent {
   ],
 })
 export class CardHeaderComponent {
-  customClasses = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
   protected hostClasses = computed(() =>
     cn(
       '@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 pt-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6',
-      this.customClasses(),
+      this.userClass(),
     ),
   );
 }
@@ -79,9 +78,9 @@ export class CardHeaderComponent {
   ],
 })
 export class CardTitleComponent {
-  customClasses = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
   protected hostClasses = computed(() =>
-    cn('leading-none', this.customClasses()),
+    cn('leading-none', this.userClass()),
   );
 }
 
@@ -105,9 +104,9 @@ export class CardTitleComponent {
   ],
 })
 export class CardDescriptionComponent {
-  customClasses = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
   protected hostClasses = computed(() =>
-    cn('text-muted-foreground', this.customClasses()),
+    cn('text-muted-foreground', this.userClass()),
   );
 }
 
@@ -131,11 +130,11 @@ export class CardDescriptionComponent {
   ],
 })
 export class CardActionComponent {
-  customClasses = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
   protected hostClasses = computed(() =>
     cn(
       'col-start-2 row-span-2 row-start-1 self-start justify-self-end',
-      this.customClasses(),
+      this.userClass(),
     ),
   );
 }
@@ -160,9 +159,10 @@ export class CardActionComponent {
   ],
 })
 export class CardContentComponent {
-  customClasses = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
+
   protected hostClasses = computed(() =>
-    cn('px-6 [&:last-child]:pb-6', this.customClasses()),
+    cn('px-6 [&:last-child]:pb-6', this.userClass()),
   );
 }
 
@@ -186,8 +186,9 @@ export class CardContentComponent {
   ],
 })
 export class CardFooterComponent {
-  customClasses = input<string | undefined>();
+  userClass = input<string>('', { alias: 'class' });
+
   protected hostClasses = computed(() =>
-    cn('flex items-center px-6 pb-6 [.border-t]:pt-6', this.customClasses()),
+    cn('flex items-center px-6 pb-6 [.border-t]:pt-6', this.userClass()),
   );
 }

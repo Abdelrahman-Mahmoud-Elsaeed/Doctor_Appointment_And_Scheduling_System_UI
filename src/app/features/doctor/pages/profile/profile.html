@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4 py-8">
     
     <section aria-label="Doctor Profile Header">
-      <app-card customClasses="p-6 mb-6">
+      <app-card class="p-6 mb-6">
         <div class="flex flex-col md:flex-row gap-6">
           
           <div class="flex-shrink-0">
@@ -26,8 +26,8 @@
               <div>
                 <h1 class="text-gray-900 mb-2 text-xl font-bold">{{ doctor.name }}</h1>
                 <ul class="flex flex-wrap items-center gap-3 mb-3 list-none p-0">
-                  <li><app-badge customClasses="bg-[#007bff]/10 text-[#007bff] border-none">{{ doctor.specialization }}</app-badge></li>
-                  <li><app-badge customClasses="bg-green-100 text-green-700 border-none">Active</app-badge></li>
+                  <li><app-badge class="bg-[#007bff]/10 text-[#007bff] border-none">{{ doctor.specialization }}</app-badge></li>
+                  <li><app-badge class="bg-green-100 text-green-700 border-none">Active</app-badge></li>
                 </ul>
                 <div class="flex items-center gap-2 mb-3" aria-label="Rating">
                   <lucide-icon [img]="Star" class="w-5 h-5 fill-yellow-400 text-yellow-400" aria-hidden="true"></lucide-icon>
@@ -73,22 +73,22 @@
 
             <ul class="flex flex-wrap gap-2 list-none p-0" aria-label="Verification statuses">
               <li>
-                <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
+                <app-badge variant="outline" class="bg-green-50 text-green-700 border-green-200">
                   <span class="mr-1" aria-hidden="true">✓</span> Email Verified
                 </app-badge>
               </li>
               <li>
-                <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
+                <app-badge variant="outline" class="bg-green-50 text-green-700 border-green-200">
                   <span class="mr-1" aria-hidden="true">✓</span> Phone Verified
                 </app-badge>
               </li>
               <li>
-                <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
+                <app-badge variant="outline" class="bg-green-50 text-green-700 border-green-200">
                   <span class="mr-1" aria-hidden="true">✓</span> License Verified
                 </app-badge>
               </li>
               <li>
-                <app-badge variant="outline" customClasses="bg-green-50 text-green-700 border-green-200">
+                <app-badge variant="outline" class="bg-green-50 text-green-700 border-green-200">
                   <span class="mr-1" aria-hidden="true">✓</span> Board Certified
                 </app-badge>
               </li>
@@ -98,16 +98,16 @@
       </app-card>
     </section>
 
-    <app-card customClasses="p-6">
+    <app-card class="p-6">
       <app-tabs [(value)]="activeTab">
-        <app-tabs-list customClasses="mb-6" aria-label="Profile Settings Sections">
+        <app-tabs-list class="mb-6" aria-label="Profile Settings Sections">
           <app-tabs-trigger value="personal">Personal Info</app-tabs-trigger>
           <app-tabs-trigger value="professional">Professional</app-tabs-trigger>
           <app-tabs-trigger value="practice">Practice Details</app-tabs-trigger>
           <app-tabs-trigger value="security">Security</app-tabs-trigger>
         </app-tabs-list>
 
-        <app-tabs-content value="personal" customClasses="space-y-6">
+        <app-tabs-content value="personal" class="space-y-6">
           <form class="grid grid-cols-1 md:grid-cols-2 gap-6" aria-labelledby="personal-info-heading">
             <h2 id="personal-info-heading" class="sr-only">Personal Information</h2>
             
@@ -116,9 +116,9 @@
               <div class="relative mt-2">
                 <lucide-icon [img]="User" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
-                  [id]="'firstName'"
+                  id="firstName"
                   value="Sarah"
-                  customClasses="pl-10"
+                  class="pl-10"
                   autocomplete="given-name"
                 ></app-input>
               </div>
@@ -129,9 +129,9 @@
               <div class="relative mt-2">
                 <lucide-icon [img]="User" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
-                  [id]="'lastName'"
+                  id="lastName"
                   value="Johnson"
-                  customClasses="pl-10"
+                  class="pl-10"
                   autocomplete="family-name"
                 ></app-input>
               </div>
@@ -142,10 +142,10 @@
               <div class="relative mt-2">
                 <lucide-icon [img]="Mail" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
-                  [id]="'email'"
+                  id="email"
                   type="email"
                   value="dr.sarah.johnson@healthcare.com"
-                  customClasses="pl-10"
+                  class="pl-10"
                   autocomplete="email"
                 ></app-input>
               </div>
@@ -156,10 +156,10 @@
               <div class="relative mt-2">
                 <lucide-icon [img]="Phone" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
-                  [id]="'phone'"
+                  id="phone"
                   type="tel"
                   value="+1 (555) 123-4567"
-                  customClasses="pl-10"
+                  class="pl-10"
                   autocomplete="tel"
                 ></app-input>
               </div>
@@ -170,9 +170,9 @@
               <div class="relative mt-2">
                 <lucide-icon [img]="MapPin" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
-                  [id]="'address'"
+                  id="address"
                   [value]="doctor.location"
-                  customClasses="pl-10"
+                  class="pl-10"
                   autocomplete="street-address"
                 ></app-input>
               </div>
@@ -181,10 +181,10 @@
             <div class="md:col-span-2">
               <app-label for="languages">Languages Spoken</app-label>
               <app-input
-                [id]="'languages'"
+                id="languages"
                 placeholder="e.g., English, Spanish, French"
                 value="English, Spanish"
-                customClasses="mt-2"
+                class="mt-2"
                 aria-describedby="languages-hint"
               ></app-input>
               <span id="languages-hint" class="sr-only">Separate multiple languages with commas</span>
@@ -193,20 +193,20 @@
 
           <div class="flex justify-end gap-4 pt-4 border-t">
             <app-button variant="outline">Cancel</app-button>
-            <app-button customClasses="bg-[#007bff] hover:bg-[#0056b3]">
+            <app-button class="bg-[#007bff] hover:bg-[#0056b3]">
               Save Changes
             </app-button>
           </div>
         </app-tabs-content>
 
-        <app-tabs-content value="professional" customClasses="space-y-6">
+        <app-tabs-content value="professional" class="space-y-6">
           <form class="grid grid-cols-1 md:grid-cols-2 gap-6" aria-labelledby="professional-info-heading">
             <h2 id="professional-info-heading" class="sr-only">Professional Information</h2>
             
             <div>
-              <app-label for="specialization" customClasses="w-fit">Specialization</app-label>
+              <app-label for="specialization" class="w-fit">Specialization</app-label>
               <app-select [value]="doctor.specialization">
-                <app-select-trigger [id]="'specialization'" customClasses="mt-2" aria-label="Select Specialization">
+                <app-select-trigger id="specialization" class="mt-2" aria-label="Select Specialization">
                   <app-select-value>{{doctor.specialization}}</app-select-value>
                 </app-select-trigger>
                 <app-select-content>
@@ -224,10 +224,10 @@
               <div class="relative mt-2">
                 <lucide-icon [img]="Briefcase" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
-                  [id]="'experience'"
+                  id="experience"
                   type="number"
                   [value]="doctor.experience"
-                  customClasses="pl-10"
+                  class="pl-10"
                 ></app-input>
               </div>
             </div>
@@ -237,9 +237,9 @@
               <div class="relative mt-2">
                 <lucide-icon [img]="GraduationCap" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
-                  [id]="'education'"
+                  id="education"
                   value="Harvard Medical School"
-                  customClasses="pl-10"
+                  class="pl-10"
                 ></app-input>
               </div>
             </div>
@@ -249,9 +249,9 @@
               <div class="relative mt-2">
                 <lucide-icon [img]="Award" class="ab w-4 h-4 text-gray-400" aria-hidden="true"></lucide-icon>
                 <app-input
-                  [id]="'license'"
+                  id="license"
                   value="MD-123456"
-                  customClasses="pl-10"
+                  class="pl-10"
                 ></app-input>
               </div>
             </div>
@@ -259,10 +259,10 @@
             <div class="md:col-span-2">
               <app-label for="about">About / Bio</app-label>
               <app-textarea
-                [id]="'about'"
+                id="about"
                 [rows]="4"
                 [value]="doctor.about"
-                customClasses="mt-2"
+                class="mt-2"
                 aria-describedby="about-desc"
               ></app-textarea>
               <p id="about-desc" class="text-xs text-gray-500 mt-1">
@@ -277,7 +277,7 @@
                 <li><app-badge variant="secondary">Family Medicine</app-badge></li>
                 <li><app-badge variant="secondary">Preventive Medicine</app-badge></li>
                 <li>
-                  <app-button variant="outline" size="sm" customClasses="h-7" aria-label="Add new board certification">
+                  <app-button variant="outline" size="sm" class="h-7" aria-label="Add new board certification">
                     + Add Certification
                   </app-button>
                 </li>
@@ -287,28 +287,28 @@
 
           <div class="flex justify-end gap-4 pt-4 border-t">
             <app-button variant="outline">Cancel</app-button>
-            <app-button customClasses="bg-[#007bff] hover:bg-[#0056b3]">
+            <app-button class="bg-[#007bff] hover:bg-[#0056b3]">
               Save Changes
             </app-button>
           </div>
         </app-tabs-content>
 
-        <app-tabs-content value="practice" customClasses="space-y-6">
+        <app-tabs-content value="practice" class="space-y-6">
           <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <app-label for="consultationFee">Consultation Fee ($)</app-label>
               <app-input
-                [id]="'consultationFee'"
+                id="consultationFee"
                 type="number"
                 [value]="doctor.price"
-                customClasses="mt-2"
+                class="mt-2"
               ></app-input>
             </div>
 
             <div>
-              <app-label for="sessionDuration" customClasses="w-fit">Session Duration (min)</app-label>
+              <app-label for="sessionDuration" class="w-fit">Session Duration (min)</app-label>
               <app-select value="30">
-                <app-select-trigger [id]="'sessionDuration'" customClasses="mt-2">
+                <app-select-trigger id="sessionDuration" class="mt-2">
                   <app-select-value>30</app-select-value>
                 </app-select-trigger>
                 <app-select-content>
@@ -325,7 +325,7 @@
               <ul class="flex flex-wrap gap-2 list-none p-0">
                 @for (day of doctor.availability; track day) {
                   <li>
-                    <app-badge customClasses="bg-green-100 text-green-700">
+                    <app-badge class="bg-green-100 text-green-700">
                       {{ day }}
                     </app-badge>
                   </li>
@@ -334,7 +334,7 @@
                   <app-button
                     variant="outline"
                     size="sm"
-                    customClasses="h-7"
+                    class="h-7"
                     routerLink="/doctor/schedule"
                   >
                     Edit Schedule
@@ -368,7 +368,7 @@
                 <li><app-badge variant="secondary">Health Screenings</app-badge></li>
                 <li><app-badge variant="secondary">Treatment Planning</app-badge></li>
                 <li>
-                  <app-button variant="outline" size="sm" customClasses="h-7" aria-label="Add new service">
+                  <app-button variant="outline" size="sm" class="h-7" aria-label="Add new service">
                     + Add Service
                   </app-button>
                 </li>
@@ -383,7 +383,7 @@
                 <li><app-badge variant="secondary">United Healthcare</app-badge></li>
                 <li><app-badge variant="secondary">Cigna</app-badge></li>
                 <li>
-                  <app-button variant="outline" size="sm" customClasses="h-7" aria-label="Add new insurance provider">
+                  <app-button variant="outline" size="sm" class="h-7" aria-label="Add new insurance provider">
                     + Add Insurance
                   </app-button>
                 </li>
@@ -393,22 +393,22 @@
 
           <div class="flex justify-end gap-4 pt-4 border-t">
             <app-button variant="outline">Cancel</app-button>
-            <app-button customClasses="bg-[#007bff] hover:bg-[#0056b3]">
+            <app-button class="bg-[#007bff] hover:bg-[#0056b3]">
               Save Changes
             </app-button>
           </div>
         </app-tabs-content>
 
-        <app-tabs-content value="security" customClasses="space-y-6">
+        <app-tabs-content value="security" class="space-y-6">
           <section aria-labelledby="password-heading">
             <h3 id="password-heading" class="text-gray-900 mb-4 font-bold">Change Password</h3>
             <form class="space-y-4 max-w-md">
               <div>
                 <app-label for="currentPassword">Current Password</app-label>
                 <app-input
-                  [id]="'currentPassword'"
+                  id="currentPassword"
                   type="password"
-                  customClasses="mt-2"
+                  class="mt-2"
                   autocomplete="current-password"
                 ></app-input>
               </div>
@@ -416,9 +416,9 @@
               <div>
                 <app-label for="newPassword">New Password</app-label>
                 <app-input
-                  [id]="'newPassword'"
+                  id="newPassword"
                   type="password"
-                  customClasses="mt-2"
+                  class="mt-2"
                   autocomplete="new-password"
                 ></app-input>
               </div>
@@ -426,9 +426,9 @@
               <div>
                 <app-label for="confirmPassword">Confirm New Password</app-label>
                 <app-input
-                  [id]="'confirmPassword'"
+                  id="confirmPassword"
                   type="password"
-                  customClasses="mt-2"
+                  class="mt-2"
                   autocomplete="new-password"
                 ></app-input>
               </div>
@@ -442,7 +442,7 @@
                 <p class="text-gray-900">Enable 2FA</p>
                 <p class="text-sm text-gray-600">Add an extra layer of security to your account</p>
               </div>
-              <app-badge customClasses="bg-green-100 text-green-700">Enabled</app-badge>
+              <app-badge class="bg-green-100 text-green-700">Enabled</app-badge>
             </div>
           </section>
 
@@ -468,7 +468,7 @@
 
           <div class="flex justify-end gap-4 pt-4 border-t">
             <app-button variant="outline">Cancel</app-button>
-            <app-button customClasses="bg-[#007bff] hover:bg-[#0056b3]">
+            <app-button class="bg-[#007bff] hover:bg-[#0056b3]">
               Update Password
             </app-button>
           </div>

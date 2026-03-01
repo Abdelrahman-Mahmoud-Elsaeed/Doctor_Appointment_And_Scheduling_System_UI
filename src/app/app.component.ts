@@ -11,7 +11,6 @@ import { LoadingService } from '@services/loading-service';
     @if(loading.isLoading()) {
       <app-loading-screen [message]="loading.message()"></app-loading-screen>
     }
-    
     <router-outlet></router-outlet>
   `
 })

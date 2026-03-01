@@ -1,7 +1,7 @@
 @if (showConfirmation()) {
   <div class="min-h-screen bg-gray-50 py-12" role="alert" aria-live="polite">
     <div class="container mx-auto px-4">
-      <app-card customClasses="max-w-2xl mx-auto p-8 text-center">
+      <app-card class="max-w-2xl mx-auto p-8 text-center">
         <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6" aria-hidden="true">
           <lucide-icon [img]="icons.CheckCircle" class="w-12 h-12 text-green-600"></lucide-icon>
         </div>
@@ -11,7 +11,7 @@
           Your appointment has been successfully booked. A confirmation email has been sent to your registered email address.
         </p>
 
-        <app-card customClasses="bg-gray-50 p-6 mb-8 text-left">
+        <app-card class="bg-gray-50 p-6 mb-8 text-left">
           <div class="flex items-start gap-4 mb-4">
             <img
               [src]="doctor.image"
@@ -57,7 +57,7 @@
             View My Appointments
           </app-button>
           <app-button
-            customClasses="bg-[#00bfa6] hover:bg-[#00a890]"
+            class="bg-[#00bfa6] hover:bg-[#00a890]"
             routerLink="/home"
           >
             Back to Home
@@ -72,7 +72,7 @@
       <nav aria-label="Back navigation">
         <app-button
             variant="ghost"
-            customClasses="mb-6"
+            class="mb-6"
             [routerLink]="['/doctor-details', doctorId]"
         >
           <lucide-icon [img]="icons.ArrowLeft" class="w-4 h-4 mr-2" aria-hidden="true"></lucide-icon>
@@ -82,18 +82,18 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2">
-          <app-card customClasses="p-6">
+          <app-card class="p-6">
             <h1 class="text-gray-900 text-2xl font-bold mb-2">Book Appointment</h1>
             <p class="text-gray-600">Choose your preferred date, time, and appointment type</p>
           </app-card>
 
           <section aria-labelledby="appointment-type-heading">
-            <app-card customClasses="p-6 mt-6">
+            <app-card class="p-6 mt-6">
               <h2 id="appointment-type-heading" class="text-gray-900 text-lg font-semibold mb-4">Appointment Type</h2>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" role="radiogroup">
                 @for (type of appointmentTypes; track type.id) {
                   <app-card
-                    [customClasses]="appointmentType() === type.id 
+                    [class]="appointmentType() === type.id 
                       ? 'border-2 border-[#00bfa6] bg-[#00bfa6]/5 p-4 cursor-pointer focus:ring-2 focus:ring-[#00bfa6] outline-none' 
                       : 'border hover:border-[#00bfa6]/50 p-4 cursor-pointer focus:ring-2 focus:ring-[#00bfa6] outline-none'"
                     (click)="appointmentType.set(type.id)"
@@ -128,13 +128,13 @@
           </section>
 
           <section aria-labelledby="date-heading">
-            <app-card customClasses="p-6 mt-6">
+            <app-card class="p-6 mt-6">
               <h2 id="date-heading" class="text-gray-900 text-lg font-semibold mb-4">Select Date</h2>
               <div class="grid grid-cols-7 gap-2" role="listbox" aria-label="Available dates">
                 @for (date of dates(); track $index) {
                   @let dateStr = getDateStr(date);
                   <app-card
-                    [customClasses]="selectedDate() === dateStr 
+                    [class]="selectedDate() === dateStr 
                       ? 'border-2 border-[#00bfa6] bg-[#00bfa6] text-white p-3 cursor-pointer text-center focus:ring-2 focus:ring-offset-2 focus:ring-[#00bfa6] outline-none' 
                       : 'border hover:border-[#00bfa6]/50 p-3 cursor-pointer text-center focus:ring-2 focus:ring-offset-2 focus:ring-[#00bfa6] outline-none'"
                     (click)="selectedDate.set(dateStr)"
@@ -155,7 +155,7 @@
 
           @if (selectedDate()) {
             <section aria-labelledby="time-heading">
-              <app-card customClasses="p-6 mt-6">
+              <app-card class="p-6 mt-6">
                 <h2 id="time-heading" class="text-gray-900 text-lg font-semibold mb-4">Select Time Slot</h2>
                 
                 <div class="space-y-6">
@@ -165,7 +165,7 @@
                       @for (time of timeSlots.morning; track time) {
                         <app-button
                           [variant]="selectedTime() === time ? 'default' : 'outline'"
-                          [customClasses]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
+                          [class]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
                           (click)="selectedTime.set(time)"
                           [attr.aria-pressed]="selectedTime() === time"
                           [attr.aria-label]="'Select ' + time"
@@ -182,7 +182,7 @@
                       @for (time of timeSlots.afternoon; track time) {
                         <app-button
                           [variant]="selectedTime() === time ? 'default' : 'outline'"
-                          [customClasses]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
+                          [class]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
                           (click)="selectedTime.set(time)"
                           [attr.aria-pressed]="selectedTime() === time"
                           [attr.aria-label]="'Select ' + time"
@@ -199,7 +199,7 @@
                       @for (time of timeSlots.evening; track time) {
                         <app-button
                           [variant]="selectedTime() === time ? 'default' : 'outline'"
-                          [customClasses]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
+                          [class]="selectedTime() === time ? 'bg-[#00bfa6] hover:bg-[#00a890]' : ''"
                           (click)="selectedTime.set(time)"
                           [attr.aria-pressed]="selectedTime() === time"
                           [attr.aria-label]="'Select ' + time"
@@ -216,7 +216,7 @@
 
           @if (selectedDate() && selectedTime()) {
             <section aria-labelledby="notes-heading">
-              <app-card customClasses="p-6 mt-6">
+              <app-card class="p-6 mt-6">
                 <h2 id="notes-heading" class="text-gray-900 text-lg font-semibold mb-4">Additional Information</h2>
                 <div class="space-y-2">
                   <label for="visit-notes" class="flex items-center gap-2 text-gray-700 font-medium">
@@ -237,7 +237,7 @@
         </div>
 
         <aside class="space-y-6" aria-label="Booking Summary">
-          <app-card customClasses="p-6">
+          <app-card class="p-6">
             <h2 class="text-gray-900 text-lg font-semibold mb-4">Doctor Details</h2>
             <div class="flex items-start gap-4 mb-4">
               <img
@@ -261,7 +261,7 @@
             </div>
           </app-card>
 
-          <app-card customClasses="p-6 bg-[#00bfa6]/5 border-[#00bfa6] mt-6">
+          <app-card class="p-6 bg-[#00bfa6]/5 border-[#00bfa6] mt-6">
             <h2 class="text-gray-900 text-lg font-semibold mb-4">Booking Summary</h2>
             <dl class="space-y-3">
               <div class="flex justify-between text-sm">
@@ -293,7 +293,7 @@
             </dl>
 
             <app-button
-              customClasses="w-full mt-6 bg-[#00bfa6] hover:bg-[#00a890]"
+              class="w-full mt-6 bg-[#00bfa6] hover:bg-[#00a890]"
               [disabled]="!selectedDate() || !selectedTime()"
               (click)="handleBooking()"
               aria-label="Confirm Booking for "

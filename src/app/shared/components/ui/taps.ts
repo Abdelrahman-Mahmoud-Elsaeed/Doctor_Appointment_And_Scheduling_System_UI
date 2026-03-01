@@ -16,9 +16,10 @@ import {
   WritableSignal,
   AfterViewInit,
   DestroyRef,
+  input,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { cn } from "@utils/cn.util";
+import { cn } from '@utils/cn.util';
 
 /**
  * TabsService
@@ -123,7 +124,13 @@ class tabsService {
     } as Provider,
   ],
   template: `<ng-content></ng-content>`,
-  // keep empty styles — Tailwind classes are used in templates
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
 })
 export class tabsComponent implements OnInit, OnChanges, OnDestroy {
   private tabsService = inject(tabsService);
@@ -136,7 +143,8 @@ export class tabsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() defaultValue?: string;
 
   /** class list to pass to root */
-  @Input() customClasses?: string;
+  userClass = input<string>('', { alias: 'class' });
+
 
   /** emits when active value changes */
   @Output() valueChange = new EventEmitter<string>();
@@ -186,13 +194,13 @@ export class tabsComponent implements OnInit, OnChanges, OnDestroy {
 
   // Helper to build classes like the original: keep Tailwind exactly
   get rootClasses() {
-    return cn("flex flex-col gap-2", this.customClasses ?? "");
+    return cn("flex flex-col gap-2", this.userClass() ?? "");
   }
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                 tabsList                                */
-/*  Usage: <app-tabs-list [customClasses]>'children triggers here'</app-tabs-list>
+/*  Usage: <app-tabs-list [class]>'children triggers here'</app-tabs-list>
 /* -------------------------------------------------------------------------- */
 @Component({
   selector: "app-tabs-list",
@@ -208,23 +216,31 @@ export class tabsComponent implements OnInit, OnChanges, OnDestroy {
       <ng-content></ng-content>
     </div>
   `,
+    styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
 })
 export class tabsListComponent {
-  @Input() customClasses?: string;
+  userClass = input<string>('', { alias: 'class' });
+
   @Input() orientation: "horizontal" | "vertical" = "horizontal";
 
   get listClasses() {
     // copied exactly from React wrapper
     return cn(
       "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-xl p-[3px] flex",
-      this.customClasses ?? ""
+      this.userClass() ?? ""
     );
   }
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                tabsTrigger                               */
-/*  Usage: <app-tabs-trigger [value] customClasses>Label</app-tabs-trigger>
+/*  Usage: <app-tabs-trigger [value] class>Label</app-tabs-trigger>
 /*  - Registers itself to TabsService on init and unregister on destroy
 /*  - When clicked, calls TabsService.setActive(value)
 /*  - Exposes keyboard behavior (handled at button level)
@@ -253,6 +269,13 @@ export class tabsListComponent {
       <ng-content></ng-content>
     </button>
   `,
+    styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
 })
 export class tabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy {
   private tabsService = inject(tabsService);
@@ -260,7 +283,8 @@ export class tabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() value!: string;
   @Input() disabled = false;
-  @Input() customClasses?: string;
+  userClass = input<string>('', { alias: 'class' });
+
   // optional id references to content
   @Input() contentId?: string;
 
@@ -278,7 +302,7 @@ export class tabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy {
   get triggerClasses() {
     return cn(
       "data-[state=active]:bg-card dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-xl border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-      this.customClasses
+      this.userClass()
     );
   }
 
@@ -356,7 +380,7 @@ export class tabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy {
 
 /* -------------------------------------------------------------------------- */
 /*                                tabsContent                               */
-/*  Usage: <app-tabs-content [value] [customClasses]>content...</app-tabs-content>
+/*  Usage: <app-tabs-content [value] [class]>content...</app-tabs-content>
 /*  - Renders content only if active value === value input
 /*  - Adds data-slot and classes preserved
 /* -------------------------------------------------------------------------- */
@@ -378,6 +402,13 @@ export class tabsTriggerComponent implements OnInit, AfterViewInit, OnDestroy {
     </div>
   }
   `,
+    styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
 })
 export class tabsContentComponent implements OnInit {
   private tabsService = inject(tabsService);
@@ -391,7 +422,7 @@ export class tabsContentComponent implements OnInit {
   /** optional id of labelledby (trigger id) */
   @Input() labelledById?: string;
 
-  @Input() customClasses?: string;
+  userClass = input<string>('', { alias: 'class' });
 
   ngOnInit(): void {
     if (!this.value) {
@@ -404,7 +435,7 @@ export class tabsContentComponent implements OnInit {
   }
 
   get contentClasses() {
-    return cn("flex-1 outline-none", this.customClasses ?? "");
+    return cn("flex-1 outline-none", this.userClass() ?? "");
   }
 }
 

@@ -25,14 +25,14 @@
                 [value]="store.searchTerm()"
                 [name]="'search'"
                 (valueChange)="onSearch($event)" 
-                customClasses="pl-10">
+                class="pl-10">
               </app-input>
             </form>
           </div>
 
           <div>
             <app-select aria-label="Sort doctors by" [value]="selectedSort()" (valueChange)="onSortChange($event)">
-              <app-select-trigger customClasses="w-full md:w-48">
+              <app-select-trigger class="w-full md:w-48">
                 <app-select-value placeholder="Sort by...">Sort by...</app-select-value>
               </app-select-trigger>
               <app-select-content>
@@ -107,7 +107,7 @@
                 [routerLink]="[]"
                 [queryParams]="{ page: p }"
                 queryParamsHandling="merge"
-                [customClasses]="store.page() === p ? 'bg-[#00bfa6] text-white hover:bg-[#00a890]' : ''"
+                [class]="store.page() === p ? 'bg-[#00bfa6] text-white hover:bg-[#00a890]' : ''"
                 [attr.aria-current]="store.page() === p ? 'page' : null">
                 {{ p }}
               </app-button>
@@ -171,7 +171,7 @@
           [id]="'search-' + suffix"
           [value]="store.searchDrName()"
           placeholder="Doctor name..."
-          customClasses="pl-10"
+          class="pl-10"
           (valueChange)="onSearchName($event)" />
       </div>
     </div>
@@ -185,8 +185,8 @@
               [id]="spec + '-' + suffix" 
               [checked]="store.selectedSpecs().includes(spec)" 
               (checkedChange)="onSpecChecked($event, spec)" 
-              customClasses="mr-2 ml-1" />
-            <app-label [for]="spec + '-' + suffix" customClasses="text-sm text-gray-700 cursor-pointer">
+              class="mr-2 ml-1" />
+            <app-label [for]="spec + '-' + suffix" class="text-sm text-gray-700 cursor-pointer">
               {{ spec }}
             </app-label>
           </div>
@@ -202,7 +202,7 @@
             [id]="'male-' + suffix" 
             [checked]="store.selectedGender().includes('male')" 
             (checkedChange)="onGenderChecked($event, 'male')" 
-            customClasses="mr-2 ml-1" /> 
+            class="mr-2 ml-1" /> 
           <app-label [for]="'male-' + suffix" class="text-sm text-gray-700 cursor-pointer">Male</app-label>
         </div>
         <div class="flex items-center space-x-2">
@@ -210,14 +210,14 @@
             [id]="'female-' + suffix" 
             [checked]="store.selectedGender().includes('female')" 
             (checkedChange)="onGenderChecked($event, 'female')" 
-            customClasses="mr-2 ml-1" /> 
+            class="mr-2 ml-1" /> 
           <app-label [for]="'female-' + suffix" class="text-sm text-gray-700 cursor-pointer">Female</app-label>
         </div>
       </div>
     </fieldset>
 
     <div>
-      <app-label [id]="'price-label-' + suffix" customClasses="mb-3 block">
+      <app-label [id]="'price-label-' + suffix" class="mb-3 block">
         Price Range: ${{ store.priceRange()[0] }} - ${{ store.priceRange()[1] }}
       </app-label>
       <app-slider 
@@ -230,7 +230,7 @@
     </div>
 
     <div>
-      <app-label [for]="'location-' + suffix" customClasses="mb-3 block">Location</app-label>
+      <app-label [for]="'location-' + suffix" class="mb-3 block">Location</app-label>
       <app-input 
         [id]="'location-' + suffix" 
         [value]="store.location()" 
@@ -249,7 +249,7 @@
               [id]="day + '-' + suffix" 
               [checked]="store.selectedDays().includes(day)" 
               (checkedChange)="onDayChecked($event, day)" 
-              customClasses="mr-2 ml-1"/> 
+              class="mr-2 ml-1"/> 
             <app-label [for]="day + '-' + suffix" class="text-sm text-gray-700 cursor-pointer">
               {{ day }}
             </app-label>

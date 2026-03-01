@@ -1,9 +1,7 @@
-import { Component, Input, Output, EventEmitter, signal, computed } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, ChevronLeft, ChevronRight } from 'lucide-angular';
 import { cn } from '@utils/cn.util';
 
-// Defines a single day cell in the grid
 interface CalendarDay {
   date: Date;
   isToday: boolean;
@@ -15,9 +13,9 @@ interface CalendarDay {
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [CommonModule],
   template: `
-    <div [class]="cn('p-3', customClasses)">
+    <div [class]="cn('p-3', userClass())">
       <div class="flex flex-col gap-4">
                 <div class="flex justify-center pt-1 relative items-center w-full">
           <div class="flex items-center gap-1">
@@ -30,7 +28,7 @@ interface CalendarDay {
                 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground'
               )"
             >
-              <lucide-icon [img]="ChevronLeft" class="size-4"></lucide-icon>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
             </button>
 
             <div class="text-sm font-medium">
@@ -46,7 +44,7 @@ interface CalendarDay {
                 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground'
               )"
             >
-              <lucide-icon [img]="ChevronRight" class="size-4"></lucide-icon>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
           </div>
         </div>
@@ -103,8 +101,7 @@ interface CalendarDay {
   `,
 })
 export class CalendarComponent {
-  // --- Public API ---
-  @Input() customClasses?: string;
+  userClass = input<string>('', { alias: 'class' });
   @Input() showOutsideDays = true;
   @Input()
   set selected(value: Date | undefined) {
@@ -113,19 +110,13 @@ export class CalendarComponent {
 
   @Output() select = new EventEmitter<Date>();
 
-  // --- Internal State ---
   protected readonly cn = cn;
-  protected readonly ChevronLeft = ChevronLeft;
-  protected readonly ChevronRight = ChevronRight;
   protected weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-// protected Signature: `today`
   protected today = this.normalizeDate(new Date());
 
-  /** The first day of the currently displayed month */
   protected currentMonth = signal(this.normalizeDate(new Date(), 'month'));
   protected selectedDate = signal<Date | undefined>(undefined);
 
-  /** Formatted label for the month and year (e.g., "November 2025") */
   protected monthYearLabel = computed(() => {
     return this.currentMonth().toLocaleString('default', {
       month: 'long',
@@ -133,28 +124,21 @@ export class CalendarComponent {
     });
   });
 
-  /**
-   * A 2D array (6x7) representing the weeks and days of the displayed month.
-   */
   protected calendarGrid = computed<CalendarDay[][]>(() => {
-    const month = this.currentMonth(); // e.g., Nov 1, 2025
+    const month = this.currentMonth(); 
     const weeks: CalendarDay[][] = [];
 
-    // Find the start of the grid (first day of the month, then rewind to the preceding Sunday)
-    const firstDayOfMonth = month.getDay(); // e.g., Nov 1 is a Sat (6)
+    const firstDayOfMonth = month.getDay(); 
     const startDate = new Date(month);
-    startDate.setDate(1 - firstDayOfMonth); // 1 - 6 = -5. Sets date to Oct 26 (Sunday)
+    startDate.setDate(1 - firstDayOfMonth); 
 
-    // Build the 6x7 grid
     for (let w = 0; w < 6; w++) {
       const week: CalendarDay[] = [];
       for (let d = 0; d < 7; d++) {
-        // Calculate the date for the current cell
         const offset = w * 7 + d;
         const day = new Date(startDate);
         day.setDate(startDate.getDate() + offset);
 
-        // Get properties for this day
         const isOutside = day.getMonth() !== month.getMonth();
         const isSelected = !!this.selectedDate() && day.getTime() === this.selectedDate()!.getTime();
         const isToday = day.getTime() === this.today.getTime();
@@ -164,7 +148,7 @@ export class CalendarComponent {
           isToday: isToday,
           isSelected: isSelected,
           isOutside: isOutside,
-          isDisabled: false, // Placeholder for future logic
+          isDisabled: false, 
         });
       }
       weeks.push(week);
@@ -172,16 +156,12 @@ export class CalendarComponent {
     return weeks;
   });
 
-  // --- Event Handlers ---
-
-  /** Moves to the previous month */
   protected previousMonth(): void {
     this.currentMonth.update((date) => {
       return new Date(date.getFullYear(), date.getMonth() - 1, 1);
     });
   }
 
-  /** Moves to the next month */
   protected nextMonth(): void {
     this.currentMonth.update((date) => {
       return new Date(date.getFullYear(), date.getMonth() + 1, 1);

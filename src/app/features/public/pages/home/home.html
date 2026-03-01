@@ -22,7 +22,7 @@
             </app-input>
             <app-button 
               type="submit"
-              customClasses="hover:bg-[#00a890] bg-[#00bfa6] flex items-center justify-center gap-2 text-white"
+              class="hover:bg-[#00a890] bg-[#00bfa6] flex items-center justify-center gap-2 text-white"
               routerLink="/find-doctor">
               <lucide-icon aria-hidden="true" [img]="Search" class="w-4 h-4"></lucide-icon>
               Search
@@ -60,7 +60,7 @@
               role="link"
               [attr.aria-label]="'Browse doctors specializing in ' + spec"
               tabindex="0"
-              customClasses="p-4 cursor-pointer hover:shadow-lg hover:border-[#00bfa6] transition-all text-center h-full group"
+              class="p-4 cursor-pointer hover:shadow-lg hover:border-[#00bfa6] transition-all text-center h-full group"
               routerLink="/find-doctor"
               [queryParams]="{ spec: spec }">
               <div class="w-12 h-12 bg-[#00bfa6]/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-[#00bfa6] transition-colors">
@@ -82,7 +82,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @for (doctor of featuredDoctors; track $index) {
-            <app-card customClasses="overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
+            <app-card class="overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
               <div class="aspect-4/3 overflow-hidden bg-gray-200">
                 <img [src]="doctor.image" [alt]="'Photo of Dr. ' + doctor.name" 
                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
@@ -105,14 +105,12 @@
                     [attr.aria-label]="'View Profile of ' + doctor.name" 
                     variant="outline"  
                     class="flex-1" 
-                    customClasses="w-full" 
                     [routerLink]="['/doctor-details', doctor.id]">
                     View Profile
                   </app-button>
                   <app-button 
                     [attr.aria-label]="'Book appointment with ' + doctor.name"  
-                    class="flex-1" 
-                    customClasses="bg-[#00bfa6] w-full hover:bg-[#00a890] text-white"
+                    class="flex-1 bg-[#00bfa6] hover:bg-[#00a890] text-white"  
                     [routerLink]="['/appointment-booking', doctor.id]">
                     Book Now
                   </app-button>
@@ -172,7 +170,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           @for (testimonial of testimonials; track $index) {
-            <app-card customClasses="p-6 h-full flex flex-col justify-between">
+            <app-card class="p-6 h-full flex flex-col justify-between">
               <div>
                 <div class="flex items-center gap-1 mb-4" [attr.aria-label]="'Rated ' + testimonial.rating + ' out of 5 stars'" role="img">
                   @for (s of [].constructor(testimonial.rating); track $index) {
@@ -242,14 +240,14 @@
         <div class="flex gap-4 justify-center flex-wrap">
           <app-button 
             size="lg" 
-            customClasses="bg-white text-[#00bfa6] hover:bg-white/90 shadow-lg hover:shadow-xl font-semibold"
+            class="bg-white text-[#00bfa6] hover:bg-white/90 shadow-lg hover:shadow-xl font-semibold"
             routerLink="/find-doctor">
             Find a Doctor
           </app-button>
           <app-button 
             size="lg" 
             variant="outline"
-            customClasses="border-2 border-white text-white hover:bg-white hover:text-[#00bfa6] bg-white/10 backdrop-blur-sm font-semibold"
+            class="border-2 border-white text-white hover:bg-white hover:text-[#00bfa6] bg-white/10 backdrop-blur-sm font-semibold"
             routerLink="/register">
             Create Account
           </app-button>
@@ -259,3 +257,4 @@
 
   </main>
 </div>
+

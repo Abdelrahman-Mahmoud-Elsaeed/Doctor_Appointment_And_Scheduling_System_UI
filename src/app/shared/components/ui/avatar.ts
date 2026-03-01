@@ -1,23 +1,16 @@
 import {
   Component,
   computed,
-  forwardRef,
   inject,
-  Input,
+  input,
   signal,
-  OnChanges,
-  SimpleChanges,
+  effect,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { cn } from '@utils/cn.util';
-
-// --- Root Avatar Component ---
-// (Provides state and DI for children)
 
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [],
   template: `
     <span 
       data-slot="avatar" 
@@ -25,79 +18,59 @@ import { cn } from '@utils/cn.util';
       <ng-content></ng-content>
     </span>
   `,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
-  // Provide this component instance to all children
-  providers: [
-    { provide: AvatarComponent, useExisting: forwardRef(() => AvatarComponent) },
-  ],
+  styles: [':host { display: contents; }'],
 })
 export class AvatarComponent {
-  @Input() customClasses: string | undefined;
+  userClass = input<string>('', { alias: 'class' });
 
   protected hostClasses = computed(() =>
     cn(
       'relative flex size-10 shrink-0 overflow-hidden rounded-full',
-      this.customClasses,
+      this.userClass(),
     ),
   );
 
-  /**
-   * Shared state for children components.
-   * - 'loading': Initial state, or when src changes.
-   * - 'loaded': Image successfully loaded.
-   * - 'error': Image failed to load.
-   */
   imageStatus = signal<'loading' | 'loaded' | 'error'>('loading');
 }
 
-// --- Avatar Image Component ---
-// (Renders the image and updates parent state)
 
 @Component({
   selector: 'app-avatar-image',
   standalone: true,
-  imports: [CommonModule], // For @if
   template: `
     @if (avatar.imageStatus() !== 'error') {
       <img
         data-slot="avatar-image"
-        [src]="src"
-        [alt]="alt"
+        [src]="src()"
+        [alt]="alt()"
         [class]="hostClasses()"
         (load)="onLoad()"
         (error)="onError()"
       />
     }
   `,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+  styles: [':host { display: contents; }'],
 })
-export class AvatarImageComponent implements OnChanges {
-  @Input({ required: true }) src: string = '';
-  @Input() alt: string = 'Avatar';
-  @Input() customClasses: string | undefined;
-
-  protected hostClasses = computed(() =>
-    cn('aspect-square size-full', this.customClasses),
-  );
+export class AvatarImageComponent {
+  src = input.required<string>({ alias: 'src' });
+  alt = input<string>('Avatar', { alias: 'alt' });
+  
+  userClass = input<string>('', { alias: 'class' });
 
   protected avatar = inject(AvatarComponent);
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['src'] && !changes['src'].firstChange) {
+  protected hostClasses = computed(() =>
+    cn(
+      'aspect-square size-full object-cover',
+      this.userClass()     
+    ),
+  );
+
+  constructor() {
+    effect(() => {
+      this.src();
       this.avatar.imageStatus.set('loading');
-    }
+    }, { allowSignalWrites: true });
   }
 
   onLoad() {
@@ -109,13 +82,11 @@ export class AvatarImageComponent implements OnChanges {
   }
 }
 
-// --- Avatar Fallback Component ---
-// (Renders only when the image fails)
 
+// --- 3. Avatar Fallback Component ---
 @Component({
   selector: 'app-avatar-fallback',
   standalone: true,
-  imports: [CommonModule], // For @if
   template: `
     @if (avatar.imageStatus() === 'error') {
       <span data-slot="avatar-fallback" [class]="hostClasses()">
@@ -123,24 +94,18 @@ export class AvatarImageComponent implements OnChanges {
       </span>
     }
   `,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-    `,
-  ],
+  styles: [':host { display: contents; }'],
 })
 export class AvatarFallbackComponent {
-  @Input() customClasses: string | undefined;
+  userClass = input<string>('', { alias: 'class' });
+
+  protected avatar = inject(AvatarComponent);
 
   protected hostClasses = computed(() =>
     cn(
       'bg-muted flex size-full items-center justify-center rounded-full',
-      this.customClasses,
+      this.avatar.userClass(), 
+      this.userClass()
     ),
   );
-
-  // Inject the parent AvatarComponent
-  protected avatar = inject(AvatarComponent);
 }
