@@ -15,7 +15,7 @@ import { cn } from '@utils/cn.util';
           userClass()
         )
       "
-      [id]="id"
+      [id]="id()"
       [placeholder]="placeholder"
       [rows]="rows"
       [disabled]="disabled"
@@ -31,6 +31,9 @@ import { cn } from '@utils/cn.util';
       }
     `,
   ],
+  host: {
+    '[attr.id]': 'null',
+  },
 })
 export class TextareaComponent {
   /**
@@ -46,7 +49,7 @@ export class TextareaComponent {
   /**
    * The id of the textarea.
    */
-  @Input() id?: string;
+  id = input<string>('', { alias: 'id' });
 
   /**
    * The placeholder text.

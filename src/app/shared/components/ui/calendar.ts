@@ -75,13 +75,14 @@ interface CalendarDay {
                       (click)="onDayClick(day)"
                       [disabled]="day.isDisabled"
                       [class]="cn(
-                                                'w-full aspect-square p-0 font-normal aria-selected:opacity-100',
+                                                'w-full aspect-square p-0 font-normal aria-selected:opacity-100 cursor-pointer',
                         'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground',
                         {
-                          'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground': day.isSelected,
-                          'bg-accent text-accent-foreground': day.isToday && !day.isSelected,
-                          'day-outside text-muted-foreground aria-selected:text-muted-foreground': day.isOutside,
-                          'text-muted-foreground opacity-50': day.isDisabled,
+                          'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground cursor-default': day.isSelected,
+                          'bg-accent text-accent-foreground ': day.isToday && !day.isSelected,
+                          'day-outside text-muted-foreground aria-selected:text-muted-foreground' : day.isOutside,
+                          'hover:bg-primary text-primary-foreground' : day.isOutside && day.isSelected,
+                          'text-muted-foreground opacity-50 ': day.isDisabled,
                           'invisible': !showOutsideDays && day.isOutside
                         }
                       )"
@@ -99,6 +100,7 @@ interface CalendarDay {
       </div>
     </div>
   `,
+  styles: [':host { display: contents; }'],
 })
 export class CalendarComponent {
   userClass = input<string>('', { alias: 'class' });

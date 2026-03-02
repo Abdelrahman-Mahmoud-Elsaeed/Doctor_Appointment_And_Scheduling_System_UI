@@ -20,7 +20,7 @@
                 class="w-32 h-32 rounded-full object-cover mx-auto"
               />
               <button
-                class="absolute bottom-0 right-0 w-10 h-10 bg-[#00bfa6] rounded-full flex items-center justify-center text-white hover:bg-[#00a890] transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-[#00bfa6]"
+                class="absolute bottom-0 right-0 cursor-pointer w-10 h-10 bg-[#00bfa6] rounded-full flex items-center justify-center text-white hover:bg-[#00a890] transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-[#00bfa6]"
                 type="button"
                 (click)="onChangeAvatar()"
                 aria-label="Change profile photo"
@@ -33,7 +33,7 @@
           </div>
         </app-card>
 
-        <app-card class="p-6">
+        <app-card class="p-6 mt-6">
           <h3 class="text-gray-900 mb-4 font-semibold">Quick Stats</h3>
           <ul class="space-y-4">
             <li class="flex items-center justify-between">
@@ -57,7 +57,7 @@
       </aside>
 
       <section class="lg:col-span-2">
-        <app-card class="p-6">
+        <app-card class="p-6 h-full">
           <h2 class="sr-only">Profile settings</h2>
           
           <app-tabs [defaultValue]="'personal'">

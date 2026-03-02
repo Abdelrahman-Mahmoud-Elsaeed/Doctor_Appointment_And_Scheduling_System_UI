@@ -55,13 +55,10 @@ export class Profile {
   protected readonly Calendar = Calendar;
   protected readonly MapPin = MapPin;
 
-  // mock data import
   mockPatient = mockPatient;
   selctedGender = signal<string|null>(mockPatient.gender.toLowerCase());
   selectedBloodType = signal<string | null>('o-positive')
-  // small helpers you might want to wire up later
   onChangeAvatar() {
-    // wire your avatar flow here (open modal / file input)
     console.log('change avatar clicked');
   }
 }

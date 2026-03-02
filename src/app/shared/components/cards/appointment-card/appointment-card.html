@@ -47,16 +47,14 @@
       <app-button  
         [attr.aria-label]="'Reschedule appointment with Dr. ' + appointment.doctor.name" 
         variant="outline"
-        class="flex-1 "
-        class="w-full"  
+        class="flex-1 w-full"
         (click)="rescheduleAppointment.emit()" >
         Reschedule
       </app-button>
       <app-button 
         [attr.aria-label]="'Cancel appointment with Dr. ' + appointment.doctor.name"  
         variant="outline" 
-        class="flex-1" 
-        class="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
+        class="flex-1 w-full text-red-600 hover:text-red-700 hover:bg-red-50" 
         (click)="cancelAppointment.emit()">
         Cancel
       </app-button>
