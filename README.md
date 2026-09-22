@@ -38,4 +38,16 @@ Angular-based front-end for a medical appointment platform. Patients can browse 
 Optional:
 
 - Build for production: `npm run build`
-- Run unit tests: `npm test`
+- Run unit tests: `npm test`octor
+## Screenshots
+
+- Home: ![Home](./screenshot/home.png)
+- Find Doctor: ![Find Doctor](./screenshot/find-doctor.png)
+- Login: ![Login](./screenshot/login.png)
+- Register: ![Register](./screenshot/register.png)
+- Patient Appointments: ![Patient Appointments](./screenshot/patient-appointments.png)
+- Patient Profile: ![Patient Profile](./screenshot/patient-profile.png)
+- Doctor Dashboard: ![Doctor Dashboard](./screenshot/doctor-dashboard.png)
+- Doctor Appointments: ![Doctor Appointments](./screenshot/doctor-appointments.png)
+- Doctor Schedule: ![Doctor Schedule](./screenshot/doctor-schedule.png)
+- Doctor Profile: ![Doctor Profile](./screenshot/doctor-profile.png)
