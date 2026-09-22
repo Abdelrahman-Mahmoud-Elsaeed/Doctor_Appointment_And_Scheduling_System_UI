@@ -1,59 +1,41 @@
-# DoctorAppointmentAndSchedulingSystemUI
+# Doctor Appointment and Scheduling System UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.9.
+Angular-based front-end for a medical appointment platform. Patients can browse doctors, book appointments, and manage visits, while doctors can review schedules and appointment details through role-based views.
 
-## Development server
+## Tech Stack
 
-To start a local development server, run:
+- Angular 20
+- TypeScript
+- RxJS
+- Angular Router
+- SCSS
+- Tailwind CSS
+- Angular CDK
 
-```bash
-ng serve
-```
+## Key Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Public patient flow for finding doctors and viewing profile details
+- Appointment booking and rescheduling workflows
+- Role-based access for patient and doctor dashboards
+- Schedule and appointment management views for providers
+- Responsive UI built with reusable Angular components and shared layouts
 
-## Code scaffolding
+## How to Run Locally
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm start
+   ```
+3. Open the app in a browser at:
+   ```text
+   http://localhost:4200/
+   ```
 
-```bash
-ng generate component component-name
-```
+Optional:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Build for production: `npm run build`
+- Run unit tests: `npm test`
